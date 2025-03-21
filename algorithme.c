@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 15:16:45 by docteurbadl       #+#    #+#             */
-/*   Updated: 2025/03/20 13:30:11 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/03/21 12:34:47 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,29 +18,26 @@ void init()
     // init signal ctrl c (new line)
     // init pwd
     // create display line. 
+    // init $? ? 
 }
 
 void routine()
 {
     //take input 
     //verifying << (should be abble to write several line in this case)
-    // update history 
+    // update history
 
     // parsing
-
-        // replace $ by their value
-
+        // replace $ by their value     DONE
         // replace * by their value (if is in the current repository, otherwise ignore)
-
         //verifying " ' () validity
-
         // split into token the different part 
         // pass through the array to identify Logical operator ( && || ())
         //pass through the array to identify fd operator ( |  >> > <)
         //create an array of array of str to contain every group number
         //place the element in the tree 
 
-    // Siganl modification in the shell(ignore all)
+    // Signal modification in the shell(ignore all)
     //execution
         // while (tree) apply fd
         // process_tree(status);
@@ -53,12 +50,13 @@ void routine()
 void parsing()
 {
      // parsing
-        // replace $ by their value ( if not existing replace by "")
+        // replace $ by their value ( if not existing replace by "")   DONE
+            /*
             // cut the string in several part, part before $ (if not existing create "")the $ and following char all the end of the string.
             // getenv($variable) -> result;
-            // join first part result and end part. 
+            // join first part result and end part.
             // do it again until no $ followed by non space exist
-
+        */
         // replace * by their value (if is in the current repository, otherwise ignore)
             // if (complete path == pwd || relative path has not '/' )
             //create an array of filename with matching the condition. ( *.c, *, *.*, a*o*t)
@@ -72,7 +70,8 @@ void parsing()
             // a word is delimited by space, but if a " or a ' is encountered : pass the char until it's another one or it's the null terminator. 
             // if it's the null terminator we know that it is never close. 
         // split into token the different part
-        // you have to create a function split which apply the result in t_parsed_command-> text; Add -> text add -> group Id Add-> associativity 0 = right 1 = left remove- > has_wildcards 
+            // you have to create a function split which apply the result in t_parsed_command-> text; Add -> text add -> group Id Add-> associativity 0 = right 1 = left remove- > has_wildcards 
+            //
             //'(' become one token ')' a token representing NULL can be usefull sometime. (maybe ?)
                 // we have then an array like "(" "ls" "-a" "&&" "cat" "'\pwd'" ")" "||" "echo" "failed"
         // pass through the array to identify Logical operator ( && || >> > < |)
@@ -88,15 +87,16 @@ void parsing()
                 //check if two 0s are stuck together.
             // check for () 
                 // for the parenthesis, a conter start to 0 and should finish on 0. and if it pass to -1 it break and show an error.
-                    // each -1 that it pass -> +1 each -2 -> -1; 
+                    // each -1 that it pass -> +1 each -2 -> -1;
                     // if -1 is just before -2 erro 
                 // place together the token in a new array.
-            // group up token 
+            //erase "" ''
+            // group up token
                 // if number > 0 combine the number over 0 together. ( the ones with the ones ...) then place it.
 
         //place the element in the tree
             //to do so we use the Shunting Yard algorithm
-                // we have a list of output and a stack for operator (create a list of parsed_command), (create a stack of parsed command )
+                // we have a list of output and a stack for operator (create a list of parsed_command), (create a stack of parsed command)
                 // we have to set the priority of each sign compare to each other.(already done) precedence ; // redirection < > << >> = 4 | = 3 && = 2 || = 1
                 // we have to to set the associativity of each symbole. (&& || left it mean that the first one is priorities A || B || C -> (A || B) || C
                 //< > << >> it right cmd > file1 > file2 -> cmd > (file1 > file2))
@@ -112,4 +112,5 @@ void parsing()
                 //  When encountering an operator:
                 // Pop the required number of operands from the stack. (LINK THE TWO last operrand to the new OPPERATOR POP THE TWO OPERRAND AND SEND the new OPERATOR in the stack)
                 // continue until the end of the stack.
+            // return the tree
 }
