@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   variable_manager.c                                 :+:      :+:    :+:   */
+/*   A_variable_manager.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:16:54 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/03/21 18:22:26 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/03/22 11:56:01 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,6 @@ char	*assembling(char *variable, char **array_of_str)
 		{
 			result = ft_strjoin(array_of_str[0], variable);
 			free(array_of_str[0]);
-			free(variable);
 		}
 		else
 		{
@@ -199,7 +198,5 @@ int main()
 	printf(".%s.", test10);
 	printf("\n");
 	free(test10);
-
-
 	return 0;
 }*/

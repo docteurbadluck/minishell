@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 15:16:45 by docteurbadl       #+#    #+#             */
-/*   Updated: 2025/03/21 12:34:47 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/03/24 15:02:21 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,19 +57,24 @@ void parsing()
             // join first part result and end part.
             // do it again until no $ followed by non space exist
         */
-        // replace * by their value (if is in the current repository, otherwise ignore)
+        // replace * by their value (if is in the current repository, otherwise ignore) DONE
+            /*
             // if (complete path == pwd || relative path has not '/' )
             //create an array of filename with matching the condition. ( *.c, *, *.*, a*o*t)
             //path the char, if it's a star pass if it's different char try to find them in another files.
             // if you can't quit otherwise continue until while star, new text or end of char 
             // in the list of potential word, look if you find the matching part at the begining 0 word comp : 1 (depend of number of open text) end -1 (a.out) a*o*t -> correct,  a*t*o
+        */
         //verifying << (parrently a lot of law are different)
 
-        //verifying " '  validity
+        //verifying " ' and count word  DONE
+        /*
             // we have to count the word to spli the input so we use this moment to verify different things
             // a word is delimited by space, but if a " or a ' is encountered : pass the char until it's another one or it's the null terminator. 
             // if it's the null terminator we know that it is never close. 
-        // split into token the different part
+        */
+        // split into token the different part DONE
+        /*
             // you have to create a function split which apply the result in t_parsed_command-> text; Add -> text add -> group Id Add-> associativity 0 = right 1 = left remove- > has_wildcards 
             //
             //'(' become one token ')' a token representing NULL can be usefull sometime. (maybe ?)
@@ -78,8 +83,10 @@ void parsing()
             // check text 
                 // if you can find one of this char ( & | < > ) and it is the same as one of the logical operator above
                 // it means that it's a mistake.
-            // if you can find an operator put his value in logical_operator  < > << >> = 4 | = 3 && = 2 || = 1 other 0.
-            // attribute group number to each token to create block of command.
+            // if you can find an operator put his value in logical_operator  < > << >> = 4 | = 3 && = 2 || = 1 ( = -1 ) = -2 other 0.
+            */
+        
+        // attribute group number to each token to create block of command.
                 // exemle "(" "ls" "-a" ">" "test.txt" "&&" "cat" "'\pwd'" ")" "||" "echo" "failed"
                 //         -1    1    1   0       2      0     3       3   -2    0    4       4
             // check logical operation 
