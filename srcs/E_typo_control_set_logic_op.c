@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 14:30:21 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/03/24 16:29:59 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/03/24 17:11:58 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,7 @@ void	word_value(t_parsed_command *array, int y)
 	}
 }
 
-
+/*
 int main()
 {
 	t_parsed_command *ptr;
@@ -152,3 +152,4 @@ int main()
 	}
 	free(ptr);
 }
+*/

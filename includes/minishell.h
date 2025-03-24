@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:41:20 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/03/24 16:23:47 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/03/24 17:35:20 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,9 @@ typedef struct s_parsed_command {
 }	t_parsed_command;
 
 
+//***AA
+void free_array(t_parsed_command **array);
+
 
 //	***A
 //$? est remplacer par STATUS_LAST_PROCESS
@@ -62,6 +65,9 @@ void	count_op(int *i, const char *input, int *counter);
 	t_parsed_command	*tokenise(char *input);
 //  ***Da
 void	split_special_char(char *input, int *i, int *y, t_parsed_command *a);
+
+//  ***E
+int	typo_control_set_logic_op(t_parsed_command *array);
 
 	
 #endif

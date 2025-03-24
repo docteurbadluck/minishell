@@ -5,7 +5,8 @@ LIBFT = -Llibft -lft
 CFLAGS = -Wall -Wextra -Werror
 
 SRC = srcs/A_variable_manager.c  srcs/AA_main.c srcs/B_wildcard_manager.c srcs/Ba_wildcard_util.c srcs/Ca_count_word_valid_quote.c \
-	srcs/Cb_count_word_utils.c srcs/D_tokenise.c srcs/Da_tokenise_utils.c srcs/E_typo_control_set_logic_op.c
+	srcs/Cb_count_word_utils.c srcs/D_tokenise.c srcs/Da_tokenise_utils.c srcs/E_typo_control_set_logic_op.c srcs/F_set_groupid_control_logic.c
+
 HEADERS = includes/minishell.h
 BUILD_DIR = build
 

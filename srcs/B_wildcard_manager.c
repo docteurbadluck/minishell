@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 12:37:33 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/03/22 12:03:30 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/03/24 17:26:54 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,8 @@ char	*get_filtered_wildcard_matches(char *pattern, char **names)
 		}
 		i++;
 	}
-	output_wild[ft_strlen(output_wild) - 1] = '\0';
+	if (output_wild && ft_strlen(output_wild) > 0)
+		output_wild[ft_strlen(output_wild) - 1] = '\0';
 	return (output_wild);
 }
 
