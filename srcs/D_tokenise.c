@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 14:30:21 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/03/24 16:20:56 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/03/25 16:25:59 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,22 +52,17 @@ void	split_quote(char *input, int *i, int *y, t_parsed_command *array)
 	int	save;
 	int	count_letter;
 
-	if (input[*i] == '"')
-	{
-		save = *i;
-		count_letter = 1;
-		while (input[++(*i)] != '"')
-			count_letter++;
-		array[*y].text = ft_substr(input, save, count_letter + 1);
-		(*y)++;
-		return ;
-	}
+	split_double_quote(input, i, y, array);
 	if (input[*i] == '\'')
 	{
 		save = *i;
 		count_letter = 1;
-		while (input[++(*i)] != '\'')
+		while (input[++(*i)])
+		{
+			if (input[(*i)] == '\'' && input[(*i) - 1] != '\\')
+				break ;
 			count_letter++;
+		}
 		array[*y].text = ft_substr(input, save, count_letter + 1);
 		(*y)++;
 	}

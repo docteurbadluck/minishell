@@ -6,23 +6,24 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 14:30:21 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/03/24 18:10:46 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/03/25 16:37:25 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+void	attribute_groupid(t_parsed_command *array);
+int		control_logic(t_parsed_command *array);
+int		control_parentheses(t_parsed_command *array);
 
-// attribute group number to each token to create block of command.
-                // exemle "(" "ls" "-a" ">" "test.txt" "&&" "cat" "'\pwd'" ")" "||" "echo" "failed"
-                //         -1    1    1   0       2      0     3       3   -2    0    4       4
-            // check logical operation 
-                // check if 0 are at the beginning or at the end.
-                //check if two 0s are stuck together.
-            // check for () 
-                // for the parenthesis, a conter start to 0 and should finish on 0. and if it pass to -1 it break and show an error.
-                    // each -1 that it pass -> +1 each -2 -> -1;
-                    // if -1 is just before -2 erro
+int	set_groupid_control_logic(t_parsed_command *array)
+{
+	attribute_groupid(array);
+	if (control_logic(array) || control_parentheses(array))
+		return (-1);
+	return (0);
+}
+
 void	attribute_groupid(t_parsed_command *array)
 {
 	int	i;
@@ -34,20 +35,16 @@ void	attribute_groupid(t_parsed_command *array)
 	{
 		if (array[i].logical_operator != 0)
 		{
-			array[i].group_id = 0;
-			if (array[i].logical_operator == -1)
-				array[i].group_id = -1;
-			if (array[i].logical_operator == -2)
-				array[i].group_id = -2;
+			give_value(array, i);
 			i++;
 		}
 		else
 		{
-			while(array[i].logical_operator == 0 && array[i].text)
+			while (array[i].logical_operator == 0 && array[i].text)
 			{
 				array[i].group_id = compteur;
 				i++;
-			} 
+			}
 			compteur++;
 		}
 	}
@@ -56,26 +53,15 @@ void	attribute_groupid(t_parsed_command *array)
 int	control_logic(t_parsed_command *array)
 {
 	int	i;
-	int y;
+	int	y;
 
-	i = 0;
-	y = 0;
-	while (array[i + 1].text)
-		i++;
-	while (array[i].group_id == -1 || array[i].group_id == -2)
-			i--;
-	while (array[y].group_id == -1 || array[y].group_id == -2)
-		y++;
-	if (array[y].group_id == 0 || array[i].group_id == 0)
-	{
-		printf("error control logic\n");
+	if (control_border_logic(array))
 		return (-1);
-	}
 	i = 0;
 	while (array[i].text)
 	{
 		y = i + 1;
-		while (array[y].group_id == -1 || array[y].group_id == -2 )
+		while (array[y].group_id == -1 || array[y].group_id == -2)
 			y++;
 		if (array[i].group_id == 0 && array[y].group_id == 0)
 		{
@@ -87,22 +73,40 @@ int	control_logic(t_parsed_command *array)
 	return (0);
 }
 
-void free_array(t_parsed_command **array)
+int	control_parentheses(t_parsed_command *array)
 {
-	int i = 0;
-		while ((*array)[i].text)
-		{
-			free((*array)[i].text);
-			i++;
-		}
-		free(*array);
-	}
+	int	compteur;
+	int	i;
 
+	i = 0;
+	compteur = 0;
+	while (array[i].text)
+	{
+		if (array[i].group_id == -2)
+		{
+			compteur--;
+			if (compteur < 0)
+			{
+				printf("errror control parentheses");
+				return (-1);
+			}
+		}
+		if (array[i].group_id == -1)
+			compteur++;
+		i++;
+	}
+	if (compteur == 0)
+		return (0);
+	printf("errror control parentheses");
+	return (-1);
+}
+
+/*
 
 int main()
 {
 	char *temp;
-	char *str = " ( a > ()() abc def ) ||jhi   )";
+	char *str = " ( ( abc || def)";
 	char *new;
 	t_parsed_command *array;
 	int i;
@@ -125,16 +129,18 @@ int main()
 		free_array(&array);
 		return (1);
 	}
-	attribute_groupid(array);
-	printf("control_logic : %d\n", control_logic(array));
+	if (set_groupid_control_logic(array)) //echec
+	{
+		free_array(&array);
+		return -1;
+	}
 	i = 0;
-
 	while (array[i].text)
 	{
 		printf("text : %s, groupid : %d\n",array[i].text, array[i].group_id);
 		i++;
 	}
-	//free_array(&array);
+	free_array(&array);
 	return 0;
 }
-
+*/

@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 15:16:45 by docteurbadl       #+#    #+#             */
-/*   Updated: 2025/03/24 15:02:21 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/03/25 16:34:21 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,11 @@ void routine()
 
     // parsing
         // replace $ by their value     DONE
-        // replace * by their value (if is in the current repository, otherwise ignore)
-        //verifying " ' () validity
-        // split into token the different part 
-        // pass through the array to identify Logical operator ( && || ())
-        //pass through the array to identify fd operator ( |  >> > <)
+        // replace * by their value (if is in the current repository, otherwise ignore) DONE
+        //verifying " ' () validity DONE 
+        // split into token the different part DONE  
+        // pass through the array to identify Logical operator ( && || ()) DONE
+        //pass through the array to identify fd operator ( |  >> > <) DONE
         //create an array of array of str to contain every group number
         //place the element in the tree 
 
@@ -86,7 +86,8 @@ void parsing()
             // if you can find an operator put his value in logical_operator  < > << >> = 4 | = 3 && = 2 || = 1 ( = -1 ) = -2 other 0.
             */
         
-        // attribute group number to each token to create block of command.
+        // attribute group number to each token to create block of command. DONE
+        /*
                 // exemle "(" "ls" "-a" ">" "test.txt" "&&" "cat" "'\pwd'" ")" "||" "echo" "failed"
                 //         -1    1    1   0       2      0     3       3   -2    0    4       4
             // check logical operation 
@@ -96,11 +97,12 @@ void parsing()
                 // for the parenthesis, a conter start to 0 and should finish on 0. and if it pass to -1 it break and show an error.
                     // each -1 that it pass -> +1 each -2 -> -1;
                     // if -1 is just before -2 erro 
-                // place together the token in a new array.
-            //erase "" ''
-            // group up token
+                // place together the token in a new array.*/
+            //erase "" ''           it is really necessary? 
+            // group up token   DONE
+            /*
                 // if number > 0 combine the number over 0 together. ( the ones with the ones ...) then place it.
-
+*/
         //place the element in the tree
             //to do so we use the Shunting Yard algorithm
                 // we have a list of output and a stack for operator (create a list of parsed_command), (create a stack of parsed command)

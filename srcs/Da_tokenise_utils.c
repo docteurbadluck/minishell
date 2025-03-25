@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 16:08:26 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/03/24 16:19:15 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/03/25 16:26:01 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,27 @@ void	split_parenthesis(char *input, int *i, int *y, t_parsed_command *array)
 	if (input[*i] == ')')
 	{
 		array[*y].text = ft_substr(input, *i, 1);
+		(*y)++;
+		return ;
+	}
+}
+
+void	split_double_quote(char *input, int *i, int *y, t_parsed_command *array)
+{
+	int	save;
+	int	count_letter;
+
+	if (input[*i] == '"')
+	{
+		save = *i;
+		count_letter = 1;
+		while (input[++(*i)])
+		{
+			if (input[(*i)] == '"' && input[(*i) - 1] != '\\')
+				break ;
+			count_letter++;
+		}
+		array[*y].text = ft_substr(input, save, count_letter + 1);
 		(*y)++;
 		return ;
 	}

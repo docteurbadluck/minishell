@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 12:51:06 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/03/24 16:26:24 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/03/25 16:31:08 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,12 @@ int	count_word_valid_quote(const char *input)
 		if (result == -1)
 			return (-1);
 		if (result == 1)
-			continue ;
-		if (char_is(input[i]))
-			flag = 0;
-		else if (!flag)
 		{
-			counter++;
-			flag = 1;
+			if (!input[i])
+				break ;
+			continue ;
 		}
+		set_flag(input, i, &flag, &counter);
 		count_parentheses_or_op(&i, input, &counter);
 	}
 	return (counter);
@@ -95,15 +93,6 @@ void	count_parentheses_or_op(int *i, const char *input, int *counter)
 		(*counter)++;
 	}
 	count_op(i, input, counter);
-}
-
-int	char_is(char c)
-{
-	if (c == ' ' || c == '\t' || c == '\n'
-		|| c == ')' || c == '(' || c == '|'
-		|| c == '&' || c == '<' || c == '>')
-		return (1);
-	return (0);
 }
 
 /*

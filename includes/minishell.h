@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:41:20 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/03/24 17:35:20 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/03/25 16:30:16 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ typedef struct s_parsed_command {
 
 
 //***AA
-void free_array(t_parsed_command **array);
 
 
 //	***A
@@ -61,13 +60,35 @@ char	*assembling_wild(char *variable, char **array_of_str);
 int	count_word_valid_quote(const char *input);
 //  ***Cb
 void	count_op(int *i, const char *input, int *counter);
+void set_flag(const char *input, int i, int *flag, int *counter);
+
 //	***D
-	t_parsed_command	*tokenise(char *input);
+t_parsed_command	*tokenise(char *input);
 //  ***Da
 void	split_special_char(char *input, int *i, int *y, t_parsed_command *a);
+void	split_double_quote(char *input, int *i, int *y, t_parsed_command *array);
 
 //  ***E
-int	typo_control_set_logic_op(t_parsed_command *array);
+int	set_logic_op(t_parsed_command *array);
+
+//  ***F
+int	set_groupid_control_logic(t_parsed_command *array);
+
+//  ***Fa
+int 	control_border_logic(t_parsed_command *array);
+void	give_value(t_parsed_command *array, int i);
+void    free_array(t_parsed_command **array);
+void    free_new_array(t_parsed_command **new_array);
+
+
+//  G
+t_parsed_command	*group_up(t_parsed_command **array);
+
+//  Ga***
+int	count_new_array(t_parsed_command *array);
+int	count_arguments_and_move(t_parsed_command *array, int *i);
+void	allocate_and_fill_arguments(t_parsed_command *array
+	, int save_pos, int count_arg, int *i);
 
 	
 #endif

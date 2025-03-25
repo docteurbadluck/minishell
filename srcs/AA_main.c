@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 12:42:07 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/03/24 17:47:24 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/03/25 16:37:34 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 int main()
 {
 	char *temp;
-	char *str = " *.out";
+	char *str = "\"a bcd<  abc > bcd \"";
 	char *new;
 	t_parsed_command *array;
 	int i;
@@ -34,25 +34,43 @@ int main()
 	free(new);
 	if (!array) //echec
 		exit(1);
-	if (typo_control_set_logic_op(array) == 1) //echec
+	set_logic_op(array);
+	if (set_groupid_control_logic(array) == -1) //echec
 	{
 		free_array(&array);
-		return (1);
+		return -1;
 	}
 
+	t_parsed_command *new_array =  group_up(&array);
+	if (new_array == NULL) // alloc fail .
+	{
+		if (array)
+			free_array(&array);
+	}
+	i = 0;
+	int y;
+	while (new_array[i].text)
+	{	
+		 y = 0;
+		if (new_array[i].command)
+		{
+			printf("command : %s\n", new_array[i].command);
+			if (new_array[i].arguments)
+			{				
+				printf("arg : ");
+
+				while (new_array[i].arguments[y])
+				{
+					printf("'%s' ", new_array[i].arguments[y]);
+					y++;
+				}
+			printf("\n");
+			}
+		}
+		i++;
+	}
+	free_new_array(&new_array);
 	
-	free_array(&array);
 	return 0;
 }
-
-void free_array(t_parsed_command **array)
-{
-	int i = 0;
-		while ((*array)[i].text)
-		{
-			free((*array)[i].text);
-			i++;
-		}
-		free(*array);
-		
-	}*/
+*/
