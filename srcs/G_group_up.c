@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 14:30:21 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/03/25 16:06:08 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/03/27 10:17:24 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,12 +80,11 @@ void	create_new_array(t_parsed_command *array, t_parsed_command *new)
 }
 
 /*
-
 // then we have (-> command -> null "ls" command ls arg -l -a NULL
 int main()
 {
 	char *temp;
-	char *str = " 123  456   789  111   222  abc";
+	char *str = " 123  456  ||  789 > 111   222  abc";
 	char *new;
 	t_parsed_command *array;
 	int i;

@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 12:37:33 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/03/24 17:26:54 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/03/26 17:36:32 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ char	*wildcard_generator(char *input);
 // directory. it return null if the input was empty after an incorect wildcar
 char	*wildcard_manager(char *input)
 {
-	char	*return_input;
 	int		i;
 	int		flag;
 

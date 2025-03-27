@@ -6,12 +6,14 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:41:20 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/03/25 16:30:16 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/03/27 12:09:46 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 #define MINISHELL_H
+# define RIGHT 2
+# define LEFT 1
 #include "../libft/libft.h"
 
 # include <dirent.h>
@@ -22,7 +24,7 @@ typedef struct s_parsed_command {
 	int		group_id;
 	int		associativity;
     char	*command;          // The command to be executed (e.g., "ls", "echo").
-    char	**arguments;       // Array of arguments for the command (e.g., {"-l", "/home"}).
+    char	**arguments;       // Array of arguments for the command (e.g., {"ls" "-l", "/home"}).
     char	*input_file;       // File for input redirection (e.g., "input.txt").
     char	*output_file;      // File for output redirection (e.g., "output.txt").
     int		append_mode;        // Boolean flag for appending output (1 if ">>", 0 if ">").
@@ -34,6 +36,14 @@ typedef struct s_parsed_command {
     int		has_wildcards;      // Boolean flag indicating if wildcards are present in arguments.
     int		logical_operator;   // Logical operator for command chaining (0 for none, 1 for "&&", 2 for "||").
 }	t_parsed_command;
+
+
+typedef struct s_ast_node {
+    t_parsed_command *command;    // Pointer to a command struct, if this node represents a command
+    int logical_operator;         // Logical operator (0 for none, 1 for "&&", 2 for "||")
+    struct s_ast_node *left;      // Left child node (used for binary operators)
+    struct s_ast_node *right;     // Right child node (used for binary operators)
+} t_ast_node;
 
 
 //***AA
@@ -90,5 +100,22 @@ int	count_arguments_and_move(t_parsed_command *array, int *i);
 void	allocate_and_fill_arguments(t_parsed_command *array
 	, int save_pos, int count_arg, int *i);
 
-	
+//  H
+t_parsed_command	*from_input_to_group(char *input);
+
+//  Ia***
+void	set_associativity(t_parsed_command	*new_array);
+int	    check_priority(t_parsed_command *new_array, int i, t_list *operator_stack);
+void	send_element(t_list **operator_stack, t_list **output_list);
+void    print_list(t_list *output_list);
+void    free_list(t_list *output_list);
+
+
+//  I***
+t_list *from_group_to_polish_reverse(t_parsed_command *new_array);
+//  J***
+t_ast_node	*from_polish_to_tree(t_list *output_list);
+
+
+
 #endif

@@ -6,71 +6,34 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 12:42:07 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/03/25 16:37:34 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/03/27 12:11:01 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-/*
-int main()
+
+int	main(void)
 {
-	char *temp;
-	char *str = "\"a bcd<  abc > bcd \"";
-	char *new;
-	t_parsed_command *array;
-	int i;
+	char				*str;
+	t_parsed_command	*new_array;
+	t_list				*output_list;
+	t_ast_node			*tree;
+
+	str = ft_strdup("(A && B) || (C | (D && E) || (F | G)) && H");
+	new_array = from_input_to_group(str);
+	if (!new_array)
+		return (1);
+	output_list = from_group_to_polish_reverse(new_array);
+	tree = from_polish_to_tree(output_list);
+	free_list(output_list);
+
+	printf("\n%s\n", tree->command->command);
+	printf("\n%s\n", tree->left->command->command);
+	printf("\n%s\n", tree->right->command->command);
 	
-	new = variable_manager(str);
-	temp = new;
-	new =wildcard_manager(new);
-	free(temp);
-	if (!new) //only if it's totally empty
-	{
-		printf("error wildcard_manager");
-		exit(1);
-	}
-	array = tokenise(new);
-	free(new);
-	if (!array) //echec
-		exit(1);
-	set_logic_op(array);
-	if (set_groupid_control_logic(array) == -1) //echec
-	{
-		free_array(&array);
-		return -1;
-	}
-
-	t_parsed_command *new_array =  group_up(&array);
-	if (new_array == NULL) // alloc fail .
-	{
-		if (array)
-			free_array(&array);
-	}
-	i = 0;
-	int y;
-	while (new_array[i].text)
-	{	
-		 y = 0;
-		if (new_array[i].command)
-		{
-			printf("command : %s\n", new_array[i].command);
-			if (new_array[i].arguments)
-			{				
-				printf("arg : ");
-
-				while (new_array[i].arguments[y])
-				{
-					printf("'%s' ", new_array[i].arguments[y]);
-					y++;
-				}
-			printf("\n");
-			}
-		}
-		i++;
-	}
+	//todo free_tree.
 	free_new_array(&new_array);
-	
-	return 0;
+	free(str);
+	return (0);
 }
-*/

@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 14:30:21 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/03/25 16:18:55 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/03/26 11:05:19 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,13 @@ int	count_arguments_and_move(t_parsed_command *array, int *i)
 
 	count_arg = 0;
 	save_pos = *i;
-	while (array[*i + 1].text && array[save_pos].group_id
-		== array[*i + 1].group_id)
+	while (array[*i].text && array[save_pos].group_id
+		== array[*i].group_id)
 	{
 		count_arg++;
 		(*i)++;
 	}
-	*i = save_pos + 1;
+	*i = save_pos;
 	return (count_arg);
 }
 

@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:16:54 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/03/22 11:56:01 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/03/26 17:36:18 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ char	*assembling(char *variable, char **array_of_str);
 	//environnement and to know we have to verify that they are not in ""
 char	*variable_manager(char *input)
 {
-	char	*return_input;
 	int		i;
 	int		flag;
 
