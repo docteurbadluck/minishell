@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:41:20 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/03/27 12:09:46 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/03/27 16:55:11 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,12 @@ void    free_list(t_list *output_list);
 t_list *from_group_to_polish_reverse(t_parsed_command *new_array);
 //  J***
 t_ast_node	*from_polish_to_tree(t_list *output_list);
+//  K***
+t_ast_node  *from_text_to_tree(char *str, t_parsed_command **new_array);
+void            free_tree(t_ast_node *node);
+void            print_tree(t_ast_node *node, int depth);
 
 
+void print_ast_balanced(t_ast_node *root) ;
 
 #endif
