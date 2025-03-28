@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 15:16:45 by docteurbadl       #+#    #+#             */
-/*   Updated: 2025/03/25 16:34:21 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/03/28 10:30:03 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,3 +123,38 @@ void parsing()
                 // continue until the end of the stack.
             // return the tree
 }
+
+/*
+1. Basic Functionality
+Syntax: command << DELIMITER
+
+Reads input until DELIMITER appears on a new line.
+
+Input is passed as stdin to the command.
+
+2. Expansion Rules
+Unquoted delimiter (<< EOF) → Expands variables ($VAR), commands ($(cmd)), and globs (*).
+
+Quoted delimiter (<< 'EOF') → No expansion, input is treated as raw text.
+
+4. Signal Handling
+CTRL+C (SIGINT) → Interrupt heredoc, discard input, return to prompt.
+
+Use a custom signal handler: exit(1);
+
+CTRL+D (EOF) → End input, warn if DELIMITER is missing.
+
+Check getline() return value.
+
+CTRL+\ (SIGQUIT) → Ignore to match Bash behavior.
+
+signal(SIGQUIT, SIG_IGN);
+
+5. Edge Cases
+Nested heredocs.
+
+Combining heredocs with redirections (<< EOF > file).
+
+Handling special characters inside heredocs correctly.
+
+*/
