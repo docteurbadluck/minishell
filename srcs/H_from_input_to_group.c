@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 10:23:59 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/03/26 11:18:17 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/03/28 16:53:36 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,13 @@ char	*developpe_input(char *input)
 	return (new);
 }
 
-t_parsed_command	*from_new_to_group_up(char *new)
+t_parsed_command	*from_new_to_group_up(char *developped_input)
 {
 	t_parsed_command	*array;
 	t_parsed_command	*new_array;
 
-	array = tokenise(new);
-	free(new);
+	array = tokenise(developped_input);
+	free(developped_input);
 	if (!array)
 		return (NULL);
 	set_logic_op(array);
@@ -56,15 +56,15 @@ t_parsed_command	*from_new_to_group_up(char *new)
 
 t_parsed_command	*from_input_to_group(char *input)
 {
-	char				*new;
+	char				*developped_input;
 	t_parsed_command	*grouped_array;
 
 	if (!input || !ft_strlen(input))
 		return (NULL);
-	new = developpe_input(input);
-	if (!new)
+	developped_input = developpe_input(input);
+	if (!developped_input)
 		return (NULL);
-	grouped_array = from_new_to_group_up(new);
+	grouped_array = from_new_to_group_up(developped_input);
 	if (!grouped_array)
 		return (NULL);
 	set_associativity(grouped_array);

@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 15:16:45 by docteurbadl       #+#    #+#             */
-/*   Updated: 2025/03/28 10:30:03 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/03/28 17:05:47 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,7 @@ void parsing()
             // if you can't quit otherwise continue until while star, new text or end of char 
             // in the list of potential word, look if you find the matching part at the begining 0 word comp : 1 (depend of number of open text) end -1 (a.out) a*o*t -> correct,  a*t*o
         */
-        //verifying << (parrently a lot of law are different)
-
-        //verifying " ' and count word  DONE
+        //verifying " ' and count word  DONE 
         /*
             // we have to count the word to spli the input so we use this moment to verify different things
             // a word is delimited by space, but if a " or a ' is encountered : pass the char until it's another one or it's the null terminator. 
@@ -86,14 +84,14 @@ void parsing()
             // if you can find an operator put his value in logical_operator  < > << >> = 4 | = 3 && = 2 || = 1 ( = -1 ) = -2 other 0.
             */
         
-        // attribute group number to each token to create block of command. DONE
-        /*
+        // attribute group number to each token to create block of command. 
+        /*                          change > >> << < to -3 
                 // exemle "(" "ls" "-a" ">" "test.txt" "&&" "cat" "'\pwd'" ")" "||" "echo" "failed"
-                //         -1    1    1   0       2      0     3       3   -2    0    4       4
-            // check logical operation 
-                // check if 0 are at the beginning or at the end.
-                //check if two 0s are stuck together.
-            // check for () 
+                //         -1    1    1  0       2      0     3       3   -2    0    4       4
+            // check logical -> group number
+                // check if 0 are at the beginning or at the end. TRUE ONLY WITH || && and | 
+                //check if two 0s are stuck together.             TRUE ONLY WITH || && and | 
+            // check for ()             DO WE HAVE TO POP ANOTHER LINE iF ( is not closed ? 
                 // for the parenthesis, a conter start to 0 and should finish on 0. and if it pass to -1 it break and show an error.
                     // each -1 that it pass -> +1 each -2 -> -1;
                     // if -1 is just before -2 erro 
@@ -103,7 +101,8 @@ void parsing()
             /*
                 // if number > 0 combine the number over 0 together. ( the ones with the ones ...) then place it.
 */
-        //place the element in the tree
+        //place the element in the tree DONE 
+        /*
             //to do so we use the Shunting Yard algorithm
                 // we have a list of output and a stack for operator (create a list of parsed_command), (create a stack of parsed command)
                 // we have to set the priority of each sign compare to each other.(already done) precedence ; // redirection < > << >> = 4 | = 3 && = 2 || = 1
@@ -114,14 +113,16 @@ void parsing()
                 // à celle du nouvel opérateur ET si l’opérateur est gauche-associatif. if left associativity ;✅ Pop only operators with strictly higher precedence.
                 // the parentheses are pushed onto the stack, to the output until a left parenthesis is encountered.
                 // THAT CREATE A LIST OF NODE IN REVERSE POLISH
-
-            //How to create the tree
+        */
+            //How to create the treeDONE 
+            /*
                 // create a stack : 
                 // push operand into the stack 
                 //  When encountering an operator:
                 // Pop the required number of operands from the stack. (LINK THE TWO last operrand to the new OPPERATOR POP THE TWO OPERRAND AND SEND the new OPERATOR in the stack)
                 // continue until the end of the stack.
-            // return the tree
+                */
+            // return the tree DONE 
 }
 
 /*
@@ -133,7 +134,7 @@ Reads input until DELIMITER appears on a new line.
 Input is passed as stdin to the command.
 
 2. Expansion Rules
-Unquoted delimiter (<< EOF) → Expands variables ($VAR), commands ($(cmd)), and globs (*).
+Unquoted delimiter (<< EOF) → Expands variables ($VAR), commands ($(cmd)),
 
 Quoted delimiter (<< 'EOF') → No expansion, input is treated as raw text.
 
@@ -158,3 +159,19 @@ Combining heredocs with redirections (<< EOF > file).
 Handling special characters inside heredocs correctly.
 
 */
+
+
+//Funtion to change : set_logic_op()
+// set_groupid_control_logic
+
+//old logic
+// exemle "(" "ls" "-a" ">" "test.txt" "&&" "cat" "'\pwd'" ")" "||" "echo" "failed"
+//         -1    1    1  0       2      0     3       3   -2    0    4       4
+
+// exemle "(" ">" "test.txt"  "ls" "-a" ">" "test.txt" > test2.txt "&&" "cat" "'\pwd'" ")" "||" "echo" "failed"
+//         -1    1    1  1       1     1     1         1       1      0    2        2   -2    0    3       3
+
+//create a new array redirection array 
+// during the group up process if > the next is considered as the name of the file.
+//both going in redirection array.
+// search < kind of sign, in the 
