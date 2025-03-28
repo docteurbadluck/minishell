@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:41:20 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/03/27 16:55:11 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/03/28 11:55:02 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 
 # include <dirent.h>
 # include <stdlib.h>
+#include <readline/readline.h>
+#include <readline/history.h>
 
 typedef struct s_parsed_command {
 	char	*text;
