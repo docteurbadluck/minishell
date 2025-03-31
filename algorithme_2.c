@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   algorithme.c                                       :+:      :+:    :+:   */
+/*   algorithme_2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 15:16:45 by docteurbadl       #+#    #+#             */
-/*   Updated: 2025/03/31 12:14:39 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/03/31 15:27:36 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,15 @@ void init()
 void routine()
 {
     //take input 
-    //verifying << (should be abble to write several line in this case)
+    //verifying << (should be abble to write several line in this case) TO DO 
     // update history
         // with << the history is update with all the line of the heredoc.
+    //verifying " ' and ) TO DO 
 
     // parsing
-        // replace $ by their value     DONE
-        // replace * by their value (if is in the current repository, otherwise ignore) DONE
+        // replace $ by their value DONE
         //verifying " ' () validity DONE 
-        // split into token the different part DONE  
+        // split into token the different part DONE
         // pass through the array to identify Logical operator ( && || ()) DONE
         //pass through the array to identify fd operator ( |  >> > <) DONE
         //create an array of array of str to contain every group number
@@ -58,14 +58,6 @@ void parsing()
             // join first part result and end part.
             // do it again until no $ followed by non space exist
         */
-        // replace * by their value (if is in the current repository, otherwise ignore) problem -> the exec is not the same
-            /*
-            // if (complete path == pwd || relative path has not '/' )
-            //create an array of filename with matching the condition. ( *.c, *, *.*, a*o*t)
-            //path the char, if it's a star pass if it's different char try to find them in another files.
-            // if you can't quit otherwise continue until while star, new text or end of char 
-            // in the list of potential word, look if you find the matching part at the begining 0 word comp : 1 (depend of number of open text) end -1 (a.out) a*o*t -> correct,  a*t*o
-        */
         //verifying " ' and count word  DONE 
         /*
             // we have to count the word to spli the input so we use this moment to verify different things
@@ -74,34 +66,24 @@ void parsing()
         */
         // split into token the different part DONE
         /*
-            // you have to create a function split which apply the result in t_parsed_command-> text; Add -> text add -> group Id Add-> associativity 0 = right 1 = left - > has_wildcards 
-            //
             //'(' become one token ')' a token representing NULL can be usefull sometime. (maybe ?)
                 // we have then an array like "(" "ls" "-a" "&&" "cat" "'\pwd'" ")" "||" "echo" "failed"
         // pass through the array to identify Logical operator ( && || >> > < |)
-            // check text 
-                // if you can find one of this char ( & | < > ) and it is the same as one of the logical operator above
-                // it means that it's a mistake.
             // if you can find an operator put his value in logical_operator  < > << >> = 4 | = 3 && = 2 || = 1 ( = -1 ) = -2 other 0.
             */
         
-        // attribute group number to each token to create block of command. 
+        // attribute group number to each token to create block of command. DONE
         /*                          change > >> << < to -3 
                 // exemle "(" "ls" "-a" ">" "test.txt" "&&" "cat" "'\pwd'" ")" "||" "echo" "failed"
-                //         -1    1    1  0       2      0     3       3   -2    0    4       4
-            // check logical -> group number
-                // check if 0 are at the beginning or at the end. TRUE ONLY WITH || && and |
-                //check if two 0s are stuck together.             TRUE ONLY WITH || && and |
-            // check for ()             DO WE HAVE TO POP ANOTHER LINE iF ( is not closed ? 
-                // for the parenthesis, a conter start to 0 and should finish on 0. and if it pass to -1 it break and show an error.
-                    // each -1 that it pass -> +1 each -2 -> -1;
-                    // if -1 is just before -2 erro 
-                // place together the token in a new array.*/
-            //erase "" ''           it is really necessary? 
+                //         -1    1    1  -3       1      0     2       2   -2    0    3       3
+            // check logical -> group number DONE 
+            // manage redirection  DONE
+            // check for ()     DONE
             // group up token   DONE
             /*
                 // if number > 0 combine the number over 0 together. ( the ones with the ones ...) then place it.
-*/
+                */
+            // developpe wildcard TODO 
         //place the element in the tree DONE 
         /*
             //to do so we use the Shunting Yard algorithm
@@ -168,32 +150,11 @@ Handling special characters inside heredocs correctly.
 */
 
 
-//Funtion to change : set_logic_op()
-// set_groupid_control_logic
-
-//old logic
-// exemle "(" "ls" "-a" ">" "test.txt" "&&" "cat" "'\pwd'" ")" "||" "echo" "failed"
-//         -1    1    1  0       2      0     3       3   -2    0    4       4
-
-// new "(" ">" "test.txt"  "ls" "-a" ">" "test.txt" > test2.txt "&&" "cat" "'\pwd'" ")" "||" "echo" "failed"
-//     -1    1    1         1     1   1       1     1    1       0    2        2   -2    0    3       3
-
-//create a new array redirection array 
-// during the group up process if > the next is considered as the name of the file.
-//both going in redirection array.
-// search < kind of sign, in the 
-
-// <> redirection problem.
-// put the redirection info in a separate array and like and erase them from the tree.
-//put the redirection in the output as i imagined it word and keep the logic of the array. 
-//bash do the redirection as a last step before executing. 
 
 // * problem : to solve the problem different solution are possible.
 // writing wildcards, in the beginning of the wildcards list, to atribute has_wildcard.
 // to search in the first input where are the wildcards to mark them 
 // to developp wildcard later, after the group up. Bash does it here 
-
-
 
 //during the parsing, i should make fail for a specifica number ? 
 

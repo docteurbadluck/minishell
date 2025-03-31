@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 14:30:21 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/03/26 11:05:19 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/03/31 15:12:41 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,20 +45,42 @@ int	count_arguments_and_move(t_parsed_command *array, int *i)
 	return (count_arg);
 }
 
+//modify this function to put into a new array the 
+//redirection.
 void	allocate_and_fill_arguments(t_parsed_command *array
 	, int save_pos, int count_arg, int *i)
 {
 	int	y;
-
+	int z;
+	z = 0;
 	y = 0;
+	array[save_pos].redirection_array = ft_calloc(count_arg + 1, sizeof(char *));
+	if (!array[save_pos].redirection_array)
+		return ;
 	array[save_pos].arguments = ft_calloc(count_arg + 1, sizeof(char *));
 	if (!array[save_pos].arguments)
 		return ;
 	while (array[*i].text && array[save_pos].group_id == array[*i].group_id)
 	{
-		array[save_pos].arguments[y] = ft_strdup(array[*i].text);
-		(*i)++;
-		y++;
+		if (array[*i].logical_operator == 4)
+		{
+			array[save_pos].redirection_array[z] =  ft_strdup(array[*i].text);
+			(*i)++;
+			z++;
+			if (array[*i].text && array[save_pos].group_id == array[*i].group_id)
+			{
+				array[save_pos].redirection_array[z] =  ft_strdup(array[*i].text);
+				(*i)++;
+				z++;
+			}
+		}
+		else 
+		{
+			array[save_pos].arguments[y] = ft_strdup(array[*i].text);
+			(*i)++;
+			y++;
+		}
 	}
 	(*i)--;
+	array[save_pos].command = ft_strdup(array[save_pos].arguments[0]);
 }

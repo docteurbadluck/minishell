@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 14:30:21 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/03/25 16:25:57 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/03/31 15:16:14 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ void	give_value(t_parsed_command *array, int i)
 		array[i].group_id = -1;
 	if (array[i].logical_operator == -2)
 		array[i].group_id = -2;
+	if (array[i].logical_operator == 4)
+		array[i].group_id = -3;
 }
 
 int	control_border_logic(t_parsed_command *array)
@@ -59,11 +61,13 @@ void	free_new_array(t_parsed_command **new_array)
 {
 	int	i;
 	int	y;
+	int	z;
 
 	i = 0;
 	while ((*new_array)[i].text)
 	{
 		y = 0;
+		z = 0;
 		free((*new_array)[i].text);
 		free((*new_array)[i].command);
 		if ((*new_array)[i].arguments)
@@ -74,6 +78,15 @@ void	free_new_array(t_parsed_command **new_array)
 				y++;
 			}
 			free((*new_array)[i].arguments);
+		}
+		if ((*new_array)[i].redirection_array)
+		{
+			while ((*new_array)[i].redirection_array[z])
+			{
+				free((*new_array)[i].redirection_array[z]);
+				z++;
+			}
+			free((*new_array)[i].redirection_array);
 		}
 		i++;
 	}

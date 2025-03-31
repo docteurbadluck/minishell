@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:16:54 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/03/26 17:36:18 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/03/31 14:19:21 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ char	*assembling(char *variable, char **array_of_str);
 	// TO MAKE IT WORK I ADD IN THE ENVIRONEMENT $status_process
 	// so it's inportant to verify at the beggining that it is in the 
 	//environnement and to know we have to verify that they are not in ""
+
+	//LAST MODIF, change " to '  
 char	*variable_manager(char *input)
 {
 	int		i;
@@ -39,7 +41,7 @@ char	*variable_manager(char *input)
 		return (NULL);
 	while (input[i])
 	{
-		if (input[i] == '"')
+		if (input[i] == '\'')
 		{
 			flag++;
 			flag %= 2;
@@ -193,7 +195,7 @@ int main()
 	printf("\n");
 	free(test11);
 
-	char *test10 = variable_manager("abc\" $?  \" abcd $?");
+	char *test10 = variable_manager("abc ' $HOME  ' abcd $?");
 	printf(".%s.", test10);
 	printf("\n");
 	free(test10);

@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 14:30:21 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/03/25 16:19:22 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/03/31 14:10:26 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,8 @@ int		operator_check(t_parsed_command *array, int y);
 void	word_value(t_parsed_command *array, int y);
 int		parenthese_check(t_parsed_command *array, int y);
 
-//this function control if the opator logic are spaced and correct
-// also declare logic operator, which would be usefull late to create
-//the tree.
+//  declare logic_operator,
+//which would be usefull late to create the tree.
 int	set_logic_op(t_parsed_command *array)
 {
 	int	y;

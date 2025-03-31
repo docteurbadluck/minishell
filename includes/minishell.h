@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:41:20 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/03/28 11:55:02 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/03/31 10:51:17 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,13 @@
 #include <readline/history.h>
 
 typedef struct s_parsed_command {
-	char	*text;
-	int		group_id;
-	int		associativity;
+	char	*text;              // flexible text for helping me to create the tree 
+	int		group_id;           // group the argument together 
+	int		associativity;      // define the associativity
     char	*command;          // The command to be executed (e.g., "ls", "echo").
     char	**arguments;       // Array of arguments for the command (e.g., {"ls" "-l", "/home"}).
-    char	*input_file;       // File for input redirection (e.g., "input.txt").
+    char    **redirection_array; //array with all redirection in order ( ">" "text.txt" ">" "text2.txt" )
+    char	*input_file;       // File for input redirection (e.g., "input.txt").   // problem in case of several redirection 
     char	*output_file;      // File for output redirection (e.g., "output.txt").
     int		append_mode;        // Boolean flag for appending output (1 if ">>", 0 if ">").
     int		pipe_in;            // File descriptor for input pipe (used if part of a pipeline).
@@ -35,7 +36,7 @@ typedef struct s_parsed_command {
     char	*heredoc_delimiter;// Delimiter for heredoc input (used with "<<").
     char	**env_vars;        // Array of environment variables to expand (e.g., {"PATH", "HOME"}).
     int		exit_status;        // Exit status of the most recently executed command.
-    int		has_wildcards;      // Boolean flag indicating if wildcards are present in arguments.
+    int		has_wildcards;      // Boolean flag indicating if wildcards are present in arguments. > the function are not applied the same.
     int		logical_operator;   // Logical operator for command chaining (0 for none, 1 for "&&", 2 for "||").
 }	t_parsed_command;
 
@@ -60,6 +61,8 @@ char	*variable_manager(char *input);
 
 //	***B
 
+// problem echo abc > * write abc in every file 
+// so we need to use the has wildcards flag.
 char	*wildcard_manager(char *input);
 //	***Ba
 int		compte_name(void);
@@ -91,7 +94,6 @@ int 	control_border_logic(t_parsed_command *array);
 void	give_value(t_parsed_command *array, int i);
 void    free_array(t_parsed_command **array);
 void    free_new_array(t_parsed_command **new_array);
-
 
 //  G
 t_parsed_command	*group_up(t_parsed_command **array);
