@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 14:30:21 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/03/31 15:16:14 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/04/01 12:29:43 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ void	free_new_array(t_parsed_command **new_array)
 	int	i;
 	int	y;
 	int	z;
-
 	i = 0;
 	while ((*new_array)[i].text)
 	{

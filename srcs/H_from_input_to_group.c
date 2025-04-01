@@ -6,24 +6,21 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 10:23:59 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/03/31 15:29:07 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/03/31 16:05:29 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+//modifying for wildcards
 char	*developpe_input(char *input)
 {
-	char	*temp;
 	char	*new;
 
 	new = variable_manager(input);
-	temp = new;
-	new = wildcard_manager(new);
-	free(temp);
 	if (!new)
 	{
-		printf("error wildcard_manager");
+		printf("error variable manager");
 		return (NULL);
 	}
 	return (new);
@@ -68,5 +65,6 @@ t_parsed_command	*from_input_to_group(char *input)
 	if (!grouped_array)
 		return (NULL);
 	set_associativity(grouped_array);
+	//set_wildcard(grouped_array);
 	return (grouped_array);
 }

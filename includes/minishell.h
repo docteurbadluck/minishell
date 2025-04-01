@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:41:20 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/03/31 10:51:17 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/04/01 13:03:06 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct s_parsed_command {
     char	**env_vars;        // Array of environment variables to expand (e.g., {"PATH", "HOME"}).
     int		exit_status;        // Exit status of the most recently executed command.
     int		has_wildcards;      // Boolean flag indicating if wildcards are present in arguments. > the function are not applied the same.
+    char    **list_of_files;    //list of files referenced by the wildcard.
     int		logical_operator;   // Logical operator for command chaining (0 for none, 1 for "&&", 2 for "||").
 }	t_parsed_command;
 
@@ -47,6 +48,17 @@ typedef struct s_ast_node {
     struct s_ast_node *left;      // Left child node (used for binary operators)
     struct s_ast_node *right;     // Right child node (used for binary operators)
 } t_ast_node;
+
+typedef struct s_tracker
+{
+    char                **groupped_array_list_of_files;
+    char                ***groupped_array_argument;
+    char                *input;
+    char                *cp_input;
+    char                **list_of_matched_name;
+    int                 redirection;
+    int                 y;
+} t_tracker;
 
 
 //***AA
@@ -70,6 +82,11 @@ char	**name_array_generator(void);
 int		check_current_dir_input(char *input);
 int		matching_name(char *pattern, char *name);
 char	*assembling_wild(char *variable, char **array_of_str);
+
+//  ***Bd
+void free_wildcard_list(void *content);
+void modify_arg(t_tracker *ptr_tracker);
+
 
 //	***C
 int	count_word_valid_quote(const char *input);

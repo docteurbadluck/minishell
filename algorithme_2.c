@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 15:16:45 by docteurbadl       #+#    #+#             */
-/*   Updated: 2025/03/31 15:27:36 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/03/31 15:43:21 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,11 +150,11 @@ Handling special characters inside heredocs correctly.
 */
 
 
-
 // * problem : to solve the problem different solution are possible.
 // writing wildcards, in the beginning of the wildcards list, to atribute has_wildcard.
 // to search in the first input where are the wildcards to mark them 
 // to developp wildcard later, after the group up. Bash does it here 
+//Si aucun fichier ne correspond, bash garde *.c tel quel :
 
 //during the parsing, i should make fail for a specifica number ? 
 

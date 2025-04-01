@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 12:37:33 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/03/26 17:36:32 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/04/01 10:51:30 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ char	*wildcard_manager(char *input)
 	return (ft_strdup(input));
 }
 
+//modifying to handle empty
 char	*handle_wildcard_expansion(char *input, int i)
 {
 	char	**array_of_str;
@@ -55,6 +56,7 @@ char	*handle_wildcard_expansion(char *input, int i)
 		return (final_result);
 	}
 	free(return_input);
+
 	return (NULL);
 }
 
@@ -138,12 +140,11 @@ char	*wildcard_generator(char *input)
 int main()
 {
 	
-	char *new = wildcard_manager("a *.out asdf");
+	char *new = wildcard_manager("*b.out");
 	printf(".%s.\n\n", new);
 	free(new);
 
-	char *test1 = wildcard_manager("/home/tdeliot/Desktop/minishell_git/minishell.c/
-		*.out");
+	char *test1 = wildcard_manager("/home/tdeliot/Desktop/minishell_git/minishell.c/ *.out");
 	printf(".%s.\n\n", test1);
 	free(test1);
 
@@ -159,13 +160,13 @@ int main()
 	printf(".%s.\n\n", test4);
 	free(test4);
 
-	char *test5 = wildcard_manager("*out /home/tdeliot/Desktop/minishell_git/
-		minishell.c/ *.out *out");
+	char *test5 = wildcard_manager("*out /home/tdeliot/Desktop/minishell_git/minishell.c/ *.out *out");
 	printf(".%s.\n\n", test5);
 	free(test5);
 
 	char *test6 = wildcard_manager(" abcde \".*  \" *out");
 	printf(".%s.\n\n", test6);
 	free(test6);
+	
 	return 0;
 }*/
