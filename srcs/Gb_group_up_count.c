@@ -1,45 +1,46 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Fa_set_groupid_control_logic.c                     :+:      :+:    :+:   */
+/*   Gb_group_up_count.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 14:30:21 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/04/02 11:09:46 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/04/02 11:04:04 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	give_value(t_parsed_command *array, int i)
-{
-	array[i].group_id = 0;
-	if (array[i].logical_operator == -1)
-		array[i].group_id = -1;
-	if (array[i].logical_operator == -2)
-		array[i].group_id = -2;
-	if (array[i].logical_operator == 4)
-		array[i].group_id = -3;
-}
-
-int	control_border_logic(t_parsed_command *array)
+int	count_new_array(t_parsed_command *array)
 {
 	int	i;
-	int	y;
+	int	count;
 
 	i = 0;
-	y = 0;
-	while (array[i + 1].text)
-		i++;
-	while (array[i].group_id == -1 || array[i].group_id == -2)
-		i--;
-	while (array[y].group_id == -1 || array[y].group_id == -2)
-		y++;
-	if (array[y].group_id == 0 || array[i].group_id == 0)
+	count = 0;
+	while (array[i].text)
 	{
-		printf("error control logic\n");
-		return (-1);
+		if (array[i].command)
+			count++;
+		i++;
 	}
-	return (0);
+	return (count);
+}
+
+int	count_arguments_and_move(t_parsed_command *array, int *i)
+{
+	int	count_arg;
+	int	save_pos;
+
+	count_arg = 0;
+	save_pos = *i;
+	while (array[*i].text && array[save_pos].group_id
+		== array[*i].group_id)
+	{
+		count_arg++;
+		(*i)++;
+	}
+	*i = save_pos;
+	return (count_arg);
 }

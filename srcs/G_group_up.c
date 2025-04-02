@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 14:30:21 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/03/31 15:20:26 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/04/02 11:04:41 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,10 @@ t_parsed_command	*group_up(t_parsed_command **array)
 }
 
 //fixed we have two array : one for the argument one for the redirection. 
-//every redirection are store on the seconde one, the other string are store normally.
-// comand is defined at the end, it's a duplication of the first element of the arg array.
+//every redirection are store on the seconde one, the other string are 
+//store normally.
+// comand is defined at the end, it's a duplication of the first element
+// of the arg array.
 // free new array has been corrected to free the array also.
 void	set_up_arg(t_parsed_command *array)
 {

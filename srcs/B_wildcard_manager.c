@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 12:37:33 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/04/01 10:51:30 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/04/02 10:31:27 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ char	*handle_wildcard_expansion(char *input, int i)
 		return (final_result);
 	}
 	free(return_input);
-
 	return (NULL);
 }
 
@@ -144,7 +143,8 @@ int main()
 	printf(".%s.\n\n", new);
 	free(new);
 
-	char *test1 = wildcard_manager("/home/tdeliot/Desktop/minishell_git/minishell.c/ *.out");
+	char *test1 = wildcard_manager("/home/tdeliot/Desktop/
+	minishell_git/minishell.c/ *.out");
 	printf(".%s.\n\n", test1);
 	free(test1);
 
@@ -160,7 +160,8 @@ int main()
 	printf(".%s.\n\n", test4);
 	free(test4);
 
-	char *test5 = wildcard_manager("*out /home/tdeliot/Desktop/minishell_git/minishell.c/ *.out *out");
+	char *test5 = wildcard_manager("*out /home/tdeliot/Deskto
+	p/minishell_git/minishell.c/ *.out *out");
 	printf(".%s.\n\n", test5);
 	free(test5);
 

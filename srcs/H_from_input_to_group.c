@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 10:23:59 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/03/31 16:05:29 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/04/02 11:17:48 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,5 @@ t_parsed_command	*from_input_to_group(char *input)
 	if (!grouped_array)
 		return (NULL);
 	set_associativity(grouped_array);
-	//set_wildcard(grouped_array);
 	return (grouped_array);
 }

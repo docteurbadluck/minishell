@@ -6,81 +6,68 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 14:30:21 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/03/31 15:12:41 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/04/02 11:03:34 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-int	count_new_array(t_parsed_command *array)
-{
-	int	i;
-	int	count;
-
-	i = 0;
-	count = 0;
-	while (array[i].text)
-	{
-		if (array[i].command)
-			count++;
-		i++;
-	}
-	return (count);
-}
-
-int	count_arguments_and_move(t_parsed_command *array, int *i)
-{
-	int	count_arg;
-	int	save_pos;
-
-	count_arg = 0;
-	save_pos = *i;
-	while (array[*i].text && array[save_pos].group_id
-		== array[*i].group_id)
-	{
-		count_arg++;
-		(*i)++;
-	}
-	*i = save_pos;
-	return (count_arg);
-}
-
 //modify this function to put into a new array the 
 //redirection.
-void	allocate_and_fill_arguments(t_parsed_command *array
-	, int save_pos, int count_arg, int *i)
+
+void	allocate_argument_arrays(t_parsed_command *array,
+			int save_pos, int count_arg)
 {
-	int	y;
-	int z;
-	z = 0;
-	y = 0;
-	array[save_pos].redirection_array = ft_calloc(count_arg + 1, sizeof(char *));
+	array[save_pos].redirection_array
+		= ft_calloc(count_arg + 1, sizeof(char *));
 	if (!array[save_pos].redirection_array)
 		return ;
 	array[save_pos].arguments = ft_calloc(count_arg + 1, sizeof(char *));
 	if (!array[save_pos].arguments)
 		return ;
+}
+
+void	fill_redirections(t_parsed_command *array, int save_pos, int *i, int *z)
+{
+	array[save_pos].redirection_array[*z] = ft_strdup(array[*i].text);
+	(*i)++;
+	(*z)++;
+	if (array[*i].text && array[save_pos].group_id == array[*i].group_id)
+	{
+		array[save_pos].redirection_array[*z] = ft_strdup(array[*i].text);
+		(*i)++;
+		(*z)++;
+	}
+}
+
+void	fill_arguments(t_parsed_command *array, int save_pos, int *i, int *y)
+{
+	array[save_pos].arguments[*y] = ft_strdup(array[*i].text);
+	(*i)++;
+	(*y)++;
+}
+
+void	fill_arguments_and_redirections(t_parsed_command *array,
+			int save_pos, int *i)
+{
+	int	y;
+	int	z;
+
+	y = 0;
+	z = 0;
 	while (array[*i].text && array[save_pos].group_id == array[*i].group_id)
 	{
 		if (array[*i].logical_operator == 4)
-		{
-			array[save_pos].redirection_array[z] =  ft_strdup(array[*i].text);
-			(*i)++;
-			z++;
-			if (array[*i].text && array[save_pos].group_id == array[*i].group_id)
-			{
-				array[save_pos].redirection_array[z] =  ft_strdup(array[*i].text);
-				(*i)++;
-				z++;
-			}
-		}
-		else 
-		{
-			array[save_pos].arguments[y] = ft_strdup(array[*i].text);
-			(*i)++;
-			y++;
-		}
+			fill_redirections(array, save_pos, i, &z);
+		else
+			fill_arguments(array, save_pos, i, &y);
 	}
 	(*i)--;
 	array[save_pos].command = ft_strdup(array[save_pos].arguments[0]);
+}
+
+void	allocate_and_fill_arguments(t_parsed_command *array,
+			int save_pos, int count_arg, int *i)
+{
+	allocate_argument_arrays(array, save_pos, count_arg);
+	fill_arguments_and_redirections(array, save_pos, i);
 }

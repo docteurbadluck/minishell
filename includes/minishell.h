@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:41:20 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/04/01 13:03:06 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/04/02 11:16:42 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,13 @@ typedef struct s_tracker
 {
     char                **groupped_array_list_of_files;
     char                ***groupped_array_argument;
-    char                *input;
+    char                **temporaire_array;
+    char                **input;
     char                *cp_input;
     char                **list_of_matched_name;
     int                 redirection;
     int                 y;
+    int                 i;
 } t_tracker;
 
 
@@ -83,9 +85,15 @@ int		check_current_dir_input(char *input);
 int		matching_name(char *pattern, char *name);
 char	*assembling_wild(char *variable, char **array_of_str);
 
+//  ***Bc
+void	find_wildcard_in_arg(t_parsed_command *grouped_array, int i, t_list **list_of_tracker);
+int	    set_wildcard(t_parsed_command *grouped_array);
+
 //  ***Bd
-void free_wildcard_list(void *content);
 void modify_arg(t_tracker *ptr_tracker);
+//  ***Be
+void free_wildcard_list(void *content);
+void	free_str_list(void *content);
 
 
 //	***C
@@ -109,17 +117,18 @@ int	set_groupid_control_logic(t_parsed_command *array);
 //  ***Fa
 int 	control_border_logic(t_parsed_command *array);
 void	give_value(t_parsed_command *array, int i);
-void    free_array(t_parsed_command **array);
-void    free_new_array(t_parsed_command **new_array);
 
 //  G
 t_parsed_command	*group_up(t_parsed_command **array);
 
 //  Ga***
-int	count_new_array(t_parsed_command *array);
-int	count_arguments_and_move(t_parsed_command *array, int *i);
+
 void	allocate_and_fill_arguments(t_parsed_command *array
 	, int save_pos, int count_arg, int *i);
+
+// ***Gb
+int	count_new_array(t_parsed_command *array);
+int	count_arguments_and_move(t_parsed_command *array, int *i);
 
 //  H
 t_parsed_command	*from_input_to_group(char *input);
@@ -141,6 +150,10 @@ t_ast_node  *from_text_to_tree(char *str, t_parsed_command **new_array);
 void            free_tree(t_ast_node *node);
 void            print_tree(t_ast_node *node, int depth);
 
+
+//  ***X
+void    free_array(t_parsed_command **array);
+void    free_new_array(t_parsed_command **new_array);
 
 void print_ast_balanced(t_ast_node *root) ;
 

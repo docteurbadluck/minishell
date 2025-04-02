@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 14:30:21 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/03/31 14:53:16 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/04/02 10:33:31 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,8 @@ void	attribute_groupid(t_parsed_command *array);
 int		control_logic(t_parsed_command *array);
 int		control_parentheses(t_parsed_command *array);
 
-
-//FIXED  now : < are part of the group id : txt > test3.txt ls  || >  text4.txt def
-										//	 1  1   1        1   0  2    2       2 
+//FIXED  now : < are part of the group id : txt > test3.txt ls  || >  text
+										//	 1  1   1        1   0  2   2
 // also : > || is not a mistake anymore, > text ls is not a mistake anymore
 int	set_groupid_control_logic(t_parsed_command *array)
 {
@@ -39,7 +38,8 @@ void	attribute_groupid(t_parsed_command *array)
 	{
 		if ((array[i].logical_operator == 0 || array[i].logical_operator == 4))
 		{
-			while ((array[i].logical_operator == 0 || array[i].logical_operator == 4)  && array[i].text)
+			while ((array[i].logical_operator == 0
+					|| array[i].logical_operator == 4) && array[i].text)
 			{
 				array[i].group_id = compteur;
 				i++;
@@ -105,12 +105,12 @@ int	control_parentheses(t_parsed_command *array)
 	return (-1);
 }
 
-
 /*
 int main()
 {
 	char *temp;
-	char *str = "( abc > text.txt > test2. txt > test3.txt ls  || && >  text4.txt def) ";
+	char *str = "( abc > text.txt > test2. txt > test3.txt l
+	s  || && >  text4.txt def) ";
 	char *new;
 	t_parsed_command *array;
 	int i;
@@ -141,7 +141,8 @@ int main()
 	i = 0;
 	while (array[i].text)
 	{
-		printf("text : %s, groupid : %d logical : %d\n",array[i].text, array[i].group_id, array[i].logical_operator);
+		printf("text : %s, groupid : %d logical : %d\n",array[i].t
+		ext, array[i].group_id, array[i].logical_operator);
 		i++;
 	}
 	free_array(&array);
