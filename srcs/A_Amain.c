@@ -6,11 +6,12 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 12:42:07 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/04/02 11:33:40 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/04/02 16:16:19 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
 
 int	main(void)
 {
@@ -18,7 +19,7 @@ int	main(void)
 	t_ast_node			*tree;
 
 	new_array = NULL;
-	tree = from_text_to_tree(" (A  a.* a.*  > * || ls)", &new_array);
+	tree = from_text_to_tree(" ( ls  )", &new_array);
 	if (!tree)
 		return (1);
 	// Execution or testing
