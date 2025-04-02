@@ -6,14 +6,14 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 10:23:59 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/03/31 14:21:24 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/04/02 17:44:40 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 // error logic should include the case where the EOF is folowed by text and not a comand. 
-
+/*
 int	create_heredoc_files(int nbr_of_heredoc, t_parsed_command *array_of_cmd)
 {
 	int		i;
@@ -63,14 +63,14 @@ int	create_heredoc_files(int nbr_of_heredoc, t_parsed_command *array_of_cmd)
 				//write ' at the end 
 			}
 		 }
-/*
+
 		 y = 0;
 		 while (EOFtext[y])
 		 {
 			printf("%s\n", EOFtext[y]);
 			y++;
 		 }
-*/
+
 		 
 		 return 0;
 }
@@ -147,4 +147,4 @@ int main()
 	read_input();
 	return 0;
 	
-}
+}*/
