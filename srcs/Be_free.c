@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 11:40:57 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/04/02 10:44:30 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/04/02 18:05:39 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,20 @@ void	free_wildcard_list(void *content)
 void	free_str_list(void *content)
 {
 	free(content);
+}
+
+void	copy_before_wildcard(t_tracker *ptr_tracker,
+	t_list **list_of_str, int *i)
+{
+	char	*temp;
+
+	while ((*ptr_tracker->groupped_array_argument)[*i]
+	&& ft_strncmp(ptr_tracker->cp_input
+		, (*ptr_tracker->groupped_array_argument)[*i]
+		, ft_strlen(ptr_tracker->cp_input)))
+	{
+		temp = ft_strdup((*ptr_tracker->groupped_array_argument)[*i]);
+		ft_lstadd_back(list_of_str, ft_lstnew(temp));
+		(*i)++;
+	}
 }

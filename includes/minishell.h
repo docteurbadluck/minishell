@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:41:20 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/04/02 11:16:42 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/04/02 18:03:18 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,9 @@ void modify_arg(t_tracker *ptr_tracker);
 //  ***Be
 void free_wildcard_list(void *content);
 void	free_str_list(void *content);
+void	copy_before_wildcard(t_tracker *ptr_tracker,
+	t_list **list_of_str, int *i);
+
 
 
 //	***C

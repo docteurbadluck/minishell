@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 10:23:59 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/04/02 17:44:02 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/04/02 18:08:06 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	free_tree(t_ast_node *node)
 	free_tree(node->right);
 	free(node);
 }
-
+/*
 void	print_tree(t_ast_node *node, int depth)
 {
 	int	i;
@@ -76,3 +76,4 @@ void	print_tree(t_ast_node *node, int depth)
 	print_tree(node->left, depth + 1);
 	print_tree(node->right, depth + 1);
 }
+*/
