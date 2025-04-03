@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 10:23:59 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/03/27 10:16:42 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/04/03 14:43:35 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,4 +121,29 @@ int main()
 	free_new_array(&new_array);
 	return (0);
 }
+*/
+/*
+ls >a >b >>c empty a and b 
+
+ls >>a >>b >>c write ls in each of them 
+
+tdeliot@c4c4c4:~/Desktop/usefull_but/test$ ls >>a >b >c
+tdeliot@c4c4c4:~/Desktop/usefull_but/test$ ls
+a  b  c  minishell
+tdeliot@c4c4c4:~/Desktop/usefull_but/test$ cat a
+tdeliot@c4c4c4:~/Desktop/usefull_but/test$ cat b
+tdeliot@c4c4c4:~/Desktop/usefull_but/test$ cat c
+a
+b
+c
+minishell
+ls >>a >b >c
+tdeliot@c4c4c4:~/Desktop/usefull_but/test$ cat a
+tdeliot@c4c4c4:~/Desktop/usefull_but/test$ cat b
+tdeliot@c4c4c4:~/Desktop/usefull_but/test$ cat c
+a
+b
+c
+minishell
+
 */

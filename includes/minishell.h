@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:41:20 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/04/03 10:43:14 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/04/03 15:39:46 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,14 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
+
+typedef struct s_infile
+{
+    char    *filename;
+    int     mode;   // 0 -> normal  1 -> << heredoc ( should never hapen but i did'nt coded heredoc yet) 
+} t_iofile;
+
+
 typedef struct s_parsed_command {
 	char	*text;              // flexible text for helping me to create the tree 
 	int		group_id;           // group the argument together 
@@ -28,8 +36,8 @@ typedef struct s_parsed_command {
     char	*command;          // The command to be executed (e.g., "ls", "echo").
     char	**arguments;       // Array of arguments for the command (e.g., {"ls" "-l", "/home"}).
     char    **redirection_array; //array with all redirection in order ( ">" "text.txt" ">" "text2.txt" )
-    char	*input_file;       // File for input redirection (e.g., "input.txt").   // problem in case of several redirection 
-    char	*output_file;      // File for output redirection (e.g., "output.txt").
+    t_iofile	*input_file;       // array with the names of the input file in order mode determine if it;s in append mode or not.
+    t_iofile	*output_file;      // File for output redirection (e.g., "output.txt").
     int		append_mode;        // Boolean flag for appending output (1 if ">>", 0 if ">").
     int		pipe_in;            // File descriptor for input pipe (used if part of a pipeline).
     int		pipe_out;           // File descriptor for output pipe (used if part of a pipeline).
@@ -61,10 +69,6 @@ typedef struct s_tracker
     int                 y;
     int                 i;
 } t_tracker;
-
-
-//***AA
-
 
 //	***A
 //$? est remplacer par STATUS_LAST_PROCESS
