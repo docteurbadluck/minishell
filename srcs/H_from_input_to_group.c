@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 10:23:59 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/04/03 10:38:47 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/04/03 11:18:30 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,12 @@ t_parsed_command	*from_input_to_group(char *input)
 		free_new_array(&grouped_array);
 		return (NULL);
 	}
-	set_outfiles(grouped_array);
+	if (set_outfiles(grouped_array))
+	{
+		printf("error redirection");
+		free_new_array(&grouped_array);
+		return (NULL);
+	}
 	
 	return (grouped_array);
 }

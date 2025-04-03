@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 14:30:21 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/04/02 15:34:38 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/04/03 11:40:25 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ t_parsed_command	*tokenise(char *input)
 	nbr_word = count_word_valid_quote(input);
 	if (nbr_word == -1 || nbr_word == 0)
 	{
-		printf("nbr_word error");
+		printf("nbr_word error\n");
 		return (NULL);
 	}
 	array = ft_calloc(nbr_word + 1, sizeof(t_parsed_command));
@@ -76,7 +76,8 @@ void	split_words(char *input, int *i, int *y, t_parsed_command *array)
 	if ((input[*i] != '"') && (input[*i] != '(') 
 		&& (input[*i] != ')') && (input[*i] != ' ')
 		&& (input[*i] != '|') && (input[*i] != '&')
-		&& (input[*i] != '>') && (input[*i] != '<') && input[*i])
+		&& (input[*i] != '>') && (input[*i] != '<')
+		&& (input[*i] != '\'') && input[*i]) // modif
 	{
 		save = *i;
 		count_letter = 1;
@@ -135,7 +136,7 @@ int main()
 	t_parsed_command *ptr3;
 	  i = 0;
 	
-	ptr3 = tokenise("adf a asdf sadf sd dsf asdfa asdf asdf asd fasdf  ");
+	ptr3 = tokenise(" ls > \"\" ");
 	if (!ptr3)
 	{
 		printf("ptr3 = NULL\n");
