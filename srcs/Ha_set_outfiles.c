@@ -1,30 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   A_Amain.c                                          :+:      :+:    :+:   */
+/*   Ha_set_outfiles.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/22 12:42:07 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/04/03 10:26:44 by tdeliot          ###   ########.fr       */
+/*   Created: 2025/03/26 10:23:59 by tdeliot           #+#    #+#             */
+/*   Updated: 2025/04/03 10:42:52 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	main(void)
+int set_outfiles(t_parsed_command *grouped_array)
 {
-	t_parsed_command	*new_array;
-	t_ast_node			*tree;
+	int	i;
+	int	y;
 
-	new_array = NULL;
-	tree = from_text_to_tree("ls > \"\"", &new_array);
-	if (!tree)
+	i = 0;
+	while (grouped_array[i].command)
 	{
-		return (1);
+		while (grouped_array[i].redirection_array[y])
+		{
+			printf("%s, ", grouped_array[i].redirection_array[y]);
+		}
+		
 	}
-	print_tree(tree, 0);
-	free_tree(tree);
-	free_new_array(&new_array);
-	return (0);
 }

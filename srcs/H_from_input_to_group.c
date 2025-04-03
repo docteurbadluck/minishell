@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 10:23:59 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/04/02 17:22:05 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/04/03 10:38:47 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,7 @@ t_parsed_command	*from_new_to_group_up(char *developped_input)
 	new_array = group_up(&array);
 	if (new_array == NULL)
 	{
-		if (array)
-			free_array(&array);
+		free_array(&array);
 		return (NULL);
 	}
 	return (new_array);
@@ -71,5 +70,7 @@ t_parsed_command	*from_input_to_group(char *input)
 		free_new_array(&grouped_array);
 		return (NULL);
 	}
+	set_outfiles(grouped_array);
+	
 	return (grouped_array);
 }

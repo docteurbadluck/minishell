@@ -6,21 +6,40 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 14:30:21 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/04/02 11:04:41 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/04/03 10:13:49 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	set_up_arg(t_parsed_command *array);
+//void	set_up_arg(t_parsed_command *array);
 void	create_new_array(t_parsed_command *array, t_parsed_command *new);
+int	set_up_arg(t_parsed_command *array);
+
+/*
+t_parsed_command	*group_up(t_parsed_command **array)
+{
+	t_parsed_command	*new;
+	int					count;
+
+	ifset_up_arg(*array);
+	count = count_new_array(*array);
+	new = ft_calloc(count + 1, sizeof(t_parsed_command));
+	if (!new)
+		return (NULL);
+	create_new_array(*array, new);
+	return (new);
+}*/
 
 t_parsed_command	*group_up(t_parsed_command **array)
 {
 	t_parsed_command	*new;
 	int					count;
 
-	set_up_arg(*array);
+	if (set_up_arg(*array))
+	{
+		return NULL;
+	}
 	count = count_new_array(*array);
 	new = ft_calloc(count + 1, sizeof(t_parsed_command));
 	if (!new)
@@ -35,6 +54,7 @@ t_parsed_command	*group_up(t_parsed_command **array)
 // comand is defined at the end, it's a duplication of the first element
 // of the arg array.
 // free new array has been corrected to free the array also.
+/*
 void	set_up_arg(t_parsed_command *array)
 {
 	int	i;
@@ -59,6 +79,34 @@ void	set_up_arg(t_parsed_command *array)
 			break ;
 		i++;
 	}
+}*/
+
+int	set_up_arg(t_parsed_command *array)
+{
+	int	i;
+	int	count_arg;
+	int	save_pos;
+
+	i = 0;
+	while (array[i].text)
+	{
+		count_arg = 0;
+		if (array[i].group_id > 0)
+		{
+			save_pos = i;
+			count_arg = count_arguments_and_move(array, &i);
+			if (!count_arg)
+				continue ;
+			if (allocate_and_fill_arguments(array, save_pos, count_arg, &i))
+				return 1;
+		}
+		if (array[i].group_id <= 0)
+			array[i].command = ft_strdup(array[i].text); 
+		if (!array[i].text)
+			break ;
+		i++;
+	}
+	return 0;
 }
 
 void	create_new_array(t_parsed_command *array, t_parsed_command *new)

@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:41:20 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/04/03 09:47:13 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/04/03 10:43:14 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,9 +127,12 @@ void	give_value(t_parsed_command *array, int i);
 t_parsed_command	*group_up(t_parsed_command **array);
 
 //  Ga***
-
+/*
 void	allocate_and_fill_arguments(t_parsed_command *array
-	, int save_pos, int count_arg, int *i);
+	, int save_pos, int count_arg, int *i);*/
+
+int	allocate_and_fill_arguments(t_parsed_command *array
+        , int save_pos, int count_arg, int *i);
 
 // ***Gb
 int	count_new_array(t_parsed_command *array);
@@ -137,6 +140,8 @@ int	count_arguments_and_move(t_parsed_command *array, int *i);
 
 //  H
 t_parsed_command	*from_input_to_group(char *input);
+
+int set_outfiles(t_parsed_command *grouped_array);
 
 //  Ia***
 void	set_associativity(t_parsed_command	*new_array);

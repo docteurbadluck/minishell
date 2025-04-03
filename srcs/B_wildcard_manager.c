@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 12:37:33 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/04/03 09:48:06 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/04/03 09:58:00 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,27 +84,6 @@ char	**cut_input_wildcard(char *input, int i)
 	array_of_str[2] = ft_strdup(&input[i]);
 	return (array_of_str);
 }
-/*
-char	*get_filtered_wildcard_matches(char *pattern, char **names)
-{
-	char	*output_wild;
-	int		i;
-
-	output_wild = ft_strdup("\0");
-	i = 0;
-	while (names[i])
-	{
-		if (matching_name(pattern, names[i]) == 0)
-		{
-			output_wild = ft_strjoin_2(output_wild, names[i]);
-			output_wild = ft_strjoin_2(output_wild, " ");
-		}
-		i++;
-	}
-	if (output_wild && ft_strlen(output_wild) > 0)
-		output_wild[ft_strlen(output_wild) - 1] = '\0';
-	return (output_wild);
-}*/
 
 char	*get_filtered_wildcard_matches(char *pattern, char **names)
 {
