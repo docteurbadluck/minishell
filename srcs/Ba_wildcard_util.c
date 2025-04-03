@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 11:40:57 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/03/24 15:24:50 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/04/03 09:45:55 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ int	check_current_dir_input(char *input)
 		return (0);
 }
 
+/*
 int	matching_name(char *pattern, char *name)
 {
 	if (*pattern == '\0' && *name == '\0')
@@ -87,6 +88,28 @@ int	matching_name(char *pattern, char *name)
 	}
 	if (*pattern == *name)
 		return (matching_name(pattern + 1, name + 1));
+	return (1);
+}
+*/
+
+int	matching_name(char *pattern, char *name, int first_call)
+{
+	if (first_call && *name == '.') // Ignore files starting with punctuation
+		return (1);
+	if (*pattern == '\0' && *name == '\0')
+		return (0);
+	if (*pattern == '\0')
+		return (1);
+	if (*pattern == '*')
+	{
+		if (matching_name(pattern + 1, name, 0) == 0)
+			return (0);
+		if (*name != '\0' && matching_name(pattern, name + 1, 0) == 0)
+			return (0);
+		return (1);
+	}
+	if (*pattern == *name)
+		return (matching_name(pattern + 1, name + 1, 0));
 	return (1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:41:20 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/04/02 18:03:18 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/04/03 09:47:13 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,9 @@ char	*wildcard_manager(char *input);
 int		compte_name(void);
 char	**name_array_generator(void);
 int		check_current_dir_input(char *input);
-int		matching_name(char *pattern, char *name);
+//int		matching_name(char *pattern, char *name);
+int	matching_name(char *pattern, char *name, int first_call);
+
 char	*assembling_wild(char *variable, char **array_of_str);
 
 //  ***Bc
