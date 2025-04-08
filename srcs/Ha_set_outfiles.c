@@ -6,72 +6,88 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 10:23:59 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/04/08 11:10:33 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/04/08 11:44:08 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	set_outfiles(t_parsed_command	*grouped_array)
+static void	initialize_io_structs(t_parsed_command *cmd)
 {
-	int		i, y, x, z;
-	int		flag = 0;
-	t_iofile	*infiles;
-	t_iofile	*outfiles;
+	cmd->input_file = ft_calloc(1, sizeof(t_iofile));
+	cmd->output_file = ft_calloc(1, sizeof(t_iofile));
+}
 
-	infiles = NULL;
-	outfiles = NULL;
+static void	allocate_io_arrays(t_iofile **in, t_iofile **out, int count)
+{
+	*in = ft_calloc(count + 1, sizeof(t_iofile));
+	*out = ft_calloc(count + 1, sizeof(t_iofile));
+}
+
+static void	handle_redirection_entry(char *entry,
+		int flag, t_redir_state *st)
+{
+	if (flag == 2 || flag == 4)
+	{
+		st->infiles[st->z].filename = process_redirection_filename(entry);
+		st->infiles[st->z].mode = flag;
+		st->z++;
+	}
+	else if (flag == 1 || flag == 3)
+	{
+		st->outfiles[st->x].filename = process_redirection_filename(entry);
+		st->outfiles[st->x].mode = flag;
+		st->x++;
+	}
+}
+
+static void	process_redirections(char **redir_array, t_iofile *infiles,
+	t_iofile *outfiles)
+{
+	int				y;
+	int				flag;
+	t_redir_state	state;
+
+	y = 0;
+	flag = 0;
+	state.infiles = infiles;
+	state.outfiles = outfiles;
+	state.x = 0;
+	state.z = 0;
+	while (redir_array[y])
+	{
+		if (!control_operator(redir_array[y]))
+			flag = which_symbole(redir_array[y]);
+		else
+			handle_redirection_entry(redir_array[y], flag, &state);
+		y++;
+	}
+}
+
+int	set_outfiles(t_parsed_command *grouped_array)
+{
+	int			i;
+	int			file_count;
+	t_iofile	*in;
+	t_iofile	*out;
+
+	i = 0;
 	if (control_redirection_logique(grouped_array))
 		return (1);
-	i = 0;
 	while (grouped_array[i].command)
 	{
-		y = 0;
-		z = 0;
-		x = 0;
-		if (!grouped_array[i].redirection_array)
+		if (!grouped_array[i].redirection_array
+			|| (count_files_names(grouped_array[i].redirection_array)) == 0)
 		{
-			grouped_array[i].input_file = ft_calloc(1, sizeof (t_iofile));
-			grouped_array[i].output_file = ft_calloc(1, sizeof (t_iofile));
+			initialize_io_structs(&grouped_array[i]);
 			i++;
-			continue;
+			continue ;
 		}
-		int file_count = count_files_names(grouped_array[i].redirection_array);
-		if (file_count == 0)
-		{
-			grouped_array[i].input_file = ft_calloc(1, sizeof (t_iofile));
-			grouped_array[i].output_file = ft_calloc(1, sizeof (t_iofile));
-			i++;
-			continue;
-		}
-		infiles = ft_calloc(file_count + 1, sizeof (t_iofile));
-		outfiles = ft_calloc(file_count + 1, sizeof (t_iofile));
-		while (grouped_array[i].redirection_array[y])
-		{
-			if (!control_operator(grouped_array[i].redirection_array[y])) 
-			{
-				flag = which_symbole(grouped_array[i].redirection_array[y]);
-			}
-			else 
-			{
-				
-				if (flag == 2 || flag == 4)
-				{
-					infiles[z].filename = process_redirection_filename(grouped_array[i].redirection_array[y]);
-					infiles[z].mode = flag;
-					z++;
-				}
-				else if (flag == 1 || flag == 3)
-				{
-					outfiles[x].filename = process_redirection_filename(grouped_array[i].redirection_array[y]);
-					outfiles[x].mode = flag;
-					x++;
-				}
-			}
-			y++;
-		}
-		grouped_array[i].input_file = infiles;
-		grouped_array[i].output_file = outfiles;
+		file_count = count_files_names(grouped_array[i].redirection_array);
+		allocate_io_arrays(&in, &out, file_count);
+		process_redirections(grouped_array[i].redirection_array, in, out);
+		grouped_array[i].input_file = in;
+		grouped_array[i].output_file = out;
 		i++;
 	}
 	return (0);
