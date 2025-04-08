@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 14:30:21 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/04/03 11:40:25 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/04/08 10:23:56 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	split_words(char *input, int *i, int *y, t_parsed_command *array)
 		&& (input[*i] != ')') && (input[*i] != ' ')
 		&& (input[*i] != '|') && (input[*i] != '&')
 		&& (input[*i] != '>') && (input[*i] != '<')
-		&& (input[*i] != '\'') && input[*i]) // modif
+		&& (input[*i] != '\'') && input[*i])
 	{
 		save = *i;
 		count_letter = 1;

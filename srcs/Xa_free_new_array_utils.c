@@ -1,30 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   A_Amain.c                                          :+:      :+:    :+:   */
+/*   Xa_free_new_array_utils.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/22 12:42:07 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/04/08 10:22:15 by tdeliot          ###   ########.fr       */
+/*   Created: 2025/03/21 14:30:21 by tdeliot           #+#    #+#             */
+/*   Updated: 2025/04/08 10:31:07 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	main(void)
+void	free_iofiles(t_parsed_command *command)
 {
-	t_parsed_command	*new_array;
-	t_ast_node			*tree;
+	int	i;
 
-	new_array = NULL;
-	tree = from_text_to_tree("  ls * > \"abc\" > *.out || ls  ", &new_array);
-	if (!tree)
+	if (command->input_file)
 	{
-		return (1);
+		i = 0;
+		while (command->input_file[i].filename)
+		{
+			free(command->input_file[i].filename);
+			i++;
+		}
+		free(command->input_file);
+		command->input_file = NULL;
 	}
-	print_tree(tree, 0);
-	free_tree(tree);
-	free_new_array(&new_array);
-	return (0);
+	if (command->output_file)
+	{
+		i = 0;
+		while (command->output_file[i].filename)
+		{
+			free(command->output_file[i].filename);
+			i++;
+		}
+		free(command->output_file);
+		command->output_file = NULL;
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 12:37:33 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/04/03 09:58:00 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/04/08 10:23:37 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,6 @@ char	*get_filtered_wildcard_matches(char *pattern, char **names)
 		output_wild[ft_strlen(output_wild) - 1] = '\0';
 	return (output_wild);
 }
-
 
 char	*wildcard_generator(char *input)
 {

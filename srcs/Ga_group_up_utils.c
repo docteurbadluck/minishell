@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 14:30:21 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/04/03 10:25:48 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/04/08 10:29:20 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,13 +83,12 @@ int	fill_arguments_and_redirections(t_parsed_command *array,
 			fill_arguments(array, save_pos, i, &y);
 	}
 	(*i)--;
-	if (array[save_pos].arguments[0]) // modif
+	if (array[save_pos].arguments[0])
 	{
 		array[save_pos].command = ft_strdup(array[save_pos].arguments[0]);
-		return 0; 
+		return (0);
 	}
-
-	return 1;
+	return (1);
 }
 /*
 void	allocate_and_fill_arguments(t_parsed_command *array,
@@ -102,8 +101,9 @@ void	allocate_and_fill_arguments(t_parsed_command *array,
 int	allocate_and_fill_arguments(t_parsed_command *array,
 	int save_pos, int count_arg, int *i)
 {
-	int z = 0; 
-	
+	int	z;
+
+	z = 0;
 	allocate_argument_arrays(array, save_pos, count_arg);
 	if (fill_arguments_and_redirections(array, save_pos, i))
 	{
@@ -114,7 +114,6 @@ int	allocate_and_fill_arguments(t_parsed_command *array,
 		}
 		z = 0;
 		free(array[save_pos].redirection_array);
-
 		while (array[save_pos].arguments[z])
 		{
 			free(array[save_pos].arguments[z]);
@@ -122,7 +121,7 @@ int	allocate_and_fill_arguments(t_parsed_command *array,
 		}
 		free(array[save_pos].arguments);
 		printf("fill argument and redirections problem");
-		return 1;
+		return (1);
 	}
-	return 0;
+	return (0);
 }

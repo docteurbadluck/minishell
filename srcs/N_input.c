@@ -6,13 +6,13 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 10:23:59 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/04/02 17:44:40 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/04/08 10:30:09 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-// error logic should include the case where the EOF is folowed by text and not a comand. 
+// error logic should include the case where the EOF is folowed by t
 /*
 int	create_heredoc_files(int nbr_of_heredoc, t_parsed_command *array_of_cmd)
 {
@@ -133,7 +133,7 @@ int	read_input(void)
 				// create temporary file temp, .txt if 'EOF' '...' else "..."
 				// readline until EOF or SIGNAL
 				// transform the string : 
-				// transform << into < temp1.txt   \\ later unlink the temporary file.
+				// transform << into < temp1.txt   \\ later unlink 
 		}
 		
 		free(input);

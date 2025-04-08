@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 14:30:21 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/04/03 16:27:10 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/04/08 10:30:57 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,40 +54,6 @@ void	free_redirections(char **redirection_array)
 	}
 	free(redirection_array);
 }
-
-void	free_iofiles(t_parsed_command *command)
-{
-	int	i;
-
-	if (!command)
-		return;
-
-	if (command->input_file)
-	{
-		i = 0;
-		while (command->input_file[i].filename)
-		{
-			free(command->input_file[i].filename);
-			i++;
-		}
-		free(command->input_file);
-		command->input_file = NULL;
-	}
-
-	if (command->output_file)
-	{
-		i = 0;
-		while (command->output_file[i].filename)
-		{
-			free(command->output_file[i].filename);
-			i++;
-		}
-		free(command->output_file);
-		command->output_file = NULL;
-	}
-
-}
-
 
 void	free_parsed_command(t_parsed_command *command)
 {

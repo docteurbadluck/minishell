@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:41:20 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/04/03 15:39:46 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/04/08 10:34:34 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,14 +127,10 @@ int	set_groupid_control_logic(t_parsed_command *array);
 int 	control_border_logic(t_parsed_command *array);
 void	give_value(t_parsed_command *array, int i);
 
-//  G
+//  ***G
 t_parsed_command	*group_up(t_parsed_command **array);
 
-//  Ga***
-/*
-void	allocate_and_fill_arguments(t_parsed_command *array
-	, int save_pos, int count_arg, int *i);*/
-
+//  ***Ga
 int	allocate_and_fill_arguments(t_parsed_command *array
         , int save_pos, int count_arg, int *i);
 
@@ -142,32 +138,38 @@ int	allocate_and_fill_arguments(t_parsed_command *array
 int	count_new_array(t_parsed_command *array);
 int	count_arguments_and_move(t_parsed_command *array, int *i);
 
-//  H
+//  ***H
 t_parsed_command	*from_input_to_group(char *input);
 
+//  ***Ha
 int set_outfiles(t_parsed_command *grouped_array);
 
-//  Ia***
+//  ***I
+t_list *from_group_to_polish_reverse(t_parsed_command *new_array);
+
+//  ***Ia
 void	set_associativity(t_parsed_command	*new_array);
 int	    check_priority(t_parsed_command *new_array, int i, t_list *operator_stack);
 void	send_element(t_list **operator_stack, t_list **output_list);
 void    print_list(t_list *output_list);
 void    free_list(t_list *output_list);
 
-
-//  I***
-t_list *from_group_to_polish_reverse(t_parsed_command *new_array);
-//  J***
+//  ***L
 t_ast_node	*from_polish_to_tree(t_list *output_list);
-//  K***
+//  ***K
 t_ast_node  *from_text_to_tree(char *str, t_parsed_command **new_array);
 void            free_tree(t_ast_node *node);
-void            print_tree(t_ast_node *node, int depth);
 
+//  ***L
+void            print_tree(t_ast_node *node, int depth);
 
 //  ***X
 void    free_array(t_parsed_command **array);
 void    free_new_array(t_parsed_command **new_array);
+
+//  ***Xa
+void	free_iofiles(t_parsed_command *command);
+
 
 void print_ast_balanced(t_ast_node *root) ;
 

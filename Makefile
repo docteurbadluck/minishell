@@ -12,7 +12,8 @@ SRC = srcs/A_variable_manager.c  srcs/A_Amain.c srcs/B_wildcard_manager.c srcs/B
 	srcs/F_set_groupid_control_logic.c srcs/Fa_set_groupid_control_logic.c srcs/G_group_up.c srcs/Ga_group_up_utils.c \
 	srcs/Gb_group_up_count.c srcs/H_from_input_to_group.c srcs/Ha_set_outfiles.c \
 	srcs/I_from_group_to_polish_reverse.c srcs/Ia_to_polish_reverse_utils.c \
-	srcs/J_from_polish_to_tree.c srcs/K_from_text_to_tree.c srcs/L_print_tree.c srcs/X_free_new_array.c
+	srcs/J_from_polish_to_tree.c srcs/K_from_text_to_tree.c srcs/L_print_tree.c srcs/X_free_new_array.c \
+	srcs/Xa_free_new_array_utils.c
 
 HEADERS = includes/minishell.h
 BUILD_DIR = build
