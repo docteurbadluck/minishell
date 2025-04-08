@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:41:20 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/04/08 11:58:19 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/04/08 13:02:16 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ typedef struct s_infile
 {
 	char	*filename;
 	int		mode;
+	int		quote_heredoc;
 }	t_iofile;
 
 typedef struct s_parsed_command {

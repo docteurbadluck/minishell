@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 10:23:59 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/04/08 11:44:08 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/04/08 13:35:39 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ static void	handle_redirection_entry(char *entry,
 	{
 		st->infiles[st->z].filename = process_redirection_filename(entry);
 		st->infiles[st->z].mode = flag;
+		if (flag == 4 && (ft_strchr(entry, '\'') || ft_strchr(entry, '"')))
+			st->infiles[st->z].quote_heredoc = 1;
 		st->z++;
 	}
 	else if (flag == 1 || flag == 3)

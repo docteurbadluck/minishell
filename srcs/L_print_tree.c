@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 10:23:59 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/04/08 11:07:49 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/04/08 13:30:16 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ void	print_iofiles(t_parsed_command *command)
 	while (command->input_file[i].filename)
 	{
 		printf("%s ", command->input_file[i].filename);
+		if (command->input_file[i].quote_heredoc)
+			printf(" heredoc quote %d ", command->input_file[i].quote_heredoc);
 		i++;
 	}
 	if (command->output_file[0].filename)
