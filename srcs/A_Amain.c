@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 12:42:07 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/04/08 10:22:15 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/04/08 11:15:46 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	main(void)
 	t_ast_node			*tree;
 
 	new_array = NULL;
-	tree = from_text_to_tree("  ls * > \"abc\" > *.out || ls  ", &new_array);
+	tree = from_text_to_tree("  ls  > \"abc\" > 's d' > \"'abc'\" ", &new_array);
 	if (!tree)
 	{
 		return (1);

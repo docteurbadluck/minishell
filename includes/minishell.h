@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:41:20 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/04/08 10:34:34 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/04/08 11:09:31 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,6 +143,16 @@ t_parsed_command	*from_input_to_group(char *input);
 
 //  ***Ha
 int set_outfiles(t_parsed_command *grouped_array);
+//  ***Hb
+int	control_operator(char *redirection);
+int	control_redirection_logique(t_parsed_command *grouped_array);
+int	count_files_names(char	**redirection_array);
+int	which_symbole(char *redirection);
+
+//  ***Hc
+char	*process_redirection_filename(const char *input);
+
+
 
 //  ***I
 t_list *from_group_to_polish_reverse(t_parsed_command *new_array);
