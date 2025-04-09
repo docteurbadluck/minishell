@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:41:20 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/04/08 13:02:16 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/04/09 12:49:00 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,15 @@
 # define MINISHELL_H
 # define RIGHT 2
 # define LEFT 1
+# define _XOPEN_SOURCE 700
+
 # include "../libft/libft.h"
 
 # include <dirent.h>
 # include <stdlib.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <signal.h>
 
 typedef struct s_infile
 {
@@ -75,6 +78,17 @@ typedef struct s_redir_state
 	int			x;
 	int			z;
 }	t_redir_state;
+
+typedef struct s_heredoc_manip
+{
+	int			i;
+	int			y;
+	char		**EOFtext;
+	char		**tempfiles_names;
+	t_iofile	**to_modif;
+	int			z;
+	int			*fd;
+}	t_heredoc_manip;
 
 //	***A
 char				*variable_manager(char *input);

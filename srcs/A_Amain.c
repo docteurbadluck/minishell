@@ -6,12 +6,12 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 12:42:07 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/04/08 13:25:05 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/04/09 10:22:38 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
+/*
 int	main(void)
 {
 	t_parsed_command	*new_array;
@@ -28,3 +28,4 @@ int	main(void)
 	free_new_array(&new_array);
 	return (0);
 }
+*/
