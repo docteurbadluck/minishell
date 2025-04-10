@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 15:16:45 by docteurbadl       #+#    #+#             */
-/*   Updated: 2025/04/08 13:46:07 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/04/10 10:46:52 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,29 +23,18 @@ void init()
 
 void routine()
 {
-    //take input 
-    //verifying << (should be abble to write several line in this case) TO DO 
+    //take input
     // update history
-        // with << the history is update with all the line of the heredoc.
-    //verifying " ' and ) TO DO 
-
+    //verifying << (should be abble to write several line in this case) DONE
     // parsing
-        // replace $ by their value DONE
-        //verifying " ' () validity DONE 
-        // split into token the different part DONE
-        // pass through the array to identify Logical operator ( && || ()) DONE
-        //pass through the array to identify fd operator ( |  >> > <) DONE
-        //create an array of array of str to contain every group number
-        //place the element in the tree 
 
     // Signal modification in the shell(ignore all)
     //execution
         // while (tree) apply fd
         // process_tree(status);
-        // fork() -> modification signal (ctrl c = ^C exit, ctrl \ = core dumped (ctrl d already ignored))
+        // fork() -> modification signal (ctrl c = ^C exit, ctrl \ = core dumped)
         // exec() 
         // wait(&status); -> update $?
-    //reinit signals pwd... 
 }
 
 void parsing()
@@ -109,40 +98,9 @@ void parsing()
 }
 
 /*
-1. Basic Functionality
-Syntax: command << DELIMITER
 
-Reads input until DELIMITER appears on a new line.
-
-Input is passed as stdin to the command.
-
-2. Expansion Rules
-
-bash <<EOF &
-echo "Hello"
-sleep 10
-echo "Goodbye"
-EOF
-
-4. Signal Handling
 CTRL+C (SIGINT) → Interrupt heredoc, discard input, return to prompt.
-
-Use a custom signal handler: exit(1);
-
-CTRL+D (EOF) → End input, warn if DELIMITER is missing.
-
-Check getline() return value.
-
 CTRL+\ (SIGQUIT) → Ignore to match Bash behavior.
-
-signal(SIGQUIT, SIG_IGN);
-
-5. Edge Cases
-Nested heredocs.
-
-Combining heredocs with redirections (<< EOF > file).
-
-Handling special characters inside heredocs correctly.
 
 */
 

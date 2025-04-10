@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 10:23:59 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/04/10 09:57:17 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/04/10 10:23:20 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ void	free_heredoc(t_heredoc_manip *heredoc, int nbr_of_heredoc)
 	free(heredoc->fd);
 }
 
+//TODO quit writing if ctrl +d
 int	create_heredoc_files(int nbr_of_heredoc, t_parsed_command *array_of_cmd)
 {
 	t_heredoc_manip	heredoc;

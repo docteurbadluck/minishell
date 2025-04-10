@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 10:23:59 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/04/09 15:00:02 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/04/10 12:14:20 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,14 +94,18 @@ void	write_into_temp(t_heredoc_manip *heredoc, int y)
 {
 	char	*result;
 	char	*limiter;
-
 	result = NULL;
 	limiter = ft_strjoin(heredoc->EOFtext[y], "\n");
-	while (1)
+	while (!cancel_heredoc)
 	{
 		if (result != NULL)
 			free(result);
 		result = readline(">");
+		if (!result)
+		{
+			printf("warning: here-document delimited by end-of-file\n");
+			break;
+		}
 		result = ft_strjoin_2(result, "\n");
 		if (ft_strncmp(result, limiter, ft_strlen(limiter) + 1) != 0)
 			write (heredoc->fd[y], result, ft_strlen(result));

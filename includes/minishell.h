@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:41:20 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/04/10 09:57:40 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/04/10 12:12:17 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,28 @@ typedef struct s_heredoc_manip
 	int			z;
 	int			*fd;
 }	t_heredoc_manip;
+
+
+
+typedef struct s_signals
+{
+	struct sigaction	sa_C;	//treat ctrl c
+	struct sigaction	sa_Term; //treat ctrl 
+	void (*handler_C)(int);
+	void (*handler_Term)(int);
+	int	actual_status;
+}	t_signals;
+
+
+typedef struct s_signal_manager
+{
+	t_signals signals_menu;
+	t_signals	signals_heredoc;
+	t_signals	signals_exec;
+	int actual_mode;
+}	t_signal_manager;
+
+
 
 //	***A
 char				*variable_manager(char *input);
@@ -202,6 +224,18 @@ int					init_eof_and_to_modif(int nbr_heredoc,
 void				names_tempo_files(t_heredoc_manip *heredoc);
 void				write_into_temp(t_heredoc_manip *heredoc, int y);
 
+
+static volatile int cancel_heredoc = 0;  // Flag to indicate if the heredoc should be canceled
+
+void handler_C_menu(int signum);
+void handler_Term_menu(int signum);
+void handler_C_exec(int signum);
+void handler_Term_exec(int signum);
+void handler_C_heredoc(int signum);
+void handler_Term_heredoc(int signum);
+void listen_signal(t_signals *signals);
+void init_handlers(t_signal_manager *signals_man);
+void init_mask(t_signal_manager *signals_man);
 
 
 //	***X

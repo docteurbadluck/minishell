@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 10:23:59 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/04/09 10:10:03 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/04/10 12:12:26 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,85 +21,63 @@
 
 void handler_C_menu(int signum)
 {
-	printf("ctrl C received\n");
-	printf("( print ^C should change line)\n");
-
+	if (signum == SIGINT)
+	{
+		printf("\n");
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+	}
 }
 
-void handler_D_menu(int signum)
-{
-	printf("ctrl D received\n");
-	printf("modif line to exit and execute\n");
-
-}
-
+// show ^/ i don't know how to take it off.
 void handler_Term_menu(int signum)
 {
-	printf("ctrl received\n");
-	printf("should be ignored\n");
+	if (signum)
+	{
+		rl_on_new_line();
+		rl_redisplay();
+	}
 }
 
 void handler_C_exec(int signum)
 {
+	if (signum)
+	{}
 	printf("ctrl C received\n");
 	printf("( print ^C ,close executing program )\n");
 }
 
-void handler_D_exec(int signum)
-{
-	printf("ctrl D received\n");
-	printf("should be ignored\n");
-
-}
 
 void handler_Term_exec(int signum)
 {
+	if (signum)
+	{}
 	printf("ctrl \\ received\n");
 	printf("\\^ Quit (core dumped) is written. quit properlly. ");
 }
 
 void handler_C_heredoc(int signum)
 {
-	printf("ctrl C received\n");
-	printf("( close writing executing program )\n");
-}
-
-void handler_D_heredoc(int signum)
-{
-	printf("ctrl D received\n");
-	printf("auto complete\n");
-	// or quit ? 
-
+    if (signum == SIGINT) {
+        cancel_heredoc = 1;  // Set flag to indicate heredoc should be canceled
+        rl_on_new_line();    // Move to a new line
+        rl_redisplay();      // Redisplay the prompt
+        printf("\nHeredoc canceled by Ctrl+C\n");
+    }
 }
 
 void handler_Term_heredoc(int signum)
 {
-	printf("ctrl \\ received\n");
-	printf(" should be ignored");
+	if (signum)
+	{}	
+	if (signum)
+	{
+		rl_on_new_line();
+		rl_redisplay();
+	}
 }
 
-
-
-
-typedef struct s_signals
-{
-	struct sigaction	sa_C;	//treat ctrl c
-	struct sigaction	sa_D;	//treat ctrl d
-	struct sigaction	sa_Term; //treat ctrl 
-	void (*handler_C)(int);
-	void (*handler_D)(int);
-	void (*handler_Term)(int);
-	int	actual_status;
-}	t_signals;
-
-
-typedef struct s_signal_manager
-{
-	t_signals signals_menu;
-	t_signals	signals_heredoc;
-	t_signals	signals_exec;
-	int actual_mode;
-}	t_signal_manager;
 
 
 
@@ -107,40 +85,73 @@ typedef struct s_signal_manager
 void listen_signal(t_signals *signals)
 {
 	sigaction(SIGINT, &signals->sa_C, NULL);
-	sigaction(SIGQUIT, &signals->sa_D, NULL);
-	sigaction(SIGTSTP, &signals->sa_Term, NULL);
+	sigaction(SIGQUIT, &signals->sa_Term, NULL);
 }
 
 void init_handlers(t_signal_manager *signals_man)
 {
+	memset(&signals_man->signals_menu, 0, sizeof(signals_man->signals_menu));
+    memset(&signals_man->signals_exec, 0, sizeof(signals_man->signals_exec));
+    memset(&signals_man->signals_heredoc, 0, sizeof(signals_man->signals_heredoc));
+
 	signals_man->signals_menu.sa_C.sa_handler = &handler_C_menu;
-	signals_man->signals_menu.sa_D.sa_handler = &handler_D_menu;
 	signals_man->signals_menu.sa_Term.sa_handler = &handler_Term_menu;
-/*
+	signals_man->signals_menu.sa_Term.sa_flags = SA_RESTART;
+
 	signals_man->signals_exec.sa_C.sa_handler = &handler_C_exec;
-	signals_man->signals_exec.sa_D.sa_handler = &handler_D_exec;
 	signals_man->signals_exec.sa_Term.sa_handler = &handler_Term_exec;
 
 	signals_man->signals_heredoc.sa_C.sa_handler = &handler_C_heredoc;
-	signals_man->signals_heredoc.sa_D.sa_handler = &handler_D_heredoc;
-	signals_man->signals_heredoc.sa_Term.sa_handler = &handler_Term_heredoc;*/
+	signals_man->signals_heredoc.sa_Term.sa_handler = &handler_Term_heredoc;
 }
 
+void init_mask(t_signal_manager *signals_man)
+{
+	// Menu mode
+	sigemptyset(&signals_man->signals_menu.sa_C.sa_mask);
+	sigaddset(&signals_man->signals_menu.sa_C.sa_mask, SIGINT);
+	sigaddset(&signals_man->signals_menu.sa_C.sa_mask, SIGQUIT);
+
+	sigemptyset(&signals_man->signals_menu.sa_Term.sa_mask);
+	sigaddset(&signals_man->signals_menu.sa_Term.sa_mask, SIGINT);
+	sigaddset(&signals_man->signals_menu.sa_Term.sa_mask, SIGQUIT);
+
+	// Same for heredoc
+	sigemptyset(&signals_man->signals_heredoc.sa_C.sa_mask);
+	sigaddset(&signals_man->signals_heredoc.sa_C.sa_mask, SIGINT);
+	sigaddset(&signals_man->signals_heredoc.sa_C.sa_mask, SIGQUIT);
+
+	sigemptyset(&signals_man->signals_heredoc.sa_Term.sa_mask);
+	sigaddset(&signals_man->signals_heredoc.sa_Term.sa_mask, SIGINT);
+	sigaddset(&signals_man->signals_heredoc.sa_Term.sa_mask, SIGQUIT);
+
+	// Same for exec
+	sigemptyset(&signals_man->signals_exec.sa_C.sa_mask);
+	sigaddset(&signals_man->signals_exec.sa_C.sa_mask, SIGINT);
+	sigaddset(&signals_man->signals_exec.sa_C.sa_mask, SIGQUIT);
+
+	sigemptyset(&signals_man->signals_exec.sa_Term.sa_mask);
+	sigaddset(&signals_man->signals_exec.sa_Term.sa_mask, SIGINT);
+	sigaddset(&signals_man->signals_exec.sa_Term.sa_mask, SIGQUIT);
+}
+
+
+
+
+/*
 int main(void)
 {
+    printf("PID: %d\n", getpid());
+    t_signal_manager sa_manager;
 
-	t_signal_manager sa_manager;
+    init_handlers(&sa_manager);
+    init_mask(&sa_manager);
 
-	init_handlers(&sa_manager);
-	listen_signal(&sa_manager.signals_menu);
-	while(1)
-	{
-        pause();  // Using pause() instead of wait() to wait for signals
-	}
-	return 0;
+    // Start with menu mode
+    listen_signal(&sa_manager.signals_menu);
 
+    return 0;
 }
 
-
-
+*/
 
