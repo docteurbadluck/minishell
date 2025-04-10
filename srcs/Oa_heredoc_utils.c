@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 10:23:59 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/04/10 12:14:20 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/04/10 14:47:34 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,13 +90,14 @@ void	names_tempo_files(t_heredoc_manip *heredoc)
 	}
 }
 
+
 void	write_into_temp(t_heredoc_manip *heredoc, int y)
 {
 	char	*result;
 	char	*limiter;
 	result = NULL;
 	limiter = ft_strjoin(heredoc->EOFtext[y], "\n");
-	while (!cancel_heredoc)
+	while (1)
 	{
 		if (result != NULL)
 			free(result);

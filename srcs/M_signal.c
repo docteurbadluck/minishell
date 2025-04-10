@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 10:23:59 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/04/10 12:12:26 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/04/10 12:22:19 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 // creer une fonction qui permet de passer proprement d un etat a un autre et d ecouter.
 
 
+volatile sig_atomic_t cancel_heredoc = 0;  // Initializing the variable
 
 void handler_C_menu(int signum)
 {

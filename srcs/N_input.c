@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 10:23:59 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/04/10 12:12:22 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/04/10 14:52:23 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ int	read_input(void)
 			}
 			else
 			{
-				listen_signal(&sa_manager.signals_heredoc);
 				create_heredoc_files(heredoc_counter, ptr);
 				listen_signal(&sa_manager.signals_menu);
 

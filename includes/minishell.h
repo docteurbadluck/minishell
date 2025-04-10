@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:41:20 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/04/10 12:12:17 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/04/10 12:22:28 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -225,7 +225,7 @@ void				names_tempo_files(t_heredoc_manip *heredoc);
 void				write_into_temp(t_heredoc_manip *heredoc, int y);
 
 
-static volatile int cancel_heredoc = 0;  // Flag to indicate if the heredoc should be canceled
+extern volatile sig_atomic_t cancel_heredoc;  // Flag to indicate if the heredoc should be canceled
 
 void handler_C_menu(int signum);
 void handler_Term_menu(int signum);
