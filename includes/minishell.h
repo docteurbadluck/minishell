@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:41:20 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/04/09 12:49:00 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/04/10 09:57:40 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,10 +187,22 @@ t_ast_node			*from_polish_to_tree(t_list *output_list);
 
 //	***K
 t_ast_node			*from_text_to_tree(char *str, t_parsed_command **new_array);
+t_ast_node			*from_group_to_tree(t_parsed_command **new_array);
+
 void				free_tree(t_ast_node *node);
 
 //	***L
 void				print_tree(t_ast_node *node, int depth);
+
+//	***O
+int					create_heredoc_files(int nbr_of_heredoc, t_parsed_command *array_of_cmd);
+//	***Oa
+int					init_eof_and_to_modif(int nbr_heredoc,
+						t_parsed_command *array_of_cmd, t_heredoc_manip *heredoc);
+void				names_tempo_files(t_heredoc_manip *heredoc);
+void				write_into_temp(t_heredoc_manip *heredoc, int y);
+
+
 
 //	***X
 void				free_array(t_parsed_command **array);

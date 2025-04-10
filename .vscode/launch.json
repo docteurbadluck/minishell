@@ -5,7 +5,7 @@
             "name": "C Debugging",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/a.out",
+            "program": "${workspaceFolder}/build/minishell",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
