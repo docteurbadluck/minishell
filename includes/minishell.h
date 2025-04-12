@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:41:20 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/04/10 12:22:28 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/04/12 14:26:29 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 
 # include "../libft/libft.h"
 
+# include <sys/wait.h>
 # include <dirent.h>
 # include <stdlib.h>
 # include <readline/readline.h>
@@ -226,16 +227,10 @@ void				write_into_temp(t_heredoc_manip *heredoc, int y);
 
 
 extern volatile sig_atomic_t cancel_heredoc;  // Flag to indicate if the heredoc should be canceled
+void handler_menu(int signum);
 
-void handler_C_menu(int signum);
-void handler_Term_menu(int signum);
-void handler_C_exec(int signum);
-void handler_Term_exec(int signum);
-void handler_C_heredoc(int signum);
-void handler_Term_heredoc(int signum);
-void listen_signal(t_signals *signals);
-void init_handlers(t_signal_manager *signals_man);
-void init_mask(t_signal_manager *signals_man);
+void	soft_quit_handler(int signum);
+
 
 
 //	***X

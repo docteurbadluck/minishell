@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 10:23:59 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/04/12 14:03:58 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/04/12 14:42:08 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,6 @@
 
 int	read_input(void)
 {
-	t_signal_manager sa_manager;
-	init_handlers(&sa_manager);
-	init_mask(&sa_manager);
-	listen_signal(&sa_manager.signals_menu);
 
 	char	*input;
 	char	*pos;
@@ -25,6 +21,23 @@ int	read_input(void)
 	t_ast_node *tree;
 	int i;
 	int heredoc_counter;
+
+
+	struct sigaction sa_menu, sa_orig, sa_ign, sa_soft_quit;
+
+	
+
+	sa_menu.sa_handler = &handler_menu;
+	sa_menu.sa_flags = SA_RESTART;
+	sigemptyset(&sa_menu.sa_mask);
+	sigaction(SIGINT, &sa_menu, &sa_orig);
+	sigaction(SIGQUIT, &sa_menu, &sa_orig);
+
+
+	sa_ign.sa_handler = SIG_IGN;
+	sa_ign.sa_flags = 0;
+	sigemptyset(&sa_ign.sa_mask);
+	sa_soft_quit.sa_handler = &soft_quit_handler;	
 
 	while (1)
 	{
@@ -83,9 +96,26 @@ int	read_input(void)
 			}
 			else
 			{
-				create_heredoc_files(heredoc_counter, ptr);
-				listen_signal(&sa_manager.signals_menu);
-
+				int status;
+				sigaction(SIGINT, &sa_ign, &sa_menu);
+				sigaction(SIGQUIT, &sa_ign, &sa_menu);
+				int pid =fork();
+				if (!pid)
+				{
+					sigaction(SIGINT, &sa_orig, NULL);
+					create_heredoc_files(heredoc_counter, ptr);
+					exit(0);
+				}
+				waitpid(pid, &status, 0);
+				sigaction(SIGINT, &sa_menu, NULL);
+				sigaction(SIGQUIT, &sa_menu, NULL);
+				if (WIFSIGNALED(status))
+				{
+					printf("go to begining \n");
+					free_new_array(&ptr);
+					continue;
+				}
+				
 				tree = from_group_to_tree(&ptr);
 				//execute
 				print_tree(tree, 0);
@@ -100,6 +130,7 @@ int	read_input(void)
 	rl_clear_history();
 	return 0;
 }
+
 
 int main()
 {
