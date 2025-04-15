@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:41:20 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/04/12 14:26:29 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/04/15 12:39:47 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,12 +218,19 @@ void				free_tree(t_ast_node *node);
 void				print_tree(t_ast_node *node, int depth);
 
 //	***O
-int					create_heredoc_files(int nbr_of_heredoc, t_parsed_command *array_of_cmd);
+int	create_heredoc_files(int nbr_of_heredoc, t_parsed_command *array_of_cmd, char *argv0);
+//int					create_heredoc_files(int nbr_of_heredoc, t_parsed_command *array_of_cmd);
 //	***Oa
 int					init_eof_and_to_modif(int nbr_heredoc,
 						t_parsed_command *array_of_cmd, t_heredoc_manip *heredoc);
-void				names_tempo_files(t_heredoc_manip *heredoc);
+//void				names_tempo_files(t_heredoc_manip *heredoc);
+void				names_tempo_files(t_heredoc_manip *heredoc, char *argv0);
+
 void				write_into_temp(t_heredoc_manip *heredoc, int y);
+
+//	***P 
+char	*name_and_path_generator(char* argv0, char* directory, char* file_name);
+void	unlink_tempo_files(char *argv0);
 
 
 extern volatile sig_atomic_t cancel_heredoc;  // Flag to indicate if the heredoc should be canceled

@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 10:23:59 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/04/15 11:07:58 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/04/15 12:22:16 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,13 +100,13 @@ void	free_heredoc(t_heredoc_manip *heredoc, int nbr_of_heredoc)
 
 
 //TODO quit writing if ctrl +d
-int	create_heredoc_files(int nbr_of_heredoc, t_parsed_command *array_of_cmd)
+int	create_heredoc_files(int nbr_of_heredoc, t_parsed_command *array_of_cmd, char *argv0)
 {
 	t_heredoc_manip	heredoc;
 
 	if (init_eof_and_to_modif(nbr_of_heredoc, array_of_cmd, &heredoc))
 		return (-1);
-	names_tempo_files(&heredoc);
+	names_tempo_files(&heredoc, argv0);
 	create_temp_files(&heredoc, nbr_of_heredoc);
 	free_heredoc(&heredoc, nbr_of_heredoc);
 	return (0);

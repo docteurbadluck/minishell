@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 10:23:59 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/04/15 11:07:02 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/04/15 11:24:55 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@
 // creer une fonction qui permet de passer proprement d un etat a un autre et d ecouter.
 
 
-volatile sig_atomic_t cancel_heredoc = 0;  // Initializing the variable
+volatile sig_atomic_t cancel_heredoc = 0; 
 
 void handler_menu(int signum)
 {
 	if (signum == SIGINT)
 	{
-		printf("\n");
+		write(1,"\n", 1);
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
@@ -41,7 +41,7 @@ void	soft_quit_handler(int signum)
 	if (signum == SIGINT)
 	{
 		cancel_heredoc = 1;
-		printf("should quit writing\n");
+		write(1,"\n", 1);
 	}
 }
 

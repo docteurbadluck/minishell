@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 10:23:59 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/04/15 11:16:26 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/04/15 12:24:46 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ int	init_eof_and_to_modif(int nbr_heredoc,
 	return (0);
 }
 
+/*
 void	names_tempo_files(t_heredoc_manip *heredoc)
 {
 	int		y;
@@ -88,7 +89,27 @@ void	names_tempo_files(t_heredoc_manip *heredoc)
 		free(number);
 		y++;
 	}
+}*/
+
+
+void	names_tempo_files(t_heredoc_manip *heredoc, char *argv0)
+{
+	int		y;
+	char	*number;
+	char	*file_name;
+
+	y = 0;
+	while ((*heredoc).EOFtext[y])
+	{
+		number = ft_itoa(y);
+		file_name = ft_strjoin(number, "temp.txt");
+		(*heredoc).tempfiles_names[y] = name_and_path_generator(argv0, "tmp", file_name);
+		free(file_name);
+		free(number);
+		y++;
+	}
 }
+
 
 void	write_into_temp(t_heredoc_manip *heredoc, int y)
 {
@@ -106,8 +127,7 @@ void	write_into_temp(t_heredoc_manip *heredoc, int y)
 		{
 			if(cancel_heredoc)
 				break;
-				
-			printf("warning: here-document delimited by end-of-file\n");
+			printf("\nwarning: here-document delimited by end-of-file\n");
 			break;
 		}
 		if (ft_strncmp(result, limiter, ft_strlen(limiter) + 1) != 0)
