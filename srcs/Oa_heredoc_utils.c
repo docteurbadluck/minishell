@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 10:23:59 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/04/12 14:28:29 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/04/15 11:16:26 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ void	names_tempo_files(t_heredoc_manip *heredoc)
 	}
 }
 
-
 void	write_into_temp(t_heredoc_manip *heredoc, int y)
 {
 	char	*result;
@@ -101,9 +100,13 @@ void	write_into_temp(t_heredoc_manip *heredoc, int y)
 	{
 		if (result != NULL)
 			free(result);
+		write(1,">", 1);
 		result = get_next_line(0);
 		if (!result)
 		{
+			if(cancel_heredoc)
+				break;
+				
 			printf("warning: here-document delimited by end-of-file\n");
 			break;
 		}

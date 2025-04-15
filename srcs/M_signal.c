@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 10:23:59 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/04/12 14:27:03 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/04/15 11:07:02 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	soft_quit_handler(int signum)
 {
 	if (signum == SIGINT)
 	{
+		cancel_heredoc = 1;
 		printf("should quit writing\n");
 	}
 }

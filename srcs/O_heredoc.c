@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 10:23:59 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/04/12 14:13:15 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/04/15 11:07:58 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ void	create_temp_files(t_heredoc_manip *heredoc, int nbr_of_heredoc)
 				O_RDWR | O_CREAT | O_TRUNC | O_APPEND, 0666);
 		write(heredoc->fd[y], &quote, 1);
 		write_into_temp(heredoc, y);
+		if (cancel_heredoc)
+			break;
 		write(heredoc->fd[y], &quote, 1);
 		transform_temp_variable(heredoc, y);
 		close(heredoc->fd[y]);
