@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:41:20 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/04/15 12:39:47 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/04/16 09:47:59 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -233,7 +233,7 @@ char	*name_and_path_generator(char* argv0, char* directory, char* file_name);
 void	unlink_tempo_files(char *argv0);
 
 
-extern volatile sig_atomic_t cancel_heredoc;  // Flag to indicate if the heredoc should be canceled
+extern volatile sig_atomic_t g_cancel_heredoc;  // Flag to indicate if the heredoc should be canceled
 void handler_menu(int signum);
 
 void	soft_quit_handler(int signum);

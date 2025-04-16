@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 10:23:59 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/04/10 09:38:45 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/04/16 09:48:50 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_ast_node	*from_text_to_tree(char *str, t_parsed_command **new_array)
 	return (tree);
 }
 
-t_ast_node *from_group_to_tree(t_parsed_command **new_array)
+t_ast_node	*from_group_to_tree(t_parsed_command **new_array)
 {
 	t_list		*output_list;
 	t_ast_node	*tree;

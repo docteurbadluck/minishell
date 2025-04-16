@@ -6,25 +6,19 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 10:23:59 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/04/15 11:24:55 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/04/16 09:49:10 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+volatile sig_atomic_t	g_cancel_heredoc = 0; 
 
-// creer une structure signals ctrl C ctrl D  ctrl / 
-// creer les masques pour chaque etat. et les stocker dans un tableau de la structure. 
-// creer une fonction qui permet de passer proprement d un etat a un autre et d ecouter.
-
-
-volatile sig_atomic_t cancel_heredoc = 0; 
-
-void handler_menu(int signum)
+void	handler_menu(int signum)
 {
 	if (signum == SIGINT)
 	{
-		write(1,"\n", 1);
+		write(1, "\n", 1);
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
@@ -40,8 +34,8 @@ void	soft_quit_handler(int signum)
 {
 	if (signum == SIGINT)
 	{
-		cancel_heredoc = 1;
-		write(1,"\n", 1);
+		g_cancel_heredoc = 1;
+		write(1, "\n", 1);
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 10:23:59 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/04/15 12:22:16 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/04/16 09:47:49 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,8 @@ void	create_temp_files(t_heredoc_manip *heredoc, int nbr_of_heredoc)
 				O_RDWR | O_CREAT | O_TRUNC | O_APPEND, 0666);
 		write(heredoc->fd[y], &quote, 1);
 		write_into_temp(heredoc, y);
-		if (cancel_heredoc)
-			break;
+		if (g_cancel_heredoc)
+			break ;
 		write(heredoc->fd[y], &quote, 1);
 		transform_temp_variable(heredoc, y);
 		close(heredoc->fd[y]);
@@ -98,9 +98,8 @@ void	free_heredoc(t_heredoc_manip *heredoc, int nbr_of_heredoc)
 		free(heredoc->fd);
 }
 
-
-//TODO quit writing if ctrl +d
-int	create_heredoc_files(int nbr_of_heredoc, t_parsed_command *array_of_cmd, char *argv0)
+int	create_heredoc_files(int nbr_of_heredoc, t_parsed_command *array_of_cmd,
+		char *argv0)
 {
 	t_heredoc_manip	heredoc;
 

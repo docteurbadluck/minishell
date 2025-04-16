@@ -6,14 +6,13 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 10:23:59 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/04/15 12:44:35 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/04/16 09:44:26 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-
-char	*name_and_path_generator(char* argv0, char* directory, char* file_name)
+char	*name_and_path_generator(char *argv0, char *directory, char *file_name)
 {
 	char	*temp;
 	int		i;
@@ -29,7 +28,7 @@ char	*name_and_path_generator(char* argv0, char* directory, char* file_name)
 			if (counter == 2)
 			{
 				i++;
-				break;
+				break ;
 			}
 		}
 		i--;
@@ -38,7 +37,7 @@ char	*name_and_path_generator(char* argv0, char* directory, char* file_name)
 	temp = ft_strjoin_2(temp, directory);
 	temp = ft_strjoin_2(temp, "/");
 	temp = ft_strjoin_2(temp, file_name);
-	return temp;
+	return (temp);
 }
 
 void	unlink_tempo_files(char *argv0)
@@ -54,17 +53,14 @@ void	unlink_tempo_files(char *argv0)
 		number = ft_itoa(y);
 		file_name = ft_strjoin(number, "temp.txt");
 		tmp = name_and_path_generator(argv0, "tmp", file_name);
-		
 		if (access(tmp, F_OK) == 0)
-		{
 			unlink(tmp);
-		}
 		else
 		{
 			free(tmp);
 			free(file_name);
 			free(number);
-			break;
+			break ;
 		}
 		free(tmp);
 		free(file_name);
@@ -72,7 +68,6 @@ void	unlink_tempo_files(char *argv0)
 		y++;
 	}
 }
-
 
 /*
 int main(int argc, char **argv)

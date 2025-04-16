@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 10:23:59 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/04/15 12:47:31 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/04/16 09:50:16 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,9 +101,9 @@ int	read_input(char *argv0)
 				create_heredoc_files(heredoc_counter, ptr, argv0);
 				sigaction(SIGINT, &sa_menu, NULL);
 				sigaction(SIGQUIT, &sa_menu, NULL);
-				if (cancel_heredoc)
+				if (g_cancel_heredoc)
 				{
-					cancel_heredoc = 0;
+					g_cancel_heredoc = 0;
 					free_new_array(&ptr);
 					continue;
 				}
