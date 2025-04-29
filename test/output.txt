@@ -1,0 +1,8 @@
+build
+includes
+libft
+Makefile
+srcs
+test
+tmp
+TODO

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jholterh <jholterh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:41:20 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/04/16 09:47:59 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/04/28 12:33:25 by jholterh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,13 @@
 
 # include "../libft/libft.h"
 
-# include <sys/wait.h>
 # include <dirent.h>
 # include <stdlib.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <signal.h>
+# include <errno.h>
+# include <sys/wait.h>
 
 typedef struct s_infile
 {
@@ -49,12 +50,12 @@ typedef struct s_parsed_command {
 	int			exit_status;		// Exit status of the most recently executed command.
 	int			has_wildcards;		// Boolean flag indicating if wildcards are present in arguments.
 	char		**list_of_files;	// list of files referenced by the wildcard.
-	int			logical_operator;	// Logical operator for command chaining (0 for none, 1 for "&&", 2 for "||").
+	int			logical_operator;	// Logical operator for command chaining (0 for none, 1 for "&&", 2 for "||", 3 for "|").
 }	t_parsed_command;
 
 typedef struct s_ast_node {
 	t_parsed_command	*command;		// Pointer to a command struct, if this node represents a command
-	int					logical_operator;
+	int					logical_operator; // Logical operator for command chaining (0 for none, 1 for "&&", 2 for "||", 3 for "|").
 	struct s_ast_node	*left;
 	struct s_ast_node	*right;
 }	t_ast_node;
@@ -80,6 +81,41 @@ typedef struct s_redir_state
 	int			z;
 }	t_redir_state;
 
+typedef struct s_env
+{
+    char *type;
+    char *data;
+    struct s_env *next;
+}   t_env;
+
+typedef struct s_env_exp
+{
+    t_env *env;
+    t_env *exp;
+	char **paths;
+	char **execute_env;
+}   t_env_exp;
+
+typedef struct s_ast_helper
+{
+	int pipes_num;
+	int commands_num;
+	pid_t *pids;
+	int **pipe_fds;
+	int active_pipes;
+	int counter;
+	// int *active_pipes; 
+	int pipe_counter;
+}	t_ast_helper;
+
+typedef struct s_free
+{
+	t_parsed_command	*new_array;
+	t_ast_node			*tree;
+	t_env_exp 			*env_exp;
+	t_ast_helper        *ast_helper;
+}	t_free;
+
 typedef struct s_heredoc_manip
 {
 	int			i;
@@ -92,30 +128,9 @@ typedef struct s_heredoc_manip
 }	t_heredoc_manip;
 
 
-
-typedef struct s_signals
-{
-	struct sigaction	sa_C;	//treat ctrl c
-	struct sigaction	sa_Term; //treat ctrl 
-	void (*handler_C)(int);
-	void (*handler_Term)(int);
-	int	actual_status;
-}	t_signals;
-
-
-typedef struct s_signal_manager
-{
-	t_signals signals_menu;
-	t_signals	signals_heredoc;
-	t_signals	signals_exec;
-	int actual_mode;
-}	t_signal_manager;
-
-
-
 //	***A
 char				*variable_manager(char *input);
-
+ 
 //	***B
 char				*wildcard_manager(char *input);
 
@@ -207,38 +222,47 @@ void				free_list(t_list *output_list);
 
 //	***L
 t_ast_node			*from_polish_to_tree(t_list *output_list);
+t_ast_node	*from_group_to_tree(t_parsed_command **new_array);
 
 //	***K
 t_ast_node			*from_text_to_tree(char *str, t_parsed_command **new_array);
-t_ast_node			*from_group_to_tree(t_parsed_command **new_array);
-
 void				free_tree(t_ast_node *node);
 
 //	***L
 void				print_tree(t_ast_node *node, int depth);
 
+//	***M
+void				set_default_signals(void);
+void				set_ignore_signals(void);
+void				set_menu_signals(void);
+void				set_heredoc_signals(void);
+//	***Ma
+
+extern volatile sig_atomic_t	g_cancel_heredoc;  // Flag to indicate if the heredoc should be canceled
+void				handler_menu(int signum);
+void				soft_quit_handler(int signum);
+
+//	***N
+int	read_input(char *argv0, char **envp);
+
+// ***Na
+int					count_heredoc(t_parsed_command *ptr);
+
+//	***Nb
+t_free				init_free_all(void);
+char				*get_input(void);
+
 //	***O
-int	create_heredoc_files(int nbr_of_heredoc, t_parsed_command *array_of_cmd, char *argv0);
-//int					create_heredoc_files(int nbr_of_heredoc, t_parsed_command *array_of_cmd);
+int					create_heredoc_files(int nbr_of_heredoc, t_parsed_command *array_of_cmd, char *argv0);
 //	***Oa
 int					init_eof_and_to_modif(int nbr_heredoc,
 						t_parsed_command *array_of_cmd, t_heredoc_manip *heredoc);
-//void				names_tempo_files(t_heredoc_manip *heredoc);
 void				names_tempo_files(t_heredoc_manip *heredoc, char *argv0);
-
 void				write_into_temp(t_heredoc_manip *heredoc, int y);
 
 //	***P 
 char	*name_and_path_generator(char* argv0, char* directory, char* file_name);
 void	unlink_tempo_files(char *argv0);
-
-
-extern volatile sig_atomic_t g_cancel_heredoc;  // Flag to indicate if the heredoc should be canceled
-void handler_menu(int signum);
-
-void	soft_quit_handler(int signum);
-
-
 
 //	***X
 void				free_array(t_parsed_command **array);
@@ -248,5 +272,100 @@ void				free_new_array(t_parsed_command **new_array);
 void				free_iofiles(t_parsed_command *command);
 
 void				print_ast_balanced(t_ast_node *root);
+
+// built in
+int ft_echo(char **str);
+int ft_cd(t_env_exp *env_exp, char *str, int version);
+int ft_pwd();
+
+char	*allocate_memory(char *env_var, int start, int end);
+t_env	*initialize_node(char *env_var, int j, int k);
+t_env	*create_node(char *env_var);
+t_env	*safe_env(char **envp);
+int find_envtype(t_env *head, char *name);
+int ft_getenv(t_env *head, char *name, char **result);
+void ft_env(t_env *head, int version);
+t_env	*ft_envnew(void);
+void	free_env_exp_all(t_env_exp *env_exp);
+void	free_ast_helper(t_ast_helper *ast_helper);
+void free_env_exp(t_env *head);
+void free_node(t_env *node);
+int ft_unset(t_env_exp *env_exp, char *content);
+void	ft_envadd_back(t_env **lst, t_env *new);
+
+void ft_insertnode(t_env **exp, int steps, char *type, char *data);
+int create_exp(t_env_exp *env_exp);
+int ft_export(t_env_exp *env_exp, char *content, int version);
+void	insert_at_head(t_env **exp, t_env *new_node);
+void	insert_at_position(t_env **exp, int steps, t_env *new_node);
+t_env	*ft_envlast(t_env *lst);
+int	find_exp_spot(t_env *exp, char *name);
+t_env	*ft_envlast_minus_one(t_env *lst);
+void	ft_envadd_back_minus_one(t_env **lst, t_env *new);
+void	delete_node(t_env **head, int steps);
+
+
+
+
+char	**get_paths(t_env_exp *env_exp);
+char	*find_path(char **paths, char *command);
+char	**create_env_from_linked_list(t_env *env);
+
+
+
+// preparation
+int prepare_env_exp(t_env_exp **env_exp, char **envp);
+int	create_ast_helper(t_ast_helper **ast_helper);
+void	cleanup(t_free *free_all);
+
+// setup
+int	pipes_commands_counter(t_ast_node *node, t_ast_helper *ast_helper);
+void	cleanup_ast_helper(t_ast_helper *ast_helper);
+int	handle_pipe_failure(t_ast_helper *ast_helper, int i);
+int	ast_handle_pipes_setup(t_ast_helper *ast_helper);
+int	prepare_execution_ast(t_ast_node *tree, t_env_exp *env_exp,
+	t_ast_helper *ast_helper, t_free *free_all);
+
+// ast
+t_ast_node	*find_next_command_left(t_ast_node *node, t_ast_helper *ast_helper);
+t_ast_node	*find_next_command_right(t_ast_node *node, t_ast_helper *ast_helper);
+int	execute_ast_pipe(t_ast_node *node, t_ast_helper *ast_helper,
+	t_env_exp *env_exp, t_free *free_all);
+int	handle_and_or(t_ast_node *node, t_ast_helper *ast_helper,
+	t_env_exp *env_exp, t_free *free_all);
+int	execute_ast(t_ast_node *node, t_ast_helper *ast_helper,
+	t_env_exp *env_exp, t_free *free_all);
+
+// builtins
+int	check_build_in(char **command, t_env_exp *env_exp);
+int	build_in_addition(char **command, t_env_exp *env_exp, int return_value);
+int	execute_build_in(char **command, t_env_exp *env_exp, int return_value);
+
+// input
+int	count_files(t_iofile *file);
+void	handle_before_input_files(int num_files, t_iofile *file);
+int	execute_command_input(t_parsed_command *command, t_ast_helper *ast_helper);
+	
+// output
+void	handle_before_output_files(int num_files, t_iofile *file);
+void	handle_output_file(t_parsed_command *command);
+int	execute_command_output(t_parsed_command *command, t_ast_helper *ast_helper);
+
+// parent
+static int	wait_for_pipes_and_process(t_ast_helper *ast_helper, int *status);
+int	execute_command_parent(t_parsed_command *command, t_ast_helper *ast_helper);
+
+// execution
+static void	execute_child_process(t_parsed_command *command, t_ast_helper *ast_helper,
+	t_env_exp *env_exp, t_free *free_all);
+static int	handle_parent_process(t_parsed_command *command, t_ast_helper *ast_helper,
+	t_env_exp *env_exp, int return_value);
+int	execute_command(t_parsed_command *command, t_ast_helper *ast_helper,
+	t_env_exp *env_exp, t_free *free_all);
+
+
+
+
+
 
 #endif

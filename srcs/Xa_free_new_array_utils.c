@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   Xa_free_new_array_utils.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jholterh <jholterh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 14:30:21 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/04/09 14:05:42 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/04/08 17:01:18 by jholterh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
 
 void	free_iofiles(t_parsed_command *command)
 {
