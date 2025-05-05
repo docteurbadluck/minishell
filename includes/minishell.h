@@ -15,6 +15,8 @@
 # define RIGHT 2
 # define LEFT 1
 # define _XOPEN_SOURCE 700
+# define _POSIX_C_SOURCE 200809L
+
 
 # include "../libft/libft.h"
 
@@ -25,6 +27,7 @@
 # include <signal.h>
 # include <errno.h>
 # include <sys/wait.h>
+# include <string.h>
 
 typedef struct s_infile
 {
@@ -94,6 +97,7 @@ typedef struct s_env_exp
     t_env *exp;
 	char **paths;
 	char **execute_env;
+	int dollar_question;
 }   t_env_exp;
 
 typedef struct s_ast_helper
@@ -104,7 +108,6 @@ typedef struct s_ast_helper
 	int **pipe_fds;
 	int active_pipes;
 	int counter;
-	// int *active_pipes; 
 	int pipe_counter;
 }	t_ast_helper;
 
@@ -277,6 +280,7 @@ void				print_ast_balanced(t_ast_node *root);
 int ft_echo(char **str);
 int ft_cd(t_env_exp *env_exp, char *str, int version);
 int ft_pwd();
+void ft_exit(char **args);
 
 char	*allocate_memory(char *env_var, int start, int end);
 t_env	*initialize_node(char *env_var, int j, int k);
@@ -361,7 +365,7 @@ static void	execute_child_process(t_parsed_command *command, t_ast_helper *ast_h
 static int	handle_parent_process(t_parsed_command *command, t_ast_helper *ast_helper,
 	t_env_exp *env_exp, int return_value);
 int	execute_command(t_parsed_command *command, t_ast_helper *ast_helper,
-	t_env_exp *env_exp, t_free *free_all);
+					t_env_exp *env_exp, t_free *free_all);
 
 
 

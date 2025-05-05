@@ -31,7 +31,6 @@ void	handle_before_input_files(int num_files, t_iofile *file)
 	{
 		if (access(file[i].filename, F_OK) != 0)
 		{
-			ft_printf("%s: %s\n", file[i].filename, strerror(errno));
 			exit(1);
 		}
 		i++;
@@ -52,7 +51,12 @@ int	execute_command_input(t_parsed_command *command, t_ast_helper *ast_helper)
 				O_RDONLY);
 		if (fd_input == -1)
 		{
-			perror("open input file");
+			if (errno == ENOENT)
+        		fprintf(stderr, "File does not exist: %s\n", command->input_file[num_input_files].filename);
+    		else if (errno == EACCES)
+       			 fprintf(stderr, "Permission denied: %s\n", command->input_file[num_input_files].filename);
+   			else
+       		 	perror("Error opening input file");
 			exit(1);
 		}
 		// TODO

@@ -39,7 +39,7 @@ char	*find_path(char **paths, char *command)
 		free(tmp_path);
 		if (!full_path)
 			return (NULL);
-		if (access(full_path, X_OK) == 0)
+		if (access(full_path, F_OK) == 0)
 			return (full_path);
 		free(full_path);
 		i++;

@@ -27,11 +27,9 @@ int	check_build_in(char **command, t_env_exp *env_exp)
 	if (!ft_strncmp(command[0], "env", 4))
 		return (5);
 	if (!ft_strncmp(command[0], "exit", 5))
-	{
-		printf("exiting\n");
-		// maybe should free here
-		exit(0);
-	}
+		return(6);
+	if (!ft_strncmp(command[0], "$?", 3))
+		return (7);
 	return (-1);
 }
 
@@ -54,6 +52,12 @@ int	build_in_addition(char **command, t_env_exp *env_exp, int return_value)
 		ft_env(env_exp->env, 2);
 		return (0);
 	}
+	if (return_value == 6)
+	{
+		ft_exit(command);
+	}
+	if (return_value == 7)
+		ft_printf("%d\n", env_exp->dollar_question);
 	return (-1);
 }
 
