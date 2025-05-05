@@ -45,7 +45,7 @@ int	execute_command_parent(t_parsed_command *command, t_ast_helper *ast_helper)
 	if (command->pipe_out != 1)
 	{
 		if (wait_for_pipes_and_process(ast_helper, &status) == -3)
-			return (-3);
+			return (0);
 	}
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));

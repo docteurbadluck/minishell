@@ -1,7 +1,12 @@
+#CC = cc
+#CFLAGS = -g -Iincludes #-Wall -Wextra -Werror 
+#LIBFT = -Llibft -lft
+#READLINE = -lreadline
+
 CC = cc
-CFLAGS = -g -Iincludes #-Wall -Wextra -Werror 
+CFLAGS = -g -Iincludes -I/usr/local/opt/readline/include #-Wall -Wextra -Werror
 LIBFT = -Llibft -lft
-READLINE = -lreadline
+READLINE = -L/usr/local/opt/readline/lib -lreadline
 
 HEADERS = includes/minishell.h
 BUILD_DIR = build
@@ -37,7 +42,7 @@ SRC = srcs/builtins/1_ft_echo.c srcs/builtins/2_ft_cd.c srcs/builtins/3_ft_pwd.c
 OBJ_FILES = $(SRC:srcs/%.c=$(BUILD_DIR)/%.o)
 
 # Output executable
-NAME = $(BUILD_DIR)/minishell
+NAME = minishell
 
 # Default rule
 all: lib create-dir $(NAME)
