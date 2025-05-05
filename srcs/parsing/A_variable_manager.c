@@ -16,7 +16,7 @@ int		is_space_or_doll(char c);
 int		lenght_variable(char *str);
 char	**cut_input(char *input, int i);
 char	*assembling(char *variable, char **array_of_str);
-char	*handle_variable_expansion(char *input, int i);
+char	*handle_variable_expansion(char *input, int i, t_env *head);
 char	*assembling(char *variable, char **array_of_str);
 
 	// EXEMPLE : "ABCDEF $HOME ABCDEF" ->"ABCDEF /home/tdeliot ABCDEF"
@@ -30,7 +30,7 @@ char	*assembling(char *variable, char **array_of_str);
 	//environnement and to know we have to verify that they are not in ""
 
 	//LAST MODIF, change " to '  
-char	*variable_manager(char *input)
+char	*variable_manager(char *input, t_env *head)
 {
 	int		i;
 	int		flag;
@@ -48,13 +48,13 @@ char	*variable_manager(char *input)
 		}
 		if (input[i] == '$' && input[i + 1] != ' '
 			&& input[i + 1] != '\0' && !flag)
-			return (handle_variable_expansion(input, i));
+			return (handle_variable_expansion(input, i, head));
 		i++;
 	}
 	return (ft_strdup(input));
 }
 
-char	*handle_variable_expansion(char *input, int i)
+char	*handle_variable_expansion(char *input, int i, t_env *head)
 {
 	char	**array_of_str;
 	char	*return_input;
@@ -66,11 +66,12 @@ char	*handle_variable_expansion(char *input, int i)
 		free(array_of_str[1]);
 		array_of_str[1] = ft_strdup("$status_process");
 	}
-	return_input = getenv(array_of_str[1] + 1);
+	ft_getenv(head, array_of_str[1] + 1, &return_input);
+	// return_input = getenv(array_of_str[1] + 1);
 	return_input = assembling(return_input, array_of_str);
 	if (return_input)
 	{
-		final_result = variable_manager(return_input);
+		final_result = variable_manager(return_input, head);
 		free(return_input);
 		return (final_result);
 	}

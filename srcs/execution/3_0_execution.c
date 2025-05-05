@@ -12,6 +12,36 @@
 
 #include "minishell.h"
 
+#include <fcntl.h>
+#include <unistd.h>
+#include <errno.h>
+#include <string.h>
+#include <stdlib.h>
+
+void determine_error_code(const char *path)
+{
+    int fd = open(path, O_RDONLY | O_DIRECTORY);
+
+    if (fd != -1)
+    {
+        // Write "is a directory" to stderr
+        write(STDERR_FILENO, "is a directory\n", 15);
+        close(fd);
+        exit(126);
+    }
+    else
+    {
+        // Write the error message to stderr
+        if (errno == EACCES)
+        {
+            write(STDERR_FILENO, "permission denied\n", 19);
+            exit(126);
+        }
+    }
+}
+
+
+
 static void	execute_child_process(t_parsed_command *command,
 	t_ast_helper *ast_helper, t_env_exp *env_exp, t_free *free_all)
 {
@@ -28,11 +58,15 @@ static void	execute_child_process(t_parsed_command *command,
 	return_value = check_build_in(command->arguments, env_exp);
 	if (return_value > -1)
 		exit(execute_build_in(command->arguments, env_exp, return_value));
-	path = find_path(env_exp->paths, command->command);
+	path = find_path(env_exp->paths, command->arguments[0]);
 	if (path == NULL)
 		exit(127);
+	determine_error_code(path);
 	if (access(path, X_OK) != 0)
-		exit(126);
+	{
+		write(STDERR_FILENO, "command not found\n", 18);
+		exit(127);
+	}
 	set_default_signals();
 	execve(path, command->arguments, env_exp->execute_env);
 	cleanup(free_all);
@@ -82,7 +116,7 @@ void dollar(t_parsed_command **command, t_env_exp *env_exp)
 		}
 		else
 		{
-			result = variable_manager((*command)->arguments[i]);
+			result = variable_manager((*command)->arguments[i], env_exp->env);
 			free((*command)->arguments[i]);
 			(*command)->arguments[i] = result;
 		}
@@ -95,7 +129,6 @@ int	execute_command(t_parsed_command *command, t_ast_helper *ast_helper,
 	int	return_value;
 	
 	dollar(&command, env_exp);
-
 	return_value = check_build_in(command->arguments, env_exp);
 	ast_helper->pids[ast_helper->counter] = fork();
 	if (ast_helper->pids[ast_helper->counter] == -1)

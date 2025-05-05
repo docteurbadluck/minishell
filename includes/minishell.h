@@ -132,7 +132,7 @@ typedef struct s_heredoc_manip
 
 
 //	***A
-char				*variable_manager(char *input);
+char				*variable_manager(char *input, t_env *head);
  
 //	***B
 char				*wildcard_manager(char *input);
@@ -256,7 +256,7 @@ t_free				init_free_all(void);
 char				*get_input(void);
 
 //	***O
-int					create_heredoc_files(int nbr_of_heredoc, t_parsed_command *array_of_cmd, char *argv0);
+int					create_heredoc_files(int nbr_of_heredoc, t_parsed_command *array_of_cmd, char *argv0, t_env *head);
 //	***Oa
 int					init_eof_and_to_modif(int nbr_heredoc,
 						t_parsed_command *array_of_cmd, t_heredoc_manip *heredoc);

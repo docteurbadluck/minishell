@@ -29,6 +29,11 @@ char	*find_path(char **paths, char *command)
 	char	*tmp_path;
 	char	*full_path;
 
+	if (access(command, F_OK) == 0)
+	{
+		full_path = ft_strdup(command);
+		return (full_path);
+	}
 	i = 0;
 	while (paths[i])
 	{
