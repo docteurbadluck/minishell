@@ -80,7 +80,9 @@ static void	handle_new_node(t_env_exp *env_exp, t_env *new_node)
 	ft_insertnode(&env_exp->exp, steps, new_node->type, new_node->data);
 }
 
-int	ft_export(t_env_exp *env_exp, char *content, int version)
+
+
+int	ft_export_execution(t_env_exp *env_exp, char *content, int version)
 {
 	t_env	*new_node;
 
@@ -97,13 +99,30 @@ int	ft_export(t_env_exp *env_exp, char *content, int version)
 	{
 		handle_existing_node(env_exp, new_node);
 	}
-		
 	else
 	{
-	
 		handle_new_node(env_exp, new_node);
 	}
 	free_str(env_exp->execute_env);
 	env_exp->execute_env = create_env_from_linked_list(env_exp->env);
+	return (0);
+}
+
+
+int	ft_export(t_env_exp *env_exp, char **arguments, int version)
+{
+	int i;
+	int result;
+
+	if (!arguments || !arguments[1])
+		return (ft_export_execution(env_exp, NULL, version));
+
+	i = 0;
+	while (arguments[++i])
+	{
+		result = ft_export_execution(env_exp, arguments[i], version);
+		if (result != 0) // Handle failure
+			return (1);
+	}
 	return (0);
 }

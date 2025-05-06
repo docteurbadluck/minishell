@@ -299,7 +299,7 @@ void	ft_envadd_back(t_env **lst, t_env *new);
 
 void ft_insertnode(t_env **exp, int steps, char *type, char *data);
 int create_exp(t_env_exp *env_exp);
-int ft_export(t_env_exp *env_exp, char *content, int version);
+int	ft_export(t_env_exp *env_exp, char **arguments, int version);
 void	insert_at_head(t_env **exp, t_env *new_node);
 void	insert_at_position(t_env **exp, int steps, t_env *new_node);
 t_env	*ft_envlast(t_env *lst);

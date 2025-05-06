@@ -63,7 +63,10 @@ t_env	*initialize_node(char *env_var, int j, int k)
 		free(node);
 		return (NULL);
 	}
-	node->data = allocate_memory(env_var, j + 1, k);
+	if (k == -1)
+		node->data = ft_strdup("\0");
+	else
+		node->data = allocate_memory(env_var, j + 1, k);
 	if (!node->data)
 	{
 		free(node->type);
@@ -79,10 +82,28 @@ t_env	*create_node(char *env_var)
 {
 	int	j;
 	int	k;
+	int str_len;
 
+	printf("here: %s\n", env_var);
+	str_len = ft_strlen(env_var);
 	j = 0;
 	while (env_var[j] && env_var[j] != '=')
+	{
+		if (j == 0 && ft_isdigit(env_var[j]))
+		{
+			write(2, "not a valid identifier\n", 23);
+			exit(1);
+		}
+		if (!(ft_isalnum(env_var[j]) || env_var[j] == '_'))
+		{
+			write(2, "not a valid identifier\n", 23);
+			exit(1);
+		}
 		j++;
+	}
+		
+	if (str_len == j)
+		return (initialize_node(env_var, str_len, -1));
 	k = j;
 	while (env_var[k])
 		k++;
