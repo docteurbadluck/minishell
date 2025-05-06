@@ -37,7 +37,7 @@ int	build_in_addition(char **command, t_env_exp *env_exp, int return_value)
 {
 	if (return_value == 3)
 	{
-		if (ft_export(env_exp, command[1], 1) != 0)
+		if (ft_export(env_exp, command, 1) != 0)
 			return (1);
 		return (0);
 	}
