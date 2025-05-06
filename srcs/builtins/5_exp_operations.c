@@ -12,6 +12,16 @@
 
 #include "minishell.h"
 
+void free_str(char **str)
+{
+	int i;
+
+	i = -1;
+	while (str[++i])
+		free(str[i]);
+	free(str);
+}
+
 // copies from env, puts it at the right spot
 // exp doesn't have _=, thats why it just copies until current_env->next
 int	create_exp(t_env_exp *env_exp)
@@ -80,7 +90,7 @@ static void	handle_new_node(t_env_exp *env_exp, t_env *new_node)
 	ft_insertnode(&env_exp->exp, steps, new_node->type, new_node->data);
 }
 
-int	ft_export(t_env_exp *env_exp, char *content, int version)
+int	ft_export_execution(t_env_exp *env_exp, char *content, int version)
 {
 	t_env	*new_node;
 
@@ -95,15 +105,39 @@ int	ft_export(t_env_exp *env_exp, char *content, int version)
 	
 	if (ft_getenv(env_exp->env, new_node->type, NULL) != 1)
 	{
-		handle_existing_node(env_exp, new_node);
+		if (ft_strncmp(new_node->data, "\0", 1) != 0)
+			handle_existing_node(env_exp, new_node);
+		else
+			free_node(new_node);
+
 	}
-		
 	else
 	{
-	
 		handle_new_node(env_exp, new_node);
 	}
 	free_str(env_exp->execute_env);
 	env_exp->execute_env = create_env_from_linked_list(env_exp->env);
+	return (0);
+}
+
+
+int	ft_export(t_env_exp *env_exp, char **arguments, int version)
+{
+	int i;
+	int result;
+
+	if (!arguments || !arguments[1])
+		return (ft_export_execution(env_exp, NULL, version));
+
+	i = 1;
+	while (arguments[i])
+	{
+
+		result = ft_export_execution(env_exp, arguments[i], version);
+		if (result != 0)
+			return (1);
+		
+		i++;
+	}
 	return (0);
 }

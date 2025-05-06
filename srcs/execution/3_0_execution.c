@@ -54,7 +54,7 @@ static int	handle_parent_process(t_parsed_command *command,
 	}
 	if (return_value == 3 && command->pipe_out != 1)
 	{
-		if (ft_export(env_exp, command->arguments[1], 2) == 1)
+		if (ft_export(env_exp, command->arguments, 2) == 1)
 			return (127);
 		return (0);
 	}

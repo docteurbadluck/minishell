@@ -29,7 +29,7 @@ t_env	*ft_envnew(void)
 	return (new_node);
 }
 
-// allocates the memory of data and type
+// Allocates memory for a substring of env_var from start to end indices
 char	*allocate_memory(char *env_var, int start, int end)
 {
 	char	*result;
@@ -45,8 +45,7 @@ char	*allocate_memory(char *env_var, int start, int end)
 	return (result);
 }
 
-// env_new() creates a new allocated node with everything set to NULL
-// this function saves the data and the type in the node
+// Creates a new t_env node and initializes its type and data
 t_env	*initialize_node(char *env_var, int j, int k)
 {
 	t_env	*node;
@@ -63,31 +62,60 @@ t_env	*initialize_node(char *env_var, int j, int k)
 		free(node);
 		return (NULL);
 	}
-	node->data = allocate_memory(env_var, j + 1, k);
+	if (k == -1)
+		node->data = ft_strdup("\0");
+	else
+		node->data = allocate_memory(env_var, j + 1, k);
+
 	if (!node->data)
 	{
 		free(node->type);
 		free(node);
 		return (NULL);
 	}
+
 	return (node);
 }
 
-// takes a string and seperates the type and the data and puts
-// everything in a env(for environment node/struct)
+// Parses env_var and separates it into type (key) and data (value)
 t_env	*create_node(char *env_var)
 {
 	int	j;
 	int	k;
+	int	str_len;
 
+	if (!env_var)
+	{
+		ft_printf("ERROR: env_var is NULL\n");
+		return (NULL);
+	}
+	if (env_var[0] == '=')
+		exit(1);
+
+	str_len = ft_strlen(env_var);
 	j = 0;
 	while (env_var[j] && env_var[j] != '=')
+	{
+		if (j == 0 && (ft_isdigit(env_var[j]) || env_var[j] == '='))
+		{
+			write(2, "not a valid identifier\n", 23);
+			exit(1);
+		}
+		if (!(ft_isalnum(env_var[j]) || env_var[j] == '_'))
+		{
+			write(2, "not a valid identifier\n", 23);
+			exit(1);
+		}
 		j++;
+	}
+	if (str_len == j)
+		return (initialize_node(env_var, str_len, -1));
 	k = j;
 	while (env_var[k])
 		k++;
 	return (initialize_node(env_var, j, k));
 }
+
 
 // this function gets the envp over main and saves everything
 // in a linked list called env
