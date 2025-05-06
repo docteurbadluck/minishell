@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 17:48:48 by jholterh          #+#    #+#             */
-/*   Updated: 2025/05/06 14:39:47 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/05/06 15:28:09 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static int	handle_parent_process(t_parsed_command *command,
 void dollar(t_parsed_command **command, t_env_exp *env_exp)
 {
 	int i = -1;
-	char *result;
+	char	*result;
 
 	while ((*command)->arguments[++i])
 	{
@@ -91,11 +91,24 @@ void dollar(t_parsed_command **command, t_env_exp *env_exp)
 
 void remove_quotation(t_parsed_command **command)
 {
-	int i = -1;
-	char *result;
+	int		i;
+	char	*result;
 
+	i = -1;
 	while ((*command)->arguments[++i])
 	{
+		if (((*command)->input_file) && ((*command)->input_file->filename))
+		{
+			result = remove_quotes((*command)->input_file->filename);
+			free((*command)->input_file->filename);
+			(*command)->input_file->filename = result;
+		}
+		if (((*command)->output_file) && ((*command)->output_file->filename))
+		{
+			result = remove_quotes((*command)->output_file->filename);
+			free((*command)->output_file->filename);
+			(*command)->output_file->filename = result;
+		}
 		result = remove_quotes((*command)->arguments[i]);
 		free((*command)->arguments[i]);
 		(*command)->arguments[i] = result;

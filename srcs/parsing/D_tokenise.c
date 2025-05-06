@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 14:30:21 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/05/06 14:15:31 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/05/06 15:03:24 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ int main()
 	
 	t_parsed_command *ptr;
 	int i = 0;
-	ptr = tokenise("adf <<sd < f  ");
+	ptr = tokenise("adf > asdf les ");
 	while (ptr[i].text)
 	{
 		printf("%s\n", ptr[i].text);

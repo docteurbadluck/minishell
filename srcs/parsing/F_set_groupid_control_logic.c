@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   F_set_groupid_control_logic.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jholterh <jholterh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 14:30:21 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/04/08 16:59:18 by jholterh         ###   ########.fr       */
+/*   Updated: 2025/05/06 15:30:16 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,8 +109,7 @@ int	control_parentheses(t_parsed_command *array)
 int main()
 {
 	char *temp;
-	char *str = "( abc > text.txt > test2. txt > test3.txt l
-	s  || && >  text4.txt def) ";
+	char *str = " abc > \"text.txt sfd\" || def";
 	char *new;
 	t_parsed_command *array;
 	int i;
@@ -141,8 +140,8 @@ int main()
 	i = 0;
 	while (array[i].text)
 	{
-		printf("text : %s, groupid : %d logical : %d\n",array[i].t
-		ext, array[i].group_id, array[i].logical_operator);
+		printf("text : %s, groupid : %d logical : %d
+		\n",array[i].text, array[i].group_id, array[i].logical_operator);
 		i++;
 	}
 	free_array(&array);

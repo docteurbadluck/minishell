@@ -35,3 +35,13 @@ bash exit code = 1
 Test  86: ❌ ls >"./outfiles/outfile with spaces" 
 Only in ./bash_outfiles: outfile with spaces
 mini outfiles:
+
+
+/home/tdeliot/Desktop/theo-branch/minishell_saved+modif/minishell/test> cat "in put.txt"
+hello
+world
+house
+tree
+carrot
+/home/tdeliot/Desktop/theo-branch/minishell_saved+modif/minishell/test> cat <"in put.txt"
+error
