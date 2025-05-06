@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 10:23:59 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/04/29 10:39:06 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/05/06 14:03:00 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,7 @@ t_parsed_command	*from_input_to_group(char *input)
 	t_parsed_command	*grouped_array;
 
 	if (!input || !ft_strlen(input))
-		return (NULL);/*
-	developped_input = developpe_input(input);
-	if (!developped_input)
-		return (NULL);*/
+		return (NULL);
 	developped_input = ft_strdup(input);
 	grouped_array = from_new_to_group_up(developped_input);
 	if (!grouped_array)

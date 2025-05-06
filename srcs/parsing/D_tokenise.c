@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   D_tokenise.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jholterh <jholterh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 14:30:21 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/04/08 16:59:09 by jholterh         ###   ########.fr       */
+/*   Updated: 2025/05/06 14:15:31 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,8 @@ t_parsed_command	*tokenise(char *input)
 		return (NULL);
 	while (input[i] && y < nbr_word)
 	{
-		split_quote(input, &i, &y, array);
 		split_special_char(input, &i, &y, array);
-		split_words(input, &i, &y, array);
+		split_word_unit(input, &i, &y, array);
 		i++;
 	}
 	return (array);

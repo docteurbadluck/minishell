@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 17:48:48 by jholterh          #+#    #+#             */
-/*   Updated: 2025/04/29 10:49:55 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/05/06 14:39:47 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,13 +89,26 @@ void dollar(t_parsed_command **command, t_env_exp *env_exp)
 	}
 }
 
+void remove_quotation(t_parsed_command **command)
+{
+	int i = -1;
+	char *result;
+
+	while ((*command)->arguments[++i])
+	{
+		result = remove_quotes((*command)->arguments[i]);
+		free((*command)->arguments[i]);
+		(*command)->arguments[i] = result;
+	}
+}
+
 int	execute_command(t_parsed_command *command, t_ast_helper *ast_helper,
 					t_env_exp *env_exp, t_free *free_all)
 {
 	int	return_value;
 	
 	dollar(&command, env_exp);
-
+	remove_quotation(&command);
 	return_value = check_build_in(command->arguments, env_exp);
 	ast_helper->pids[ast_helper->counter] = fork();
 	if (ast_helper->pids[ast_helper->counter] == -1)

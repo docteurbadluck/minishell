@@ -6,90 +6,11 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 10:23:59 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/04/29 10:05:52 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/05/06 14:02:47 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-/*
-int	read_input(char *argv0, char **envp)
-{
-	char	*input;
-	int	heredoc_counter;
-	t_free free_all;
-
-	free_all= init_free_all();
-	set_menu_signals();
-	while (1)
-	{
-		unlink_tempo_files(argv0);
-		input = get_input();
-		if (!input)
-		{
-			printf("exit\n");
-			break ;
-		}
-		if (ft_strlen(input))
-		{
-			add_history(input);
-			free_all.new_array = from_input_to_group(input);
-			 if (!free_all.new_array)
-			 {
-				free(input);
-				continue;
-			 }
-			heredoc_counter = count_heredoc(free_all.new_array);
-			if (heredoc_counter != 0)
-			{
-				if (handle_heredocs( heredoc_counter, &free_all, argv0))
-				{
-					cleanup(&free_all);
-					continue;
-				}
-			}
-			execute_input( &free_all, envp);
-		}
-		free(input);
-	}
-	rl_clear_history();
-	return 0;
-}
-int	handle_single_input(char *argv0, char **envp, t_free *free_all)
-{
-	char	*input;
-	int		heredoc_counter;
-
-	unlink_tempo_files(argv0);
-	input = get_input();
-	if (!input)
-	{
-		printf("exit\n");
-		return (-1);
-	}
-	if (ft_strlen(input))
-	{
-		add_history(input);
-		free_all->new_array = from_input_to_group(input);
-		if (!free_all->new_array)
-		{
-			free(input);
-			return ( 0);
-		}
-		heredoc_counter = count_heredoc(free_all->new_array);
-		if (heredoc_counter != 0)
-		{
-			if (handle_heredocs(heredoc_counter, free_all, argv0))
-			{
-				cleanup(free_all);
-				free(input);
-				return (0);
-			}
-		}
-		execute_input(free_all, envp);
-	}
-	free(input);
-	return (0);
-}*/
 
 // we assume that everything succeed X) 
 void	execute_input(t_free *free_all, char **envp)
@@ -146,6 +67,7 @@ int	process_input(char *argv0, char **envp, t_free *free_all, char *input)
 int	handle_single_input(char *argv0, char **envp, t_free *free_all)
 {
 	char	*input;
+
 	unlink_tempo_files(argv0);
 	input = get_input();
 	if (!input)
@@ -165,10 +87,10 @@ int	read_input(char *argv0, char **envp)
 	t_env_exp	*env_exp;
 
 	set_menu_signals();
-	if (prepare_env_exp(&env_exp, envp) != 0 )
+	if (prepare_env_exp(&env_exp, envp) != 0)
 	{
 		printf("error\n");
-		return 1;
+		return (1);
 	}
 	while (1)
 	{

@@ -1,4 +1,37 @@
-Do the variable for the input file. 
-take away the variable from the heredoc. 
-$?
-visit ishta
+writing exit do not close anymore.
+
+Test  15: ❌ echo "exit_code ->$? user ->$USER home -> $HOME" 
+mini output = (exit_code -> user ->tdeliot home -> /home/tdeliot)
+
+Test  17: ❌ echo "$" 
+mini output = ()
+
+Test  21: ❌ echo $?HELLO 
+mini output = ()
+bash output = (0HELLO)
+mini exit code = 139
+
+Test  24: ❌ export hello 
+mini exit code = 139
+bash exit code = 0
+
+Test  33: ❌ unset 
+mini output = (unset: not enough arguments unset: not enough arguments)
+bash output = ()
+mini exit code = 127
+bash exit code = 0
+
+Test  40: ❌ cd $PWD hi 
+mini exit code = 0
+bash exit code = 1
+mini error = ()
+bash error = ( too many arguments)
+Test  41: ❌ cd 123123 
+mini output = (cd: No such file or directory: 123123 cd: No such file or directory: 123123)
+bash output = ()
+mini exit code = 127
+bash exit code = 1
+
+Test  86: ❌ ls >"./outfiles/outfile with spaces" 
+Only in ./bash_outfiles: outfile with spaces
+mini outfiles:

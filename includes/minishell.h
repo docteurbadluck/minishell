@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jholterh <jholterh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:41:20 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/04/28 12:33:25 by jholterh         ###   ########.fr       */
+/*   Updated: 2025/05/06 14:41:11 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,10 +160,15 @@ void				copy_before_wildcard(t_tracker *ptr_tracker,
 
 //	***C
 int					count_word_valid_quote(const char *input);
+int					char_is(char c);
 
 //	***Cb
 void				count_op(int *i, const char *input, int *counter);
 void				set_flag(const char *input, int i, int *flag, int *counter);
+
+//	***Cc
+int					skip_escaped_or_quoted(const char *input, int *i, int *counter, int *flag);
+
 
 //	***D
 t_parsed_command	*tokenise(char *input);
@@ -173,6 +178,9 @@ void				split_special_char(char *input, int *i,
 						int *y, t_parsed_command *a);
 void				split_double_quote(char *input, int *i,
 						int *y, t_parsed_command *array);
+//	***Db
+void	split_word_unit(char *input, int *i, int *y, t_parsed_command *array);
+
 
 //	***E
 int					set_logic_op(t_parsed_command *array);
@@ -356,17 +364,18 @@ void	handle_output_file(t_parsed_command *command);
 int	execute_command_output(t_parsed_command *command, t_ast_helper *ast_helper);
 
 // parent
-static int	wait_for_pipes_and_process(t_ast_helper *ast_helper, int *status);
+//static int	wait_for_pipes_and_process(t_ast_helper *ast_helper, int *status);
 int	execute_command_parent(t_parsed_command *command, t_ast_helper *ast_helper);
 
 // execution
-static void	execute_child_process(t_parsed_command *command, t_ast_helper *ast_helper,
-	t_env_exp *env_exp, t_free *free_all);
-static int	handle_parent_process(t_parsed_command *command, t_ast_helper *ast_helper,
-	t_env_exp *env_exp, int return_value);
+//static void	execute_child_process(t_parsed_command *command, t_ast_helper *ast_helper,
+//	t_env_exp *env_exp, t_free *free_all);
+//static int	handle_parent_process(t_parsed_command *command, t_ast_helper *ast_helper,
+//	t_env_exp *env_exp, int return_value);
 int	execute_command(t_parsed_command *command, t_ast_helper *ast_helper,
 					t_env_exp *env_exp, t_free *free_all);
 
+char	*remove_quotes(char *input);
 
 
 

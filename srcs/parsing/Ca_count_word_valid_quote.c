@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Ca_count_word_valid_quote.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jholterh <jholterh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 12:51:06 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/04/08 16:59:03 by jholterh         ###   ########.fr       */
+/*   Updated: 2025/05/06 14:22:57 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 int		skip_quoted_section(const char *input, int i, char quote);
 int		skip_escaped_or_quoted(const char *input, int *i, int *c, int *flag);
 void	count_parentheses_or_op(int *i, const char *input, int *counter);
-int		char_is(char c);
 
 // This function count the number of word in the input, quoted part as one word
 // it veryfy also that the quote are closed. it work with \" it work also with '
@@ -45,45 +44,6 @@ int	count_word_valid_quote(const char *input)
 		count_parentheses_or_op(&i, input, &counter);
 	}
 	return (counter);
-}
-
-int	skip_escaped_or_quoted(const char *input, int *i, int *counter, int *flag)
-{
-	int	new_pos;
-
-	if (input[*i] == '\\' && (input[*i + 1] == '"' || input[*i + 1] == '\''))
-	{
-		*i += 2;
-		return (1);
-	}
-	if (input[*i] == '"' || input[*i] == '\'')
-	{
-		new_pos = skip_quoted_section(input, *i, input[*i]);
-		if (new_pos == -1)
-			return (-1);
-		(*counter)++;
-		*flag = 0;
-		*i = new_pos;
-		return (1);
-	}
-	return (0);
-}
-
-int	skip_quoted_section(const char *input, int i, char quote)
-{
-	i++;
-	while (input[i])
-	{
-		if (input[i] == '\\' && input[i + 1] == quote)
-			i += 2;
-		else if (input[i] == quote)
-			break ;
-		else
-			i++;
-	}
-	if (input[i] == '\0')
-		return (-1);
-	return (i + 1);
 }
 
 void	count_parentheses_or_op(int *i, const char *input, int *counter)

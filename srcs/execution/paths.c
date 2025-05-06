@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   paths.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jholterh <jholterh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 17:34:31 by jholterh          #+#    #+#             */
-/*   Updated: 2025/04/24 17:01:06 by jholterh         ###   ########.fr       */
+/*   Updated: 2025/05/06 14:39:57 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 char	**get_paths(t_env_exp *env_exp)
 {
 	char	*env_path;
-	char	**paths;
+//	char	**paths;
 
 	ft_getenv(env_exp->env, "PATH", &env_path);
 	if (env_path == NULL)
