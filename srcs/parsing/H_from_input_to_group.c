@@ -13,11 +13,11 @@
 #include "minishell.h"
 
 //modifying for wildcards
-char	*developpe_input(char *input)
+char	*developpe_input(char *input, t_env_exp *env_exp)
 {
 	char	*new;
 
-	new = variable_manager(input);
+	new = variable_manager(input, env_exp);
 	if (!new)
 	{
 		printf("error variable manager");

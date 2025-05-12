@@ -19,7 +19,7 @@ void	modif_in_struct(t_heredoc_manip *heredoc, int y)
 	heredoc->to_modif[y]->mode = 2;
 }
 
-void	transform_temp_variable(t_heredoc_manip *heredoc, int y)
+void	transform_temp_variable(t_heredoc_manip *heredoc, int y, t_env_exp *env_exp)
 {
 	int		fd;
 	char	*buffer;
@@ -38,7 +38,7 @@ void	transform_temp_variable(t_heredoc_manip *heredoc, int y)
 			result = ft_strjoin_2(result, buffer);
 	}
 	close(fd);
-	result_final = variable_manager(result);
+	result_final = variable_manager(result, env_exp);
 	fd = open(heredoc->tempfiles_names[y], O_RDWR | O_TRUNC);
 	write(fd, result_final + 1, ft_strlen(result_final) - 2);
 	close(fd);
@@ -47,7 +47,7 @@ void	transform_temp_variable(t_heredoc_manip *heredoc, int y)
 	free(result_final);
 }
 
-void	create_temp_files(t_heredoc_manip *heredoc, int nbr_of_heredoc)
+void	create_temp_files(t_heredoc_manip *heredoc, int nbr_of_heredoc, t_env_exp *env_exp)
 {
 	int		y;
 	char	quote;
@@ -68,7 +68,7 @@ void	create_temp_files(t_heredoc_manip *heredoc, int nbr_of_heredoc)
 		if (g_cancel_heredoc)
 			break ;
 		write(heredoc->fd[y], &quote, 1);
-		transform_temp_variable(heredoc, y);
+		transform_temp_variable(heredoc, y, env_exp);
 		close(heredoc->fd[y]);
 		modif_in_struct(heredoc, y);
 		y++;
@@ -100,14 +100,14 @@ void	free_heredoc(t_heredoc_manip *heredoc, int nbr_of_heredoc)
 
 //TODO quit writing if ctrl +d
 int	create_heredoc_files(int nbr_of_heredoc,
-			t_parsed_command *array_of_cmd, char *argv0)
+			t_parsed_command *array_of_cmd, char *argv0, t_env_exp *env_exp)
 {
 	t_heredoc_manip	heredoc;
 
 	if (init_eof_and_to_modif(nbr_of_heredoc, array_of_cmd, &heredoc))
 		return (-1);
 	names_tempo_files(&heredoc, argv0);
-	create_temp_files(&heredoc, nbr_of_heredoc);
+	create_temp_files(&heredoc, nbr_of_heredoc, env_exp);
 	free_heredoc(&heredoc, nbr_of_heredoc);
 	return (0);
 }

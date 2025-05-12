@@ -18,8 +18,20 @@ static void	execute_child_process(t_parsed_command *command,
 	char	*path;
 	int		return_value;
 
-	execute_command_input(command, ast_helper);
-	execute_command_output(command, ast_helper);
+	if (command->what_first == 2 || command->what_first == 0)
+	{
+		execute_command_input(command, ast_helper);
+		execute_command_output(command, ast_helper);
+	}
+	else
+	{
+		execute_command_output(command, ast_helper);
+		execute_command_input(command, ast_helper);
+	}	
+
+	
+	
+	
 	if (!command->command || !command->arguments)
 	{
 		ft_printf("Invalid command: %s\n", strerror(errno));
@@ -32,7 +44,10 @@ static void	execute_child_process(t_parsed_command *command,
 	if (path == NULL)
 		exit(127);
 	if (access(path, X_OK) != 0)
+	{
 		exit(126);
+	}
+		
 	set_default_signals();
 	execve(path, command->arguments, env_exp->execute_env);
 	cleanup(free_all);
@@ -49,19 +64,19 @@ static int	handle_parent_process(t_parsed_command *command,
 	if (return_value == 1 && command->pipe_out != 1)
 	{
 		if (ft_cd(env_exp, command->arguments[1], 0) == 1)
-			return (127);
+			return (1);
 		return (0);
 	}
 	if (return_value == 3 && command->pipe_out != 1)
 	{
 		if (ft_export(env_exp, command->arguments, 2) == 1)
-			return (127);
+			return (1);
 		return (0);
 	}
 	if (return_value == 4 && command->pipe_out != 1)
 	{
 		if (ft_unset(env_exp, command->arguments[1]) != 0)
-			return (127);
+			return (1);
 		return (0);
 	}
 	return (parent_value);
@@ -74,18 +89,10 @@ void dollar(t_parsed_command **command, t_env_exp *env_exp)
 
 	while ((*command)->arguments[++i])
 	{
-		if (ft_strncmp((*command)->arguments[i], "$?", 3) == 0)
-		{
-			result = ft_itoa(env_exp->dollar_question);
-			free((*command)->arguments[i]);
-			(*command)->arguments[i] = result;
-		}
-		else
-		{
-			result = variable_manager((*command)->arguments[i]);
-			free((*command)->arguments[i]);
-			(*command)->arguments[i] = result;
-		}
+		result = variable_manager((*command)->arguments[i], env_exp);
+		free((*command)->arguments[i]);
+		(*command)->arguments[i] = result;
+
 	}
 }
 
