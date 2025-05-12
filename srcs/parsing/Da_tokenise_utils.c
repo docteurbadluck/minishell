@@ -27,6 +27,8 @@ void	split_arrow(char *input, int *i, int *y, t_parsed_command *array)
 {
 	if (input[*i] == '>')
 	{
+		if (array->what_first == 0)
+			array->what_first = 1;
 		if (input[*i + 1] == '>')
 		{
 			array[*y].text = ft_substr(input, *i, 2);
@@ -39,6 +41,8 @@ void	split_arrow(char *input, int *i, int *y, t_parsed_command *array)
 	}
 	if (input[*i] == '<')
 	{
+		if (array->what_first == 0)
+			array->what_first = 2;
 		if (input[*i + 1] == '<')
 		{
 			array[*y].text = ft_substr(input, *i, 2);

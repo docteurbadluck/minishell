@@ -22,13 +22,13 @@ int	ft_cd(t_env_exp *env_exp, char *str, int version)
 		if (home == NULL)
 		{
 			if (version == 0)
-				ft_printf("cd: HOME not set\n");
+				write(2, "cd: HOME not set\n", 17);
 			return (1);
 		}
 		if (chdir(home) == -1)
-			return (ft_printf("cd: %s\n", strerror(errno)), 1);
+			return (write(2, "No such file or directory\n", 26), 1);
 	}
 	else if (chdir(str) == -1)
-		return (ft_printf("cd: %s: %s\n", strerror(errno), str), 1);
+		return (write(2, "No such file or directory\n", 26), 1);
 	return (0);
 }

@@ -54,6 +54,7 @@ typedef struct s_parsed_command {
 	int			has_wildcards;		// Boolean flag indicating if wildcards are present in arguments.
 	char		**list_of_files;	// list of files referenced by the wildcard.
 	int			logical_operator;	// Logical operator for command chaining (0 for none, 1 for "&&", 2 for "||", 3 for "|").
+	int			what_first;			// determines wether to process the output or the input first.
 }	t_parsed_command;
 
 typedef struct s_ast_node {
@@ -132,7 +133,7 @@ typedef struct s_heredoc_manip
 
 
 //	***A
-char				*variable_manager(char *input);
+char	*variable_manager(char *input, t_env_exp *env_exp);
  
 //	***B
 char				*wildcard_manager(char *input);
@@ -264,7 +265,8 @@ t_free				init_free_all(void);
 char				*get_input(void);
 
 //	***O
-int					create_heredoc_files(int nbr_of_heredoc, t_parsed_command *array_of_cmd, char *argv0);
+int	create_heredoc_files(int nbr_of_heredoc,
+			t_parsed_command *array_of_cmd, char *argv0, t_env_exp *env_exp);
 //	***Oa
 int					init_eof_and_to_modif(int nbr_heredoc,
 						t_parsed_command *array_of_cmd, t_heredoc_manip *heredoc);

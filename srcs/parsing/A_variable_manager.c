@@ -16,7 +16,7 @@ int		is_space_or_doll(char c);
 int		lenght_variable(char *str);
 char	**cut_input(char *input, int i);
 char	*assembling(char *variable, char **array_of_str);
-char	*handle_variable_expansion(char *input, int i);
+char	*handle_variable_expansion(char *input, int i, t_env_exp *env_exp);
 char	*assembling(char *variable, char **array_of_str);
 
 	// EXEMPLE : "ABCDEF $HOME ABCDEF" ->"ABCDEF /home/tdeliot ABCDEF"
@@ -30,7 +30,7 @@ char	*assembling(char *variable, char **array_of_str);
 	//environnement and to know we have to verify that they are not in ""
 
 	//LAST MODIF, change " to '  
-char	*variable_manager(char *input)
+char	*variable_manager(char *input, t_env_exp *env_exp)
 {
 	int		i;
 	int		flag;
@@ -48,34 +48,52 @@ char	*variable_manager(char *input)
 		}
 		if (input[i] == '$' && input[i + 1] != ' '
 			&& input[i + 1] != '\0' && !flag)
-			return (handle_variable_expansion(input, i));
+			return (handle_variable_expansion(input, i, env_exp));
 		i++;
 	}
 	return (ft_strdup(input));
 }
 
-char	*handle_variable_expansion(char *input, int i)
+char	*handle_variable_expansion(char *input, int i, t_env_exp *env_exp)
 {
 	char	**array_of_str;
 	char	*return_input;
 	char	*final_result;
+	char	*status_str;
+	char	*env_var;
+	char	*recursive_result;
 
 	array_of_str = cut_input(input, i);
+	return_input = NULL;
 	if (input[i + 1] == '?')
 	{
+		status_str = ft_itoa(env_exp->dollar_question);
 		free(array_of_str[1]);
-		array_of_str[1] = ft_strdup("$status_process");
+		array_of_str[1] = status_str;
+		return_input = ft_strdup(status_str);
 	}
-	return_input = getenv(array_of_str[1] + 1);
-	return_input = assembling(return_input, array_of_str);
-	if (return_input)
+	else
 	{
-		final_result = variable_manager(return_input);
-		free(return_input);
-		return (final_result);
+		env_var = getenv(array_of_str[1] + 1);
+		if (!env_var)
+			return_input = ft_strdup("");
+		else
+			return_input = ft_strdup(env_var);
+	}
+	final_result = assembling(return_input, array_of_str);
+	free(return_input);
+	return_input = NULL;
+	if (final_result)
+	{
+		recursive_result = variable_manager(final_result, env_exp);
+		free(final_result);
+		return (recursive_result);
 	}
 	return (NULL);
 }
+
+
+
 
 int	lenght_variable(char *str)
 {
@@ -100,9 +118,9 @@ char	**cut_input(char *input, int i)
 	array_of_str = ft_calloc(sizeof(char *), 4);
 	array_of_str[0] = ft_calloc(sizeof(char), i + 1);
 	ft_strlcpy(array_of_str[0], input, (i + 1));
-	if (input[i + 1] == '$')
+	if (input[i + 1] == '?')
 		compteur = 2;
-	else 
+	else
 		compteur = lenght_variable(&input[i]);
 	array_of_str[1] = ft_calloc(sizeof(char), compteur + 1);
 	ft_strlcpy(array_of_str[1], &input[i], compteur + 1);
@@ -114,12 +132,14 @@ char	**cut_input(char *input, int i)
 	return (array_of_str);
 }
 
+
+
 char	*assembling(char *variable, char **array_of_str)
 {
 	char	*result;
+	char	*temp;
 
 	result = NULL;
-	free(array_of_str[1]);
 	if (array_of_str[0])
 	{
 		if (variable)
@@ -135,12 +155,17 @@ char	*assembling(char *variable, char **array_of_str)
 	}
 	if (array_of_str[2])
 	{
-		result = ft_strjoin_2(result, array_of_str[2]);
+		temp = result;
+		result = ft_strjoin(result, array_of_str[2]);
+		free(temp);
 		free(array_of_str[2]);
 	}
+	free(array_of_str[1]);
 	free(array_of_str);
 	return (result);
 }
+
+
 
 /*
 int main()

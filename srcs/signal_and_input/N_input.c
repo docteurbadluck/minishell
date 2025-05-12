@@ -26,10 +26,10 @@ void	execute_input(t_free *free_all, char **envp)
 	cleanup(free_all);
 }
 
-int	handle_heredocs(int heredoc_counter, t_free *free_all, char *argv0)
+int	handle_heredocs(int heredoc_counter, t_free *free_all, char *argv0, t_env_exp *env_exp)
 {
 	set_heredoc_signals();
-	if (create_heredoc_files(heredoc_counter, free_all->new_array, argv0) == -1)
+	if (create_heredoc_files(heredoc_counter, free_all->new_array, argv0, env_exp) == -1)
 	{
 		set_menu_signals();
 		return (-1);
@@ -43,7 +43,7 @@ int	handle_heredocs(int heredoc_counter, t_free *free_all, char *argv0)
 	return (0);
 }
 
-int	process_input(char *argv0, char **envp, t_free *free_all, char *input)
+int	process_input(char *argv0, char **envp, t_free *free_all, char *input, t_env_exp *env_exp)
 {
 	int	heredoc_counter;
 
@@ -54,7 +54,7 @@ int	process_input(char *argv0, char **envp, t_free *free_all, char *input)
 	heredoc_counter = count_heredoc(free_all->new_array);
 	if (heredoc_counter != 0)
 	{
-		if (handle_heredocs(heredoc_counter, free_all, argv0))
+		if (handle_heredocs(heredoc_counter, free_all, argv0, env_exp))
 		{
 			cleanup(free_all);
 			return (0);
@@ -64,7 +64,7 @@ int	process_input(char *argv0, char **envp, t_free *free_all, char *input)
 	return (0);
 }
 
-int	handle_single_input(char *argv0, char **envp, t_free *free_all)
+int	handle_single_input(char *argv0, char **envp, t_free *free_all, t_env_exp *env_exp)
 {
 	char	*input;
 
@@ -76,7 +76,7 @@ int	handle_single_input(char *argv0, char **envp, t_free *free_all)
 		return (-1);
 	}
 	if (ft_strlen(input))
-		process_input(argv0, envp, free_all, input);
+		process_input(argv0, envp, free_all, input, env_exp);
 	free(input);
 	return (0);
 }
@@ -96,7 +96,7 @@ int	read_input(char *argv0, char **envp)
 	{
 		free_all = init_free_all();
 		free_all.env_exp = env_exp;
-		if (handle_single_input(argv0, envp, &free_all) == -1)
+		if (handle_single_input(argv0, envp, &free_all, env_exp) == -1)
 			break ;
 	}
 	free_env_exp_all(env_exp); 

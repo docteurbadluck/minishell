@@ -37,6 +37,7 @@ t_parsed_command	*tokenise(char *input)
 	array = ft_calloc(nbr_word + 1, sizeof(t_parsed_command));
 	if (!array)
 		return (NULL);
+	array->what_first = 0;
 	while (input[i] && y < nbr_word)
 	{
 		split_special_char(input, &i, &y, array);

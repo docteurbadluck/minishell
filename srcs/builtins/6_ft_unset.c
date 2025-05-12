@@ -20,8 +20,7 @@ int	ft_unset(t_env_exp *env_exp, char *content)
 
 	if (content == NULL)
 	{
-		ft_printf("unset: not enough arguments\n");
-		return (1);
+		return (0);
 	}
 	spot = find_envtype(env_exp->exp, content);
 	if (spot == -1)
