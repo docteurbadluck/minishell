@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   0_preparation.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: docteurbadluck <docteurbadluck@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 13:33:05 by jholterh          #+#    #+#             */
-/*   Updated: 2025/04/29 10:05:00 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/05/12 18:07:12 by docteurbadl      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int	prepare_env_exp(t_env_exp **env_exp, char **envp)
 		return (1);
 	}
 	(*env_exp)->execute_env = create_env_from_linked_list((*env_exp)->env);
+	(*env_exp)->paths = NULL;
 	return (0);
 }
 

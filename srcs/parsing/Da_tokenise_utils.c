@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Da_tokenise_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jholterh <jholterh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: docteurbadluck <docteurbadluck@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 16:08:26 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/04/08 16:59:12 by jholterh         ###   ########.fr       */
+/*   Updated: 2025/05/12 18:16:02 by docteurbadl      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,14 @@ void	split_arrow(char *input, int *i, int *y, t_parsed_command *array)
 		{
 			array[*y].text = ft_substr(input, *i, 2);
 			(*i)++;
+			(*i)++;
+
 		}
 		else
+		{
 			array[*y].text = ft_substr(input, *i, 1);
+			(*i)++;
+		}
 		(*y)++;
 		return ;
 	}
@@ -47,9 +52,13 @@ void	split_arrow(char *input, int *i, int *y, t_parsed_command *array)
 		{
 			array[*y].text = ft_substr(input, *i, 2);
 			(*i)++;
+			(*i)++;
 		}
 		else
+		{
 			array[*y].text = ft_substr(input, *i, 1);
+			(*i)++;
+		}
 		(*y)++;
 		return ;
 	}
@@ -63,21 +72,29 @@ void	split_operator(char *input, int *i, int *y, t_parsed_command *array)
 		{
 			array[*y].text = ft_substr(input, *i, 2);
 			(*i)++;
+			(*i)++;
 		}
 		else
+		{
 			array[*y].text = ft_substr(input, *i, 1);
+			(*i)++;
+		}
 		(*y)++;
 		return ;
 	}
 	if (input[*i] == '|')
 	{
 		if (input[*i + 1] == '|')
-		{
+			{
 			array[*y].text = ft_substr(input, *i, 2);
+			(*i)++;
 			(*i)++;
 		}
 		else
+		{
 			array[*y].text = ft_substr(input, *i, 1);
+			(*i)++;
+		}
 		(*y)++;
 		return ;
 	}

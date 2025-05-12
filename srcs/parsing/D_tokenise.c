@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   D_tokenise.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: docteurbadluck <docteurbadluck@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 14:30:21 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/05/06 15:03:24 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/05/12 18:30:30 by docteurbadl      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ t_parsed_command	*tokenise(char *input)
 	{
 		split_special_char(input, &i, &y, array);
 		split_word_unit(input, &i, &y, array);
-		i++;
+		if (input[i] == ' ')
+			i++;
 	}
 	return (array);
 }

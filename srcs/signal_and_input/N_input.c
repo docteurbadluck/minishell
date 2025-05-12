@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   N_input.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: docteurbadluck <docteurbadluck@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 10:23:59 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/05/06 14:02:47 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/05/12 18:07:53 by docteurbadl      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	handle_single_input(char *argv0, char **envp, t_free *free_all, t_env_exp *e
 
 	unlink_tempo_files(argv0);
 	input = get_input();
-	if (!input)
+	if (!input || !ft_strncmp("exit", input, 6)) //changed
 	{
 		printf("exit\n");
 		return (-1);

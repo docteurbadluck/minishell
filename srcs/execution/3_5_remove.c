@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   3_5_remove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: docteurbadluck <docteurbadluck@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 17:06:45 by jholterh          #+#    #+#             */
-/*   Updated: 2025/05/06 14:55:16 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/05/12 18:05:52 by docteurbadl      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 char	*ft_strjoin_free(char *s1, char *s2)
 {
 	char	*str1;
@@ -34,48 +33,46 @@ char	*ft_strjoin_free(char *s1, char *s2)
 	return (result);
 }
 
+void	handle_quoted_segment(char *input, int *i, int *start, char **parts)
+{
+	char	quote;
+	char	*quoted;
+
+	if (*i > *start)
+		*parts = ft_strjoin_free(*parts, ft_substr(input, *start, *i - *start));
+	quote = input[*i];
+	*start = ++(*i);
+	while (input[*i] && (input[*i] != quote 
+			|| (quote == '"' && input[*i - 1] == '\\')))
+		(*i)++;
+	quoted = ft_substr(input, *start, *i - *start);
+	*parts = ft_strjoin_free(*parts, quoted);
+	if (input[*i])
+		(*i)++;
+	*start = *i;
+}
+
 char	*remove_quotes(char *input)
 {
-	char	*result;
-	char	**parts;
+	char	*parts;
 	int		i;
 	int		start;
-	char	*quoted;
-	char	quote;
-	int		begin;
 
+	parts = ft_strdup("");
 	start = 0;
 	i = 0;
-	parts = ft_calloc(sizeof(char *), 4);
-	result = NULL;
 	while (input[i])
 	{
 		if (input[i] == '\'' || input[i] == '"')
-		{
-			if (i > start)
-				parts[0] = ft_strjoin_free(parts[0],
-						ft_substr(input, start, i - start));
-			quote = input[i];
-			begin = ++i;
-			while (input[i] && (input[i] != quote
-					|| (quote == '"' && input[i - 1] == '\\')))
-				i++;
-			quoted = ft_substr(input, begin, i - begin);
-			parts[0] = ft_strjoin_free(parts[0], quoted);
-			if (input[i])
-				i++;
-			start = i;
-		}
+			handle_quoted_segment(input, &i, &start, &parts);
 		else
 			i++;
 	}
 	if (start < i)
-		parts[0] = ft_strjoin_free(parts[0],
-				ft_substr(input, start, i - start));
-	result = ft_strdup(parts[0]);
-	free(parts[0]);
-	free(parts);
-	return (result);
+		parts = ft_strjoin_free(parts, ft_substr(input, start, i - start));
+	if (!parts)
+		parts = ft_strdup(input);
+	return (parts);
 }
 
 char	*remove_backslash(char *input)

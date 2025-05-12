@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   A_variable_manager.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: docteurbadluck <docteurbadluck@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:16:54 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/04/26 13:40:53 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/05/12 18:29:41 by docteurbadl      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,7 @@ char	*assembling(char *variable, char **array_of_str);
 	//the goal of this function is to transform $VARIABLE from the input 
 	// into his value. We are doing it first to have a all elements before
 	// starting to verify the input.not modify in quotation variable. 
-
-	// $$ ne fonctionne pas $? est remplacer par STATUS_LAST_PROCESS
-	// TO MAKE IT WORK I ADD IN THE ENVIRONEMENT $status_process
-	// so it's inportant to verify at the beggining that it is in the 
-	//environnement and to know we have to verify that they are not in ""
-
+	
 	//LAST MODIF, change " to '  
 char	*variable_manager(char *input, t_env_exp *env_exp)
 {
@@ -46,7 +41,7 @@ char	*variable_manager(char *input, t_env_exp *env_exp)
 			flag++;
 			flag %= 2;
 		}
-		if (input[i] == '$' && input[i + 1] != ' '
+		if (input[i] == '$' && input[i + 1] != ' ' && input[i + 1] != '"'
 			&& input[i + 1] != '\0' && !flag)
 			return (handle_variable_expansion(input, i, env_exp));
 		i++;
