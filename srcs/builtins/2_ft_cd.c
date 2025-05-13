@@ -6,16 +6,21 @@
 /*   By: jholterh <jholterh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 15:29:04 by jholterh          #+#    #+#             */
-/*   Updated: 2025/04/24 16:32:45 by jholterh         ###   ########.fr       */
+/*   Updated: 2025/05/13 13:09:03 by jholterh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_cd(t_env_exp *env_exp, char *str, int version)
+int	ft_cd(t_env_exp *env_exp, char **str, int version)
 {
 	char	*home;
 
+	if (str[2] != NULL)
+	{
+		write(2, "too many arguments\n", 19);
+		return (1);
+	}
 	if (str == NULL)
 	{
 		ft_getenv(env_exp->env, "HOME", &home);
@@ -28,7 +33,7 @@ int	ft_cd(t_env_exp *env_exp, char *str, int version)
 		if (chdir(home) == -1)
 			return (write(2, "No such file or directory\n", 26), 1);
 	}
-	else if (chdir(str) == -1)
+	else if (chdir(str[1]) == -1)
 		return (write(2, "No such file or directory\n", 26), 1);
 	return (0);
 }

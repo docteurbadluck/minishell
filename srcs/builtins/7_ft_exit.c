@@ -6,17 +6,11 @@
 /*   By: jholterh <jholterh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 15:50:54 by jholterh          #+#    #+#             */
-/*   Updated: 2025/04/16 18:21:13 by jholterh         ###   ########.fr       */
+/*   Updated: 2025/05/13 13:06:03 by jholterh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-
-#include <stdlib.h>
-#include <ctype.h>
-#include <unistd.h>
-#include <stdio.h>
 
 void	ft_exit(char **args)
 {
@@ -38,7 +32,7 @@ void	ft_exit(char **args)
 		if (!isdigit(args[1][i]))
 		{
 			write(2, "exit: numeric argument required\n", 32);
-			exit(255);
+			exit(2);
 		}
 		i++;
 	}

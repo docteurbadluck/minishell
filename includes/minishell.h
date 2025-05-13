@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jholterh <jholterh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:41:20 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/05/06 14:41:11 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/05/13 13:02:21 by jholterh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -288,7 +288,7 @@ void				print_ast_balanced(t_ast_node *root);
 
 // built in
 int ft_echo(char **str);
-int ft_cd(t_env_exp *env_exp, char *str, int version);
+int	ft_cd(t_env_exp *env_exp, char **str, int version);
 int ft_pwd();
 void ft_exit(char **args);
 
