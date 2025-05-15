@@ -1,6 +1,6 @@
 CC = cc
 CFLAGS = -g -Iincludes -I/usr/local/opt/readline/include -Wall -Wextra -Werror
-LIBFT = -Llibft -lft
+LIBFT = -Llibft- -lft
 READLINE = -L/usr/local/opt/readline/lib -lreadline
 
 HEADERS = includes/minishell.h
@@ -54,7 +54,7 @@ $(BUILD_DIR)/%.o: srcs/%.c $(HEADERS)
 
 # Build the libft library
 lib:
-	@make -C libft > /dev/null 2>&1
+	@make -C libft- > /dev/null 2>&1
 
 # Create the build directory
 create-dir:
