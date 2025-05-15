@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 10:23:59 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/04/26 10:56:10 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/05/14 10:27:26 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@
 */
 int	alloc_heredoc(int nbr_heredoc, t_heredoc_manip	*heredoc)
 {
-	heredoc->EOFtext = ft_calloc(nbr_heredoc + 1, sizeof(char *));
+	heredoc->eoftext = ft_calloc(nbr_heredoc + 1, sizeof(char *));
 	heredoc->to_modif = ft_calloc(nbr_heredoc + 1, sizeof(t_iofile *));
 	heredoc->tempfiles_names = ft_calloc(nbr_heredoc + 1, sizeof(t_iofile));
-	if (!(*heredoc).EOFtext || !(*heredoc).tempfiles_names
+	if (!(*heredoc).eoftext || !(*heredoc).tempfiles_names
 		|| !(*heredoc).to_modif)
 	{
 		printf("problem alloc\n");
@@ -52,7 +52,7 @@ static void	fill_eof_and_to_modif(
 			if (array_of_cmd[i].input_file[y].filename
 				&& array_of_cmd[i].input_file[y].mode == 4)
 			{
-				(*heredoc).EOFtext[*z] = ft_strdup(array_of_cmd[i]
+				(*heredoc).eoftext[*z] = ft_strdup(array_of_cmd[i]
 						.input_file[y].filename);
 				(*heredoc).to_modif[*z] = &array_of_cmd[i].input_file[y];
 				(*z)++;
@@ -82,7 +82,7 @@ void	names_tempo_files(t_heredoc_manip *heredoc, char *argv0)
 	char	*file_name;
 
 	y = 0;
-	while ((*heredoc).EOFtext[y])
+	while ((*heredoc).eoftext[y])
 	{
 		number = ft_itoa(y);
 		file_name = ft_strjoin(number, "temp.txt");
@@ -100,7 +100,7 @@ void	write_into_temp(t_heredoc_manip *heredoc, int y)
 	char	*limiter;
 
 	result = NULL;
-	limiter = ft_strjoin(heredoc->EOFtext[y], "\n");
+	limiter = ft_strjoin(heredoc->eoftext[y], "\n");
 	while (1)
 	{
 		if (result != NULL)

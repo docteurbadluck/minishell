@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   3_5_remove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: docteurbadluck <docteurbadluck@student.    +#+  +:+       +#+        */
+/*   By: jholterh <jholterh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 17:06:45 by jholterh          #+#    #+#             */
-/*   Updated: 2025/05/12 18:05:52 by docteurbadl      ###   ########.fr       */
+/*   Updated: 2025/05/13 17:14:53 by jholterh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
 char	*ft_strjoin_free(char *s1, char *s2)
 {
 	char	*str1;
@@ -94,4 +95,30 @@ char	*remove_backslash(char *input)
 		i++;
 	}
 	return (result);
+}
+
+void	remove_quotation(t_parsed_command **command)
+{
+	int		i;
+	char	*result;
+
+	i = -1;
+	while ((*command)->arguments[++i])
+	{
+		if ((*command)->input_file && (*command)->input_file->filename)
+		{
+			result = remove_quotes((*command)->input_file->filename);
+			free((*command)->input_file->filename);
+			(*command)->input_file->filename = result;
+		}
+		if ((*command)->output_file && (*command)->output_file->filename)
+		{
+			result = remove_quotes((*command)->output_file->filename);
+			free((*command)->output_file->filename);
+			(*command)->output_file->filename = result;
+		}
+		result = remove_quotes((*command)->arguments[i]);
+		free((*command)->arguments[i]);
+		(*command)->arguments[i] = result;
+	}
 }

@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   N_input.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: docteurbadluck <docteurbadluck@student.    +#+  +:+       +#+        */
+/*   By: jholterh <jholterh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 10:23:59 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/05/12 18:07:53 by docteurbadl      ###   ########.fr       */
+/*   Updated: 2025/05/15 15:22:53 by jholterh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-// we assume that everything succeed X) 
-void	execute_input(t_free *free_all, char **envp)
+void	execute_input(t_free *free_all)
 {
 	free_all->tree = from_group_to_tree(&free_all->new_array);
 	set_ignore_signals();
@@ -26,10 +25,12 @@ void	execute_input(t_free *free_all, char **envp)
 	cleanup(free_all);
 }
 
-int	handle_heredocs(int heredoc_counter, t_free *free_all, char *argv0, t_env_exp *env_exp)
+int	handle_heredocs(int heredoc_counter, t_free *free_all
+		, char *argv0, t_env_exp *env_exp)
 {
 	set_heredoc_signals();
-	if (create_heredoc_files(heredoc_counter, free_all->new_array, argv0, env_exp) == -1)
+	if (create_heredoc_files(heredoc_counter
+			, free_all->new_array, argv0, env_exp) == -1)
 	{
 		set_menu_signals();
 		return (-1);
@@ -43,12 +44,11 @@ int	handle_heredocs(int heredoc_counter, t_free *free_all, char *argv0, t_env_ex
 	return (0);
 }
 
-int	process_input(char *argv0, char **envp, t_free *free_all, char *input, t_env_exp *env_exp)
+int	process_input(char *argv0, t_free *free_all
+		, t_env_exp *env_exp)
 {
 	int	heredoc_counter;
 
-	add_history(input);
-	free_all->new_array = from_input_to_group(input);
 	if (!free_all->new_array)
 		return (0);
 	heredoc_counter = count_heredoc(free_all->new_array);
@@ -60,23 +60,32 @@ int	process_input(char *argv0, char **envp, t_free *free_all, char *input, t_env
 			return (0);
 		}
 	}
-	execute_input(free_all, envp);
+	execute_input(free_all);
 	return (0);
 }
 
-int	handle_single_input(char *argv0, char **envp, t_free *free_all, t_env_exp *env_exp)
+int	handle_single_input(char *argv0, t_free *free_all, t_env_exp *env_exp)
 {
 	char	*input;
 
 	unlink_tempo_files(argv0);
 	input = get_input();
-	if (!input || !ft_strncmp("exit", input, 6)) //changed
+	if (!input || !ft_strncmp("exit", input, 6))
 	{
-		printf("exit\n");
+		ft_printf("exit\n");
 		return (-1);
 	}
+	if (ft_strchr(input, '\n'))
+	{
+		ft_printf("error multiple line\n");
+		return (0);
+	}
 	if (ft_strlen(input))
-		process_input(argv0, envp, free_all, input, env_exp);
+	{
+		add_history(input);
+		free_all->new_array = from_input_to_group(input);
+		process_input(argv0, free_all, env_exp);
+	}
 	free(input);
 	return (0);
 }
@@ -89,14 +98,14 @@ int	read_input(char *argv0, char **envp)
 	set_menu_signals();
 	if (prepare_env_exp(&env_exp, envp) != 0)
 	{
-		printf("error\n");
+		ft_printf("error\n");
 		return (1);
 	}
 	while (1)
 	{
 		free_all = init_free_all();
 		free_all.env_exp = env_exp;
-		if (handle_single_input(argv0, envp, &free_all, env_exp) == -1)
+		if (handle_single_input(argv0, &free_all, env_exp) == -1)
 			break ;
 	}
 	free_env_exp_all(env_exp); 

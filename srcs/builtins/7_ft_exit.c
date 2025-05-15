@@ -5,52 +5,48 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jholterh <jholterh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/04 15:50:54 by jholterh          #+#    #+#             */
-/*   Updated: 2025/05/13 13:06:03 by jholterh         ###   ########.fr       */
+/*   Created: 2025/05/13 16:13:20 by jholterh          #+#    #+#             */
+/*   Updated: 2025/05/13 17:44:33 by jholterh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+static int	is_numeric_argument(const char *arg)
+{
+	int	i;
+
+	i = 0;
+	if (arg[i] == '-' || arg[i] == '+')
+		i++;
+	if (arg[i] == '\0')
+		return (0);
+	while (arg[i])
+	{
+		if (!isdigit(arg[i]))
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+static void	handle_exit_error(const char *message, int exit_code)
+{
+	write(2, message, 32);
+	exit(exit_code);
+}
+
 void	ft_exit(char **args)
 {
 	int	number;
-	int	i;
 
 	if (args == NULL || args[0] == NULL || args[1] == NULL)
 		exit(0);
-	i = 0;
-	if (args[1][i] == '-' || args[1][i] == '+')
-		i++;
-	if (args[1][i] == '\0')
-	{
-		write(2, "exit: numeric argument required\n", 32);
-		exit(255);
-	}
-	while (args[1][i])
-	{
-		if (!isdigit(args[1][i]))
-		{
-			write(2, "exit: numeric argument required\n", 32);
-			exit(2);
-		}
-		i++;
-	}
 	if (args[2] != NULL)
-	{
-		write(2, "exit: too many arguments\n", 25);
-		exit(1);
-	}
-	number = ft_atoi(args[1]);
+		handle_exit_error("exit: too many arguments\n", 1);
+	if (!is_numeric_argument(args[1]))
+		handle_exit_error("exit: numeric argument required\n", 2);
+	number = atoi(args[1]);
 	number = (number % 256 + 256) % 256;
 	exit(number);
 }
-
-
-
-
-
-
-
-
-

@@ -6,19 +6,22 @@
 /*   By: jholterh <jholterh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 15:31:51 by jholterh          #+#    #+#             */
-/*   Updated: 2025/04/28 13:08:14 by jholterh         ###   ########.fr       */
+/*   Updated: 2025/05/13 17:50:11 by jholterh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void free_str(char **str)
+void	free_str(char **str)
 {
-	int i;
+	int	i;
 
-	i = -1;
-	while (str[++i])
+	i = 0;
+	while (str[i])
+	{
 		free(str[i]);
+		i++;
+	}
 	free(str);
 }
 
@@ -68,28 +71,6 @@ void	replace_data(t_env *head, t_env *new_node)
 	current->data = ft_strdup(new_node->data);
 }
 
-// ft_export should do the same as export
-// content = NULL --> print env but sorted
-// content = LOGNAME=tdeliot --> find out wether the type already exists
-//		 --> replace the data if it exists
-//		 --> create a new node if it doesn't
-// both linked lists need to be updated, exp needs to stay sorted
-static void	handle_existing_node(t_env_exp *env_exp, t_env *new_node)
-{
-	replace_data(env_exp->env, new_node);
-	replace_data(env_exp->exp, new_node);
-	free_node(new_node);
-}
-
-static void	handle_new_node(t_env_exp *env_exp, t_env *new_node)
-{
-	int	steps;
-
-	ft_envadd_back_minus_one(&env_exp->env, new_node);
-	steps = find_exp_spot(env_exp->exp, new_node->type);
-	ft_insertnode(&env_exp->exp, steps, new_node->type, new_node->data);
-}
-
 int	ft_export_execution(t_env_exp *env_exp, char *content, int version)
 {
 	t_env	*new_node;
@@ -99,44 +80,38 @@ int	ft_export_execution(t_env_exp *env_exp, char *content, int version)
 		ft_env(env_exp->exp, version);
 		return (0);
 	}
-	new_node = create_node(content);
+	if (ft_strncmp(content, "=", 2) == 0)
+		return (1);
+	new_node = create_node(content, version);
 	if (!new_node)
 		return (-1);
-	
 	if (ft_getenv(env_exp->env, new_node->type, NULL) != 1)
 	{
 		if (ft_strncmp(new_node->data, "\0", 1) != 0)
 			handle_existing_node(env_exp, new_node);
 		else
 			free_node(new_node);
-
 	}
 	else
-	{
 		handle_new_node(env_exp, new_node);
-	}
 	free_str(env_exp->execute_env);
 	env_exp->execute_env = create_env_from_linked_list(env_exp->env);
 	return (0);
 }
 
-
 int	ft_export(t_env_exp *env_exp, char **arguments, int version)
 {
-	int i;
-	int result;
+	int	i;
+	int	result;
 
 	if (!arguments || !arguments[1])
 		return (ft_export_execution(env_exp, NULL, version));
-
 	i = 1;
 	while (arguments[i])
 	{
-
 		result = ft_export_execution(env_exp, arguments[i], version);
 		if (result != 0)
 			return (1);
-		
 		i++;
 	}
 	return (0);

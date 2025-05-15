@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 10:23:59 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/04/26 10:52:56 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/05/14 10:27:50 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ void	modif_in_struct(t_heredoc_manip *heredoc, int y)
 	heredoc->to_modif[y]->mode = 2;
 }
 
-void	transform_temp_variable(t_heredoc_manip *heredoc, int y, t_env_exp *env_exp)
+void	transform_temp_variable(t_heredoc_manip *heredoc
+		, int y, t_env_exp *env_exp)
 {
 	int		fd;
 	char	*buffer;
@@ -47,7 +48,8 @@ void	transform_temp_variable(t_heredoc_manip *heredoc, int y, t_env_exp *env_exp
 	free(result_final);
 }
 
-void	create_temp_files(t_heredoc_manip *heredoc, int nbr_of_heredoc, t_env_exp *env_exp)
+void	create_temp_files(t_heredoc_manip *heredoc
+		, int nbr_of_heredoc, t_env_exp *env_exp)
 {
 	int		y;
 	char	quote;
@@ -82,14 +84,14 @@ void	free_heredoc(t_heredoc_manip *heredoc, int nbr_of_heredoc)
 	i = 0;
 	while (i < nbr_of_heredoc)
 	{
-		if (heredoc->EOFtext[i])
-			free(heredoc->EOFtext[i]);
+		if (heredoc->eoftext[i])
+			free(heredoc->eoftext[i]);
 		if (heredoc->tempfiles_names[i])
 			free(heredoc->tempfiles_names[i]);
 		i++;
 	}
-	if (heredoc->EOFtext)
-		free(heredoc->EOFtext);
+	if (heredoc->eoftext)
+		free(heredoc->eoftext);
 	if (heredoc->tempfiles_names)
 		free(heredoc->tempfiles_names);
 	if (heredoc->to_modif)

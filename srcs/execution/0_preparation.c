@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   0_preparation.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: docteurbadluck <docteurbadluck@student.    +#+  +:+       +#+        */
+/*   By: jholterh <jholterh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 13:33:05 by jholterh          #+#    #+#             */
-/*   Updated: 2025/05/12 18:07:12 by docteurbadl      ###   ########.fr       */
+/*   Updated: 2025/05/13 17:52:42 by jholterh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	prepare_env_exp(t_env_exp **env_exp, char **envp)
 		ft_printf("%s, Memory allocation failed\n", strerror(errno));
 		return (1);
 	}
-	(*env_exp)->env = safe_env(envp);
+	(*env_exp)->env = safe_env(envp, 2);
 	if ((*env_exp)->env == NULL)
 	{
 		ft_printf("%s, Failed to initialize environment\n", strerror(errno));
@@ -50,13 +50,12 @@ void	free_paths(char **paths)
 	int	i;
 
 	if (!paths)
-		return;
+		return ;
 	i = 0;
 	while (paths[i])
 		free(paths[i++]);
 	free(paths);
 }
-
 
 void	cleanup(t_free *free_all)
 {
@@ -75,5 +74,3 @@ void	cleanup(t_free *free_all)
 		}
 	}
 }
-
-

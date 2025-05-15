@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   Da_tokenise_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: docteurbadluck <docteurbadluck@student.    +#+  +:+       +#+        */
+/*   By: jholterh <jholterh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 16:08:26 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/05/12 18:16:02 by docteurbadl      ###   ########.fr       */
+/*   Updated: 2025/05/15 15:20:51 by jholterh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 void	split_arrow(char *input, int *i, int *y, t_parsed_command *array);
-void	split_operator(char *input, int *i, int *y, t_parsed_command *array);
 void	split_parenthesis(char *input, int *i, int *y, t_parsed_command *array);
 
 void	split_special_char(char *input, int *i, int *y, t_parsed_command *a)
@@ -23,25 +22,28 @@ void	split_special_char(char *input, int *i, int *y, t_parsed_command *a)
 	split_parenthesis(input, i, y, a);
 }
 
+static void	handle_greater(char *input, int *i, int *y, t_parsed_command *array)
+{
+	if (array->what_first == 0)
+		array->what_first = 1;
+	if (input[*i + 1] == '>')
+	{
+		array[*y].text = ft_substr(input, *i, 2);
+		(*i) += 2;
+	}
+	else
+	{
+		array[*y].text = ft_substr(input, *i, 1);
+		(*i)++;
+	}
+	(*y)++;
+}
+
 void	split_arrow(char *input, int *i, int *y, t_parsed_command *array)
 {
 	if (input[*i] == '>')
 	{
-		if (array->what_first == 0)
-			array->what_first = 1;
-		if (input[*i + 1] == '>')
-		{
-			array[*y].text = ft_substr(input, *i, 2);
-			(*i)++;
-			(*i)++;
-
-		}
-		else
-		{
-			array[*y].text = ft_substr(input, *i, 1);
-			(*i)++;
-		}
-		(*y)++;
+		handle_greater(input, i, y, array);
 		return ;
 	}
 	if (input[*i] == '<')
@@ -64,53 +66,19 @@ void	split_arrow(char *input, int *i, int *y, t_parsed_command *array)
 	}
 }
 
-void	split_operator(char *input, int *i, int *y, t_parsed_command *array)
-{
-	if (input[*i] == '&')
-	{
-		if (input[*i + 1] == '&')
-		{
-			array[*y].text = ft_substr(input, *i, 2);
-			(*i)++;
-			(*i)++;
-		}
-		else
-		{
-			array[*y].text = ft_substr(input, *i, 1);
-			(*i)++;
-		}
-		(*y)++;
-		return ;
-	}
-	if (input[*i] == '|')
-	{
-		if (input[*i + 1] == '|')
-			{
-			array[*y].text = ft_substr(input, *i, 2);
-			(*i)++;
-			(*i)++;
-		}
-		else
-		{
-			array[*y].text = ft_substr(input, *i, 1);
-			(*i)++;
-		}
-		(*y)++;
-		return ;
-	}
-}
-
 void	split_parenthesis(char *input, int *i, int *y, t_parsed_command *array)
 {
 	if (input[*i] == '(')
 	{
 		array[*y].text = ft_substr(input, *i, 1);
+		(*i)++;
 		(*y)++;
 		return ;
 	}
 	if (input[*i] == ')')
 	{
 		array[*y].text = ft_substr(input, *i, 1);
+		(*i)++;
 		(*y)++;
 		return ;
 	}

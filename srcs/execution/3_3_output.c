@@ -6,7 +6,7 @@
 /*   By: jholterh <jholterh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 17:05:06 by jholterh          #+#    #+#             */
-/*   Updated: 2025/04/25 13:31:55 by jholterh         ###   ########.fr       */
+/*   Updated: 2025/05/13 16:01:54 by jholterh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	handle_before_output_files(int num_files, t_iofile *file)
 		if (fd == -1)
 		{
 			perror("Error creating file\n");
-			// maybe handle free here
 			exit(1);
 		}
 		close(fd);
