@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Bc_set_wildcard.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jholterh <jholterh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 11:40:57 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/04/08 16:58:56 by jholterh         ###   ########.fr       */
+/*   Updated: 2025/05/19 09:29:19 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,13 +91,6 @@ int i, t_list **list_of_tracker)
 	}
 }
 
-// work without wildcard.  still work
-// work with one wildcard in arg 
-// work with " "
-// work with two wildcard in arg :  work with one wrong one correct.
-// work with two correct 
-// work now.
-// if one wildcar into arg + one into redirection it work
 void	process_wildcard_tracker(t_tracker *ptr_tracker, int *flag)
 {
 	char	*temp;

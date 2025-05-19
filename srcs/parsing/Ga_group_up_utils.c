@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Ga_group_up_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jholterh <jholterh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 14:30:21 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/04/08 16:59:52 by jholterh         ###   ########.fr       */
+/*   Updated: 2025/05/19 09:30:28 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,27 +45,6 @@ void	fill_arguments(t_parsed_command *array, int save_pos, int *i, int *y)
 	(*i)++;
 	(*y)++;
 }
-/*
-void	fill_arguments_and_redirections(t_parsed_command *array,
-	int save_pos, int *i)
-{
-int	y;
-int	z;
-
-y = 0;
-z = 0;
-while (array[*i].text && array[save_pos].group_id == array[*i].group_id)
-{
-if (array[*i].logical_operator == 4)
-	fill_redirections(array, save_pos, i, &z);
-else
-	fill_arguments(array, save_pos, i, &y);
-}
-(*i)--;
-if (array[save_pos].arguments[0]) // modif
-array[save_pos].command = ft_strdup(array[save_pos].arguments[0]);
-}
-*/
 
 int	fill_arguments_and_redirections(t_parsed_command *array,
 			int save_pos, int *i)
@@ -90,13 +69,6 @@ int	fill_arguments_and_redirections(t_parsed_command *array,
 	}
 	return (1);
 }
-/*
-void	allocate_and_fill_arguments(t_parsed_command *array,
-			int save_pos, int count_arg, int *i)
-{
-	allocate_argument_arrays(array, save_pos, count_arg);
-	fill_arguments_and_redirections(array, save_pos, i);
-}*/
 
 int	allocate_and_fill_arguments(t_parsed_command *array,
 	int save_pos, int count_arg, int *i)

@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 12:42:07 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/05/06 15:30:24 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/05/19 09:28:43 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,3 @@ int	main(int argc, char **argv, char **envp)
 	read_input(argv[0], envp);
 	return (0);
 }
-
-// pwd && unset HOME && cd || echo yes
-//  ls -l && echo <hello | ls -l 
-// cat < input.txt | sort | tee | grep a > output.txt

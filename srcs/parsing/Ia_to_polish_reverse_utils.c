@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Ia_to_polish_reverse_utils.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jholterh <jholterh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 10:23:59 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/04/08 17:00:49 by jholterh         ###   ########.fr       */
+/*   Updated: 2025/05/19 09:31:05 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,26 +67,6 @@ void	send_element(t_list **operator_stack, t_list **output_list)
 		free(temp);
 	}
 }
-/*
-void	print_shunting_yard(t_list *output_list, t_list *operator_stack)
-{
-	t_parsed_command	*ptr;
-
-	printf(" output list : \n");
-	while (output_list)
-	{
-		ptr = output_list->content;
-		printf("%s\n", ptr->command);
-		output_list = output_list->next;
-	}
-	printf(" operator stack : \n");
-	while (operator_stack)
-	{
-		ptr = operator_stack->content;
-		printf("%s\n", ptr->command);
-		operator_stack = operator_stack->next;
-	}
-}*/
 
 void	print_list(t_list *output_list)
 {

@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 10:23:59 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/05/14 10:27:26 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/05/19 09:32:10 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
  // store EOF and position for later modification.
  // create tempfiles names.
  // print " or ' depending on quote heredoc.
- // create a child which read in paralele. 
  //when eof or ctrld D close.
  //print another ' 
  // modify the 
@@ -75,7 +74,7 @@ int	init_eof_and_to_modif(int nbr_heredoc,
 	return (0);
 }
 
-void	names_tempo_files(t_heredoc_manip *heredoc, char *argv0)
+void	names_tempo_files(t_heredoc_manip *heredoc, char *way_to_tmp)
 {
 	int		y;
 	char	*number;
@@ -86,8 +85,7 @@ void	names_tempo_files(t_heredoc_manip *heredoc, char *argv0)
 	{
 		number = ft_itoa(y);
 		file_name = ft_strjoin(number, "temp.txt");
-		(*heredoc).tempfiles_names[y] = name_and_path_generator(argv0, "tmp",
-				file_name);
+		(*heredoc).tempfiles_names[y] = ft_strjoin(way_to_tmp, file_name);
 		free(file_name);
 		free(number);
 		y++;

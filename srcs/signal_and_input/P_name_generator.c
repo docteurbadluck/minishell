@@ -6,53 +6,53 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 10:23:59 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/04/26 10:56:11 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/05/19 09:27:35 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-char	*name_and_path_generator(char *argv0, char *directory, char *file_name)
+char	*path_to_tmp(char *argv0)
 {
 	char	*temp;
-	int		i;
-	int		counter;
+	char	cwd[10000];
+	char	*last_slash;
 
-	counter = 0;
-	i = ft_strlen(argv0);
-	while (i > 0)
+	if (argv0[0] == '/')
 	{
-		if (argv0[i] == '/')
-		{
-			counter++; 
-			if (counter == 2)
-			{
-				i++;
-				break ;
-			}
-		}
-		i--;
+		temp = ft_strdup(argv0);
 	}
-	temp = ft_substr(argv0, 0, i);
-	temp = ft_strjoin_2(temp, directory);
+	else
+	{
+		if (!getcwd(cwd, sizeof(cwd)))
+		return NULL;
+		temp = ft_strjoin(cwd,"/");
+		temp = ft_strjoin_2(temp,argv0);
+	}
+	last_slash = ft_strrchr(temp, '/');
+	if (last_slash)
+	{
+		last_slash++;
+		*last_slash = '\0';
+	}
+	temp = ft_strjoin_2(temp, "tmp");
 	temp = ft_strjoin_2(temp, "/");
-	temp = ft_strjoin_2(temp, file_name);
 	return (temp);
 }
-
-void	unlink_tempo_files(char *argv0)
+void	unlink_tempo_files(char *way_to_tmp)
 {
 	int		y;
 	char	*number;
 	char	*file_name;
 	char	*tmp;
+	
 
 	y = 0;
 	while (1)
 	{
 		number = ft_itoa(y);
 		file_name = ft_strjoin(number, "temp.txt");
-		tmp = name_and_path_generator(argv0, "tmp", file_name);
+		tmp = ft_strjoin(way_to_tmp, file_name);
 		if (access(tmp, F_OK) == 0)
 			unlink(tmp);
 		else
@@ -68,7 +68,6 @@ void	unlink_tempo_files(char *argv0)
 		y++;
 	}
 }
-
 /*
 int main(int argc, char **argv)
 {

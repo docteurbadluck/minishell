@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   G_group_up.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jholterh <jholterh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 14:30:21 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/04/08 16:59:26 by jholterh         ###   ########.fr       */
+/*   Updated: 2025/05/19 09:30:12 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,6 @@ t_parsed_command	*group_up(t_parsed_command **array)
 	create_new_array(*array, new);
 	return (new);
 }
-//fixed we have two array : one for the argument one for the redirection. 
-//every redirection are store on the seconde one, the other string are 
-//store normally.
-// comand is defined at the end, it's a duplication of the first element
-// of the arg array.
-// free new array has been corrected to free the array also.
 
 int	set_up_arg(t_parsed_command *array)
 {

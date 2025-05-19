@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jholterh <jholterh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:41:20 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/05/15 16:55:55 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/05/19 09:26:32 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -286,8 +286,7 @@ void				names_tempo_files(t_heredoc_manip *heredoc, char *argv0);
 void				write_into_temp(t_heredoc_manip *heredoc, int y);
 
 //	***P 
-char				*name_and_path_generator(char *argv0,
-						char *directory, char *file_name);
+char				*path_to_tmp(char *argv0);
 void				unlink_tempo_files(char *argv0);
 
 //	***X
