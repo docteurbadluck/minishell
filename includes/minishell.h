@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:41:20 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/05/19 09:26:32 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/06/03 10:39:06 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # define _XOPEN_SOURCE 700
 # define _POSIX_C_SOURCE 200809L
 
-# include "../libft-/libft.h"
+# include "../libft/libft.h"
 # include <dirent.h>
 # include <stdlib.h>
 # include <readline/readline.h>
@@ -141,6 +141,7 @@ char				*process_final_result(char *final_result,
 						t_env_exp *env_exp);
 char				*handle_variable_expansion(char *input,
 						int i, t_env_exp *env_exp);
+int					should_expand_variable(char *input, int i, int flag);
 
 //	***B
 char				*wildcard_manager(char *input);
@@ -165,6 +166,7 @@ void				free_wildcard_list(void *content);
 void				free_str_list(void *content);
 void				copy_before_wildcard(t_tracker *ptr_tracker,
 						t_list **list_of_str, int *i);
+char				*prepare_input_for_wildcard(char *input, char **pwd);
 
 //	***C
 int					count_word_valid_quote(const char *input);
@@ -276,8 +278,10 @@ char				*get_input(void);
 
 //	***O
 int					create_heredoc_files(int nbr_of_heredoc,
-						t_parsed_command *array_of_cmd,
-						char *argv0, t_env_exp *env_exp);
+						t_parsed_command *array_of_cmd, char *way_to_tmp);
+void				transform_heredoc_variable(char *filename,
+						t_env_exp *env_exp);
+
 //	***Oa
 int					init_eof_and_to_modif(int nbr_heredoc,
 						t_parsed_command *array_of_cmd,
@@ -286,8 +290,10 @@ void				names_tempo_files(t_heredoc_manip *heredoc, char *argv0);
 void				write_into_temp(t_heredoc_manip *heredoc, int y);
 
 //	***P 
-char				*path_to_tmp(char *argv0);
 void				unlink_tempo_files(char *argv0);
+char				*path_to_tmp(char *argv0);
+void				heredoc_dollar(t_parsed_command *command,
+						t_env_exp *env_exp);
 
 //	***X
 void				free_array(t_parsed_command **array);
@@ -302,7 +308,7 @@ void				print_ast_balanced(t_ast_node *root);
 int					ft_echo(char **str);
 int					ft_cd(t_env_exp *env_exp, char **str, int version);
 int					ft_pwd(void);
-void				ft_exit(char **args);
+void				ft_exit(char **args, int version);
 
 char				*allocate_memory(char *env_var, int start, int end);
 t_env				*initialize_node(char *env_var, int j, int k);

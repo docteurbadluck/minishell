@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:16:54 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/05/19 09:28:59 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/06/03 09:07:43 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,20 +23,20 @@ char	*variable_manager(char *input, t_env_exp *env_exp)
 {
 	int		i;
 	int		flag;
+	int		inquote_flag;
 
-	flag = 0;
-	i = 0;
 	if (!input)
 		return (NULL);
+	flag = 0;
+	inquote_flag = 0;
+	i = 0;
 	while (input[i])
 	{
-		if (input[i] == '\'')
-		{
-			flag++;
-			flag %= 2;
-		}
-		if (input[i] == '$' && input[i + 1] != ' ' && input[i + 1] != '"'
-			&& input[i + 1] != '\0' && !flag)
+		if (input[i] == '\"')
+			inquote_flag = (inquote_flag + 1) % 2;
+		if (input[i] == '\'' && inquote_flag == 0)
+			flag = (flag + 1) % 2;
+		if (should_expand_variable(input, i, flag))
 			return (handle_variable_expansion(input, i, env_exp));
 		i++;
 	}
@@ -50,7 +50,7 @@ int	lenght_variable(char *str)
 	str++;
 	i = 0;
 	while (str[i] && str[i] != '$' && str[i] != ' ' && str[i] != '\t'
-		&& str[i] != '"' && str[i] != '\n')
+		&& str[i] != '"' && str[i] != '\n' && str[i] != '\'')
 	{
 		i++;
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   I_from_group_to_polish_reverse.c                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jholterh <jholterh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 10:23:59 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/04/08 17:00:47 by jholterh         ###   ########.fr       */
+/*   Updated: 2025/06/02 16:29:30 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,30 +120,4 @@ int main()
 	}
 	free_new_array(&new_array);
 	return (0);
-}
-*/
-/*
-ls >a >b >>c empty a and b 
-
-ls >>a >>b >>c write ls in each of them 
-
-tdeliot@c4c4c4:~/Desktop/usefull_but/test$ ls >>a >b >c
-tdeliot@c4c4c4:~/Desktop/usefull_but/test$ ls
-a  b  c  minishell
-tdeliot@c4c4c4:~/Desktop/usefull_but/test$ cat a
-tdeliot@c4c4c4:~/Desktop/usefull_but/test$ cat b
-tdeliot@c4c4c4:~/Desktop/usefull_but/test$ cat c
-a
-b
-c
-minishell
-ls >>a >b >c
-tdeliot@c4c4c4:~/Desktop/usefull_but/test$ cat a
-tdeliot@c4c4c4:~/Desktop/usefull_but/test$ cat b
-tdeliot@c4c4c4:~/Desktop/usefull_but/test$ cat c
-a
-b
-c
-minishell
-
-*/
+}*/

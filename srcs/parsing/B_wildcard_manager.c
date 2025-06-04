@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   B_wildcard_manager.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jholterh <jholterh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 12:37:33 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/04/08 16:58:50 by jholterh         ###   ########.fr       */
+/*   Updated: 2025/06/03 10:38:37 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,62 +112,17 @@ char	*wildcard_generator(char *input)
 	char	*output_wild;
 	char	*new_input;
 	int		i;
+	char	*pwd;
 
 	i = 0;
-	if (check_current_dir_input(input) == 1)
-	{
-		printf("incorect directory wildcard\n");
+	new_input = prepare_input_for_wildcard(input, &pwd);
+	if (!new_input)
 		return (NULL);
-	}
-	if (check_current_dir_input(input) == 2)
-		new_input = input + ft_strlen(getenv("PWD")) + 1;
-	else
-		new_input = input;
 	names = name_array_generator();
 	output_wild = get_filtered_wildcard_matches(new_input, names);
 	while (names[i])
-	{
-		free(names[i]);
-		i++;
-	}
+		free(names[i++]);
 	free(names);
+	free(pwd);
 	return (output_wild);
 }
-
-/*
-
-int main()
-{
-	
-	char *new = wildcard_manager("*b.out");
-	printf(".%s.\n\n", new);
-	free(new);
-
-	char *test1 = wildcard_manager("/home/tdeliot/Desktop/
-	minishell_git/minishell.c/ *.out");
-	printf(".%s.\n\n", test1);
-	free(test1);
-
-	char *test2 = wildcard_manager("*.out");
-	printf(".%s.\n\n", test2);
-	free(test2);
-
-	char *test3 = wildcard_manager("*.*");
-	printf(".%s.\n\n", test3);
-	free(test3);
-
-	char *test4 = wildcard_manager(" *.* *out");
-	printf(".%s.\n\n", test4);
-	free(test4);
-
-	char *test5 = wildcard_manager("*out /home/tdeliot/Deskto
-	p/minishell_git/minishell.c/ *.out *out");
-	printf(".%s.\n\n", test5);
-	free(test5);
-
-	char *test6 = wildcard_manager(" abcde \".*  \" *out");
-	printf(".%s.\n\n", test6);
-	free(test6);
-	
-	return 0;
-}*/

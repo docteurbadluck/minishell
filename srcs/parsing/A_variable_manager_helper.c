@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   A_variable_manager_helper.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jholterh <jholterh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 17:25:17 by jholterh          #+#    #+#             */
-/*   Updated: 2025/05/13 17:28:02 by jholterh         ###   ########.fr       */
+/*   Updated: 2025/06/03 09:07:53 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,12 @@ char	*handle_variable_expansion(char *input, int i, t_env_exp *env_exp)
 	if (final_result)
 		return (process_final_result(final_result, env_exp));
 	return (NULL);
+}
+
+int	should_expand_variable(char *input, int i, int flag)
+{
+	if (input[i] == '$' && input[i + 1] != ' ' && input[i + 1] != '"'
+		&& input[i + 1] != '\0' && !flag)
+		return (1);
+	return (0);
 }

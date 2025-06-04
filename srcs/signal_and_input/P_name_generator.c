@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 10:23:59 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/05/19 09:27:35 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/06/02 16:16:39 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ char	*path_to_tmp(char *argv0)
 	else
 	{
 		if (!getcwd(cwd, sizeof(cwd)))
-		return NULL;
-		temp = ft_strjoin(cwd,"/");
-		temp = ft_strjoin_2(temp,argv0);
+			return (NULL);
+		temp = ft_strjoin(cwd, "/");
+		temp = ft_strjoin_2(temp, argv0);
 	}
 	last_slash = ft_strrchr(temp, '/');
 	if (last_slash)
@@ -39,13 +39,13 @@ char	*path_to_tmp(char *argv0)
 	temp = ft_strjoin_2(temp, "/");
 	return (temp);
 }
+
 void	unlink_tempo_files(char *way_to_tmp)
 {
 	int		y;
 	char	*number;
 	char	*file_name;
 	char	*tmp;
-	
 
 	y = 0;
 	while (1)
@@ -68,6 +68,24 @@ void	unlink_tempo_files(char *way_to_tmp)
 		y++;
 	}
 }
+
+void	heredoc_dollar(t_parsed_command *command, t_env_exp *env_exp)
+{
+	int	i;
+
+	i = 0;
+	(void)env_exp;
+	while (command->input_file[i].filename)
+	{
+		if (command->input_file[i].mode == 4)
+		{
+			transform_heredoc_variable(command->input_file[i].filename,
+				env_exp);
+		}
+		i++;
+	}
+}
+
 /*
 int main(int argc, char **argv)
 {

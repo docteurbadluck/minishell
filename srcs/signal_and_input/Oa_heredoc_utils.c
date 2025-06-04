@@ -6,21 +6,12 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 10:23:59 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/05/19 09:32:10 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/06/02 16:31:23 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-/*
- //count the number of <<
- // store EOF and position for later modification.
- // create tempfiles names.
- // print " or ' depending on quote heredoc.
- //when eof or ctrld D close.
- //print another ' 
- // modify the 
-*/
 int	alloc_heredoc(int nbr_heredoc, t_heredoc_manip	*heredoc)
 {
 	heredoc->eoftext = ft_calloc(nbr_heredoc + 1, sizeof(char *));

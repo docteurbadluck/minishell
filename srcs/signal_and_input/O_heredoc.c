@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 10:23:59 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/05/19 09:25:28 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/06/02 16:13:34 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,16 @@ void	modif_in_struct(t_heredoc_manip *heredoc, int y)
 {
 	free(heredoc->to_modif[y]->filename);
 	heredoc->to_modif[y]->filename = ft_strdup(heredoc->tempfiles_names[y]);
-	heredoc->to_modif[y]->mode = 2;
 }
 
-void	transform_temp_variable(t_heredoc_manip *heredoc
-		, int y, t_env_exp *env_exp)
+void	transform_heredoc_variable(char *filename, t_env_exp *env_exp)
 {
 	int		fd;
 	char	*buffer;
 	char	*result;
 	char	*result_final;
 
-	fd = open(heredoc->tempfiles_names[y], O_RDWR);
+	fd = open(filename, O_RDWR);
 	buffer = get_next_line(fd);
 	if (buffer)
 		result = ft_strdup(buffer);
@@ -40,7 +38,7 @@ void	transform_temp_variable(t_heredoc_manip *heredoc
 	}
 	close(fd);
 	result_final = variable_manager(result, env_exp);
-	fd = open(heredoc->tempfiles_names[y], O_RDWR | O_TRUNC);
+	fd = open(filename, O_RDWR | O_TRUNC);
 	write(fd, result_final + 1, ft_strlen(result_final) - 2);
 	close(fd);
 	free(result);
@@ -49,7 +47,7 @@ void	transform_temp_variable(t_heredoc_manip *heredoc
 }
 
 void	create_temp_files(t_heredoc_manip *heredoc
-		, int nbr_of_heredoc, t_env_exp *env_exp)
+		, int nbr_of_heredoc)
 {
 	int		y;
 	char	quote;
@@ -70,7 +68,6 @@ void	create_temp_files(t_heredoc_manip *heredoc
 		if (g_cancel_heredoc)
 			break ;
 		write(heredoc->fd[y], &quote, 1);
-		transform_temp_variable(heredoc, y, env_exp);
 		close(heredoc->fd[y]);
 		modif_in_struct(heredoc, y);
 		y++;
@@ -102,14 +99,14 @@ void	free_heredoc(t_heredoc_manip *heredoc, int nbr_of_heredoc)
 
 //TODO quit writing if ctrl +d
 int	create_heredoc_files(int nbr_of_heredoc,
-			t_parsed_command *array_of_cmd, char *way_to_tmp, t_env_exp *env_exp)
+			t_parsed_command *array_of_cmd, char *way_to_tmp)
 {
 	t_heredoc_manip	heredoc;
 
 	if (init_eof_and_to_modif(nbr_of_heredoc, array_of_cmd, &heredoc))
 		return (-1);
 	names_tempo_files(&heredoc, way_to_tmp);
-	create_temp_files(&heredoc, nbr_of_heredoc, env_exp);
+	create_temp_files(&heredoc, nbr_of_heredoc);
 	free_heredoc(&heredoc, nbr_of_heredoc);
 	return (0);
 }

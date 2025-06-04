@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 10:23:59 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/05/19 09:37:30 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/06/02 16:31:01 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@ void	execute_input(t_free *free_all)
 }
 
 int	handle_heredocs(int heredoc_counter, t_free *free_all
-		, char *way_to_tmp, t_env_exp *env_exp)
+		, char *argv0)
 {
 	set_heredoc_signals();
 	if (create_heredoc_files(heredoc_counter
-			, free_all->new_array, way_to_tmp, env_exp) == -1)
+			, free_all->new_array, argv0) == -1)
 	{
 		set_menu_signals();
 		return (-1);
@@ -44,8 +44,7 @@ int	handle_heredocs(int heredoc_counter, t_free *free_all
 	return (0);
 }
 
-int	process_input(char *way_to_tmp, t_free *free_all
-		, t_env_exp *env_exp)
+int	process_input(char *argv0, t_free *free_all)
 {
 	int	heredoc_counter;
 
@@ -54,7 +53,7 @@ int	process_input(char *way_to_tmp, t_free *free_all
 	heredoc_counter = count_heredoc(free_all->new_array);
 	if (heredoc_counter != 0)
 	{
-		if (handle_heredocs(heredoc_counter, free_all, way_to_tmp, env_exp))
+		if (handle_heredocs(heredoc_counter, free_all, argv0))
 		{
 			cleanup(free_all);
 			return (0);
@@ -64,17 +63,15 @@ int	process_input(char *way_to_tmp, t_free *free_all
 	return (0);
 }
 
-int	handle_single_input(char *way_to_tmp, t_free *free_all, t_env_exp *env_exp)
+int	handle_single_input(char *way_to_tmp, t_free *free_all)
 {
 	char	*input;
 
 	unlink_tempo_files(way_to_tmp);
 	input = get_input();
-	if (!input || !ft_strncmp("exit", input, 6)) // have to delete this exit
+	if (!input)
 	{
 		ft_printf("exit\n");
-		if (input)
-			free(input);
 		return (-1);
 	}
 	if (ft_strchr(input, '\n'))
@@ -87,7 +84,7 @@ int	handle_single_input(char *way_to_tmp, t_free *free_all, t_env_exp *env_exp)
 	{
 		add_history(input);
 		free_all->new_array = from_input_to_group(input);
-		process_input(way_to_tmp, free_all, env_exp);
+		process_input(way_to_tmp, free_all);
 	}
 	free(input);
 	return (0);
@@ -110,20 +107,10 @@ int	read_input(char *argv0, char **envp)
 	{
 		free_all = init_free_all();
 		free_all.env_exp = env_exp;
-		if (handle_single_input(way_to_tmp, &free_all, env_exp) == -1)
+		if (handle_single_input(way_to_tmp, &free_all) == -1)
 			break ;
 	}
-	free(way_to_tmp);
 	free_env_exp_all(env_exp); 
 	rl_clear_history();
 	return (0);
 }
-
-/*
-int	main(int argc, char **argv, char **envp)
-{
-	(void)argc;
-	read_input(argv[0], envp);
-	return (0);
-}
-*/

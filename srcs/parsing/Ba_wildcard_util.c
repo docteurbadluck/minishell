@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Ba_wildcard_util.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jholterh <jholterh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 11:40:57 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/04/08 16:58:53 by jholterh         ###   ########.fr       */
+/*   Updated: 2025/06/03 10:39:19 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	compte_name(void)
 	int				nbr_of_name;
 
 	nbr_of_name = 0;
-	pwd = getenv("PWD");
+	pwd = getcwd(NULL, 0);
 	one_dir = opendir(pwd);
 	entry = readdir(one_dir);
 	while (entry != NULL)
@@ -29,6 +29,7 @@ int	compte_name(void)
 		entry = readdir(one_dir);
 	}
 	closedir(one_dir);
+	free(pwd);
 	return (nbr_of_name);
 }
 
@@ -38,10 +39,12 @@ char	**name_array_generator(void)
 	struct dirent	*entry;
 	char			**list_of_name;
 	int				i;
+	char			*name_dir;
 
 	i = 0;
 	list_of_name = ft_calloc((compte_name() + 1), sizeof(char *));
-	my_dir = opendir(getenv("PWD"));
+	name_dir = getcwd(NULL, 0);
+	my_dir = opendir(name_dir);
 	entry = readdir(my_dir);
 	while (entry != NULL)
 	{
@@ -50,6 +53,7 @@ char	**name_array_generator(void)
 		entry = readdir(my_dir);
 	}
 	closedir(my_dir);
+	free(name_dir);
 	return (list_of_name);
 }
 
@@ -58,17 +62,24 @@ int	check_current_dir_input(char *input)
 	char	*pwd; 
 	int		len_pwd;
 
-	pwd = getenv("PWD");
+	pwd = getcwd(NULL, 0);
 	len_pwd = ft_strlen(pwd);
 	if (ft_strchr(input, '/'))
 	{
 		if (ft_strncmp(input, pwd, len_pwd) == 0
 			&& input[len_pwd] == '/')
+		{
+			free(pwd);
 			return (2);
+		}
+		free(pwd);
 		return (1);
 	}
 	else 
+	{
+		free(pwd);
 		return (0);
+	}
 }
 
 int	matching_name(char *pattern, char *name, int first_call)

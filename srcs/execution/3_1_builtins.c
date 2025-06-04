@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   3_1_builtins.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jholterh <jholterh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 12:53:25 by jholterh          #+#    #+#             */
-/*   Updated: 2025/05/15 15:54:23 by jholterh         ###   ########.fr       */
+/*   Updated: 2025/06/02 16:17:31 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,9 @@ int	build_in_addition(char **command, t_env_exp *env_exp, int return_value)
 		return (0);
 	}
 	if (return_value == 7)
-		ft_exit(command);
+	{
+		ft_exit(command, 1);
+	}
 	if (return_value == 8)
 		ft_printf("%d\n", env_exp->dollar_question);
 	return (-1);

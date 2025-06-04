@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Be_free.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jholterh <jholterh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 11:40:57 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/04/08 16:59:01 by jholterh         ###   ########.fr       */
+/*   Updated: 2025/06/03 10:39:53 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,22 @@ void	copy_before_wildcard(t_tracker *ptr_tracker,
 		ft_lstadd_back(list_of_str, ft_lstnew(temp));
 		(*i)++;
 	}
+}
+
+char	*prepare_input_for_wildcard(char *input, char **pwd)
+{
+	char	*new_input;
+
+	*pwd = getcwd(NULL, 0);
+	if (check_current_dir_input(input) == 1)
+	{
+		free(*pwd);
+		printf("incorrect directory wildcard\n");
+		return (NULL);
+	}
+	if (check_current_dir_input(input) == 2)
+		new_input = input + ft_strlen(*pwd) + 1;
+	else
+		new_input = input;
+	return (new_input);
 }

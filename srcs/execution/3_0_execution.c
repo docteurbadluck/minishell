@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   3_0_execution.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jholterh <jholterh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 12:52:05 by jholterh          #+#    #+#             */
-/*   Updated: 2025/05/15 14:20:29 by jholterh         ###   ########.fr       */
+/*   Updated: 2025/06/02 16:17:07 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ int	execute_command(t_parsed_command *command, t_ast_helper *ast_helper,
 {
 	int	return_value;
 
+	heredoc_dollar(command, env_exp);
 	dollar(&command, env_exp);
 	remove_quotation(&command);
 	return_value = check_build_in(command->arguments);
