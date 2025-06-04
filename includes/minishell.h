@@ -6,7 +6,7 @@
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:41:20 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/06/03 10:39:06 by tdeliot          ###   ########.fr       */
+/*   Updated: 2025/06/04 08:04:00 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # define _XOPEN_SOURCE 700
 # define _POSIX_C_SOURCE 200809L
 
-# include "../libft/libft.h"
+# include "../libft-/libft.h"
 # include <dirent.h>
 # include <stdlib.h>
 # include <readline/readline.h>
