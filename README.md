@@ -33,6 +33,6 @@ make
 
 👥 Authors
 
-docteurbadluck
+- docteurbadluck
 
-Collaborator: jholter
+- jholterh
