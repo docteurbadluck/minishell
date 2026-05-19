@@ -18,3 +18,13 @@ int	main(int argc, char **argv, char **envp)
 	read_input(argv[0], envp);
 	return (0);
 }
+
+/*
+prepare
+loop
+	read_input
+	parse
+	execution
+	free
+free
+*/

@@ -1,0 +1,22 @@
+cut read_input in 3 part, one part for init_env one comand_loop and one free_data 
+
+change form_imput_to_group for from_imput_to_parsed_command
+
+crée un sub directory par lettre, avec un .h dans chaque avec 
+
+sup directory, from_imput_to_parsed_command,
+from_parsed_command_to_tree
+
+delete all commented code.
+
+imput 
+parsing deviens 5 fonctions : tokenise regroup heredoc tree variable (remove quotation)
+
+executions deviens : preparation child_process parent_process 
+child process/build_in_exec handle_redirection exec
+
+handle command execution -> handle_fd
+
+third element : orchestrator: have 3 mode, input mode, heredoc_mode executing mode
+each mode set the correct signal
+

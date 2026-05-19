@@ -85,14 +85,3 @@ void	heredoc_dollar(t_parsed_command *command, t_env_exp *env_exp)
 		i++;
 	}
 }
-
-/*
-int main(int argc, char **argv)
-{
-
-	(void)argc;
-	char *name = name_and_path_generator(argv[0], "tmp", "0temp.txt");
-	printf("%s\n", name);
-	free(name);
-	return 0;
-}*/

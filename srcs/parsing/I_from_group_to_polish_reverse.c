@@ -88,36 +88,3 @@ t_list	*from_group_to_polish_reverse(t_parsed_command *new_array)
 		send_element(&operator_stack, &output_list);
 	return (output_list);
 }
-
-/*
-//redirection < > << >> = 4 | = 3 && = 2 || = 1
-int main()
-{
-	char *str = "(A && B) || (C | (D && E) || (F | G)) && H";
-	t_parsed_command	*new_array;
-	t_list *output_list;
-	t_list *ptr;
-	t_list	*temp;
-	
-	new_array =  from_input_to_group(str);
-	if (!new_array)
-		return (1);
-	output_list = from_group_to_polish_reverse(new_array);
-
-	ptr = output_list;
-	while (ptr)
-	{
-		printf("%s, ", ((t_parsed_command *)ptr->content)->command);
-		ptr = ptr->next;
-	}
-	
-	ptr = output_list;
-	while (ptr)
-	{
-		temp = ptr;
-		ptr = ptr->next;
-		free(temp);
-	}
-	free_new_array(&new_array);
-	return (0);
-}*/

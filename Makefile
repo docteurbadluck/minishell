@@ -1,7 +1,15 @@
 CC = cc
-CFLAGS = -g -Iincludes -I/usr/local/opt/readline/include -Wall -Wextra -Werror
+UNAME := $(shell uname)
+ifeq ($(UNAME), Darwin)
+    CFLAGS = -g -Iincludes -I/usr/local/opt/readline/include -Wall -Wextra -Werror
+    READLINE = -L/usr/local/opt/readline/lib -lreadline
+    READLINE_HEADER = /usr/local/opt/readline/include/readline/readline.h
+else
+    CFLAGS = -g -Iincludes -Wall -Wextra -Werror
+    READLINE = -lreadline
+    READLINE_HEADER = /usr/include/readline/readline.h
+endif
 LIBFT = -Llibft- -lft
-READLINE = -L/usr/local/opt/readline/lib -lreadline
 
 HEADERS = includes/minishell.h
 BUILD_DIR = build
@@ -42,7 +50,13 @@ OBJ_FILES = $(SRC:srcs/%.c=$(BUILD_DIR)/%.o)
 NAME = minishell
 
 # Default rule
-all: lib create-dir $(NAME)
+all: check-readline lib create-dir $(NAME)
+
+check-readline:
+	@if [ ! -f "$(READLINE_HEADER)" ]; then \
+		echo "readline not found, installing..."; \
+		sudo apt-get install -y libreadline-dev; \
+	fi
 
 $(NAME): $(OBJ_FILES)
 	$(CC) $(CFLAGS) $(OBJ_FILES) $(LIBFT) $(READLINE) -o $(NAME)
@@ -72,4 +86,7 @@ fclean: clean
 # Full rebuild
 re: fclean all
 
-.PHONY: all clean fclean re
+install-deps:
+	sudo apt-get install -y libreadline-dev
+
+.PHONY: all check-readline clean fclean re install-deps

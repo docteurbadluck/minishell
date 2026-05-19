@@ -15,9 +15,6 @@
 //function with all sign with mutlipe of them
 int	control_operator(char *redirection)
 {
-	int	y;
-
-	y = 0;
 	if (redirection && (!ft_strncmp(redirection, ">", 1)
 			|| !ft_strncmp(redirection, "<", 1)))
 		return (0);
