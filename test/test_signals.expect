@@ -1,0 +1,132 @@
+#!/usr/bin/expect
+
+log_user 1
+set timeout 5
+set MINISHELL "/home/docteurbadluck/Desktop/minishell/minishell"
+set PROMPT "> "
+
+proc run_test {name body} {
+    global MINISHELL PROMPT
+    puts "\n=== $name ==="
+    if {[catch $body err]} {
+        puts "✗ $name : ERREUR ($err)"
+    }
+}
+
+# --- TEST 1 : SIGINT au menu ---
+run_test "TEST 1 : SIGINT au menu" {
+    spawn $MINISHELL
+    expect $PROMPT
+    send "\x03"
+    expect {
+        $PROMPT { puts "✓ SIGINT au menu : OK" }
+        timeout { puts "✗ SIGINT au menu : TIMEOUT" }
+        eof     { puts "✗ SIGINT au menu : minishell a quitte" }
+    }
+    send "exit\n"
+    wait
+}
+
+# --- TEST 2 : SIGINT pendant sleep ---
+run_test "TEST 2 : SIGINT pendant sleep 5" {
+    spawn $MINISHELL
+    expect $PROMPT
+    send "sleep 5\n"
+    sleep 1
+    send "\x03"
+    expect {
+        $PROMPT { puts "✓ SIGINT pendant sleep : OK" }
+        timeout { puts "✗ SIGINT pendant sleep : TIMEOUT" }
+        eof     { puts "✗ SIGINT pendant sleep : minishell a quitte" }
+    }
+    send "exit\n"
+    wait
+}
+
+# --- TEST 3 : SIGQUIT pendant sleep ---
+run_test "TEST 3 : SIGQUIT pendant sleep 5" {
+    spawn $MINISHELL
+    expect $PROMPT
+    send "sleep 5\n"
+    sleep 1
+    send "\x1c"
+    expect {
+        $PROMPT { puts "✓ SIGQUIT pendant sleep : OK" }
+        timeout { puts "✗ SIGQUIT pendant sleep : TIMEOUT" }
+        eof     { puts "✗ SIGQUIT pendant sleep : minishell a quitte" }
+    }
+    send "exit\n"
+    wait
+}
+
+# --- TEST 4 : SIGINT pendant heredoc ---
+run_test "TEST 4 : SIGINT pendant heredoc" {
+    spawn $MINISHELL
+    expect $PROMPT
+    send "cat << EOF\n"
+    expect {
+        ">"     {}
+        timeout { puts "✗ heredoc : prompt > non apparu"; return }
+        eof     { puts "✗ heredoc : minishell a quitte"; return }
+    }
+    sleep 0.5
+    send "\x03"
+    expect {
+        $PROMPT { puts "✓ SIGINT pendant heredoc : OK" }
+        timeout { puts "✗ SIGINT pendant heredoc : TIMEOUT" }
+        eof     { puts "✗ SIGINT pendant heredoc : minishell a quitte" }
+    }
+    send "exit\n"
+    wait
+}
+
+run_test "TEST 5 : ctrl +D pendant heredoc" {
+    spawn $MINISHELL
+    expect $PROMPT
+    send "cat << eof\n"
+    expect {
+        ">" {}
+        timeout {puts " x heredoc : nothing happened"; return}
+        eof { puts "✗ heredoc : minishell a quitte"; return }
+    }
+    sleep 0.5
+    send "\x04"
+    expect {
+        $PROMPT { puts "✓ eof pendant heredoc : OK" }
+        timeout { puts "✗ eof pendant heredoc : TIMEOUT" }
+        eof     { puts "✗ eof pendant heredoc : minishell a quitte" }
+    }
+    send "exit\n"
+    wait
+}
+
+
+# --- TEST 6 : CTRL+D au menu → minishell doit quitter ---
+run_test "TEST 6 : ctrl+D au menu" {
+    spawn $MINISHELL
+    expect $PROMPT
+    send "\x04"
+    expect {
+        eof     { puts "✓ ctrl+D au menu : minishell a quitte" }
+        timeout { puts "✗ ctrl+D au menu : minishell n'a pas quitte" }
+    }
+    wait
+}
+
+# --- TEST 7 : CTRL+D pendant `cat` → EOF envoyé à cat, minishell revient au prompt ---
+run_test "TEST 7 : ctrl+D pendant cat" {
+    spawn $MINISHELL
+    expect $PROMPT
+    send "cat\n"
+    sleep 0.5
+    send "\x04"
+    expect {
+        $PROMPT { puts "✓ ctrl+D pendant cat : retour au prompt" }
+        timeout { puts "✗ ctrl+D pendant cat : TIMEOUT" }
+        eof     { puts "✗ ctrl+D pendant cat : minishell a quitte" }
+    }
+    send "exit\n"
+    wait
+}
+
+puts "\n=== DONE ==="
