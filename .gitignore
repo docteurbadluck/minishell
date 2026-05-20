@@ -1,3 +1,6 @@
 minishell_tester
 build
+tmp
 minishell
+libft-/*.o
+libft-/*.a
