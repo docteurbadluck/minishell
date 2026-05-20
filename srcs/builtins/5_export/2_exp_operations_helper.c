@@ -10,7 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "export.h"
+
 
 // ft_export should do the same as export
 // content = NULL --> print env but sorted

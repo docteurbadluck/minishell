@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "env.h"
 
 void	ft_envadd_front(t_env **lst, t_env *new)
 {

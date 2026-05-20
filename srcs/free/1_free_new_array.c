@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "free.h"
 
 void	free_array(t_parsed_command **array)
 {

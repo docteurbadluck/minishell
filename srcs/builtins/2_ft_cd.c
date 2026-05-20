@@ -10,7 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "builtins.h"
+
 
 static int	handle_cd_home(t_env_exp *env_exp, int version)
 {

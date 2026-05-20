@@ -10,7 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "export.h"
+#include "../../execution/execution.h"
+
 
 void	free_str(char **str)
 {

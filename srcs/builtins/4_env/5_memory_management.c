@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "env.h"
 
 // frees a single node
 void	free_node(t_env *node)

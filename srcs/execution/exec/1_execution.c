@@ -10,10 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include "../signal_and_input/heredoc/heredoc.h"
-#include "../signal_and_input/signal/signal.h"
-#include "../parsing/variable/variable.h"
+#include "exec.h"
+#include "../execution.h"
+#include "../../signal_and_input/heredoc/heredoc.h"
+#include "../../signal_and_input/signal/signal.h"
+#include "../../parsing/variable/variable.h"
 
 static void	handle_command_execution(t_parsed_command *command,
 		t_ast_helper *ast_helper)

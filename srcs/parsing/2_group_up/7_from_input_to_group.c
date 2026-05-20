@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "group_up.h"
+#include "../../free/free.h"
 #include "../1_tokenise/tokenise.h"
 #include "../3_build_tree/build_tree.h"
 #include "../wildcard/wildcard.h"

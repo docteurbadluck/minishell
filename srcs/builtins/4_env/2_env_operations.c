@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "env.h"
 
 // check if type is already in the file and returns specific number;
 // if it doesn't exist it returns -1

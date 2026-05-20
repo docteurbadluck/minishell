@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "env.h"
 
 char	*allocate_memory(char *env_var, int start, int end);
 t_env	*create_node(char *env_var, int version);

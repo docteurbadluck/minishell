@@ -16,11 +16,12 @@ BUILD_DIR = build
 
 # Source files with updated structure
 SRC = srcs/builtins/1_ft_echo.c srcs/builtins/2_ft_cd.c srcs/builtins/3_ft_pwd.c \
-	srcs/builtins/4_env_insert.c srcs/builtins/4_env_operations.c srcs/builtins/4_env_utils.c \
-	srcs/builtins/4_linked_list_utils.c srcs/builtins/4_memory_management.c srcs/builtins/5_exp_operations_helper.c \
-	srcs/builtins/5_exp_operations.c srcs/builtins/6_ft_unset.c srcs/builtins/7_ft_exit.c \
-	srcs/execution/paths.c srcs/execution/3_1_builtins.c srcs/execution/3_2_input.c \
-	srcs/execution/3_3_output.c srcs/execution/3_4_parent.c srcs/execution/3_5_remove.c srcs/execution/3_0_execution.c \
+	srcs/builtins/4_env/1_env_insert.c srcs/builtins/4_env/2_env_operations.c srcs/builtins/4_env/3_env_utils.c \
+	srcs/builtins/4_env/4_linked_list_utils.c srcs/builtins/4_env/5_memory_management.c srcs/builtins/5_export/2_exp_operations_helper.c \
+	srcs/builtins/5_export/1_exp_operations.c srcs/builtins/6_ft_unset.c srcs/builtins/7_ft_exit.c \
+	srcs/execution/3_paths.c srcs/execution/exec/1_execution.c srcs/execution/exec/2_builtins.c \
+	srcs/execution/exec/3_input.c srcs/execution/exec/4_output.c srcs/execution/exec/5_parent.c \
+	srcs/execution/exec/6_remove.c srcs/execution/exec/7_validate_permission_direc.c \
 	srcs/execution/0_preparation.c srcs/execution/1_setup.c srcs/execution/2_ast.c \
 	srcs/parsing/variable/1_variable_manager.c srcs/parsing/variable/2_variable_manager_helper.c \
 	srcs/parsing/A_Amain.c \
@@ -38,8 +39,8 @@ SRC = srcs/builtins/1_ft_echo.c srcs/builtins/2_ft_cd.c srcs/builtins/3_ft_pwd.c
 	srcs/parsing/2_group_up/9_set_outfiles_utils.c srcs/parsing/2_group_up/10_process_filename.c \
 	srcs/parsing/3_build_tree/1_from_group_to_polish_reverse.c srcs/parsing/3_build_tree/2_to_polish_reverse_utils.c \
 	srcs/parsing/3_build_tree/3_from_polish_to_tree.c srcs/parsing/3_build_tree/4_from_text_to_tree.c \
-	srcs/parsing/3_build_tree/5_print_tree.c srcs/execution/3_6_validate_permission_direc.c \
-	srcs/X_free_new_array.c srcs/Xa_free_new_array_utils.c \
+	srcs/parsing/3_build_tree/5_print_tree.c \
+	srcs/free/1_free_new_array.c srcs/free/2_free_new_array_utils.c \
 	srcs/signal_and_input/input/1_input.c srcs/signal_and_input/input/2_input_count_heredoc.c \
 	srcs/signal_and_input/input/3_input_util.c \
 	srcs/signal_and_input/signal/1_signal.c srcs/signal_and_input/signal/2_signal_handler.c \
@@ -64,7 +65,6 @@ check-readline:
 $(NAME): $(OBJ_FILES)
 	$(CC) $(CFLAGS) $(OBJ_FILES) $(LIBFT) $(READLINE) -o $(NAME)
 
-# Rule to compile .c files into .o files in the build directory
 $(BUILD_DIR)/%.o: srcs/%.c $(HEADERS)
 	@mkdir -p $(@D) # Ensure subdirectories in build/ exist
 	$(CC) $(CFLAGS) -c $< -o $@

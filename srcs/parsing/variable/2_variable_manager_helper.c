@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "variable.h"
+#include "../../builtins/4_env/env.h"
 
 char	*handle_status_variable(char **array_of_str, t_env_exp *env_exp)
 {

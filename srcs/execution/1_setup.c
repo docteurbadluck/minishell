@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "execution.h"
 
 /* Count the number of pipes and commands in the AST */
 int	pipes_commands_counter(t_ast_node *node, t_ast_helper *ast_helper)

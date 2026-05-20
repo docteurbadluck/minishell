@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "env.h"
 
 t_env	*create_node_helper(char *env_var, int *j, int *k, int version);
 

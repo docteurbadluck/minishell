@@ -3,6 +3,17 @@
 
 # include "minishell.h"
 
+typedef struct s_heredoc_manip
+{
+	int			i;
+	int			y;
+	char		**eoftext;
+	char		**tempfiles_names;
+	t_iofile	**to_modif;
+	int			z;
+	int			*fd;
+}	t_heredoc_manip;
+
 /* ===== PUBLIC API ===== */
 
 int		create_heredoc_files(int nbr_of_heredoc,
