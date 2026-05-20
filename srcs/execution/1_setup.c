@@ -91,7 +91,7 @@ int	ast_handle_pipes_setup(t_ast_helper *ast_helper)
 }
 
 // Prepares ast_helper, which holds information for the pipes
-int	prepare_execution_ast(t_ast_node *tree, t_env_exp *env_exp,
+int	run_ast_pipeline(t_ast_node *tree, t_env_exp *env_exp,
 	t_ast_helper *ast_helper, t_free *free_all)
 {
 	int	return_value;

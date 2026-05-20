@@ -41,8 +41,9 @@ SRC = srcs/builtins/1_ft_echo.c srcs/builtins/2_ft_cd.c srcs/builtins/3_ft_pwd.c
 	srcs/parsing/3_build_tree/3_from_polish_to_tree.c srcs/parsing/3_build_tree/4_from_text_to_tree.c \
 	srcs/parsing/3_build_tree/5_print_tree.c \
 	srcs/free/1_free_new_array.c srcs/free/2_free_new_array_utils.c \
-	srcs/signal_and_input/input/1_input.c srcs/signal_and_input/input/2_input_count_heredoc.c \
-	srcs/signal_and_input/input/3_input_util.c \
+	srcs/orchestrator/1_orchestrator.c srcs/orchestrator/2_orchestrator_utils.c \
+	srcs/signal_and_input/input/1_input_count_heredoc.c \
+	srcs/signal_and_input/input/2_input_util.c \
 	srcs/signal_and_input/signal/1_signal.c srcs/signal_and_input/signal/2_signal_handler.c \
 	srcs/signal_and_input/heredoc/1_heredoc.c srcs/signal_and_input/heredoc/2_heredoc_utils.c \
 	srcs/signal_and_input/heredoc/3_name_generator.c
@@ -85,6 +86,8 @@ clean:
 # Full cleanup
 fclean: clean
 	rm -f $(NAME)
+	make -C libft- fclean 
+
 
 # Full rebuild
 re: fclean all
@@ -92,19 +95,26 @@ re: fclean all
 install-deps:
 	sudo apt-get install -y libreadline-dev
 
-test:
-	@make -C test test
-
 tester:
-	@make -C test tester
+	@if [ ! -d "minishell_tester" ]; then \
+		git clone https://github.com/LucasKuhn/minishell_tester.git minishell_tester; \
+	fi
+	@make > /dev/null 2>&1
+	@cd minishell_tester && bash tester
 
 signals:
-	@make -C test signals
+	@make > /dev/null 2>&1
+	@bash test/signals/run_signal_tests.sh $(shell pwd)
 
 signals-view:
-	@make -C test signals-view
+	@make > /dev/null 2>&1
+	@tmux kill-session -t minishell_signals 2>/dev/null; \
+	tmux new-session -d -s minishell_signals -x 220 -y 50; \
+	tmux send-keys -t minishell_signals \
+		"expect test/signals/test_signals.expect $(shell pwd)/minishell" Enter; \
+	tmux attach -t minishell_signals
 
 check:
 	@bash check.sh
 
-.PHONY: all check-readline clean fclean re install-deps test tester signals signals-view check
+.PHONY: all check-readline clean fclean re install-deps tester signals signals-view check

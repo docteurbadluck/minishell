@@ -49,6 +49,7 @@ int		count_new_array(t_parsed_command *array);
 int		count_arguments_and_move(t_parsed_command *array, int *i);
 
 /* 7_from_input_to_group.c */
+void				set_associativity(t_parsed_command *new_array);
 t_parsed_command	*from_new_to_group_up(char *developped_input);
 
 /* 8_set_outfiles.c */

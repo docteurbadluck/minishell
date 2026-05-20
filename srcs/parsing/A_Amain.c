@@ -1,31 +1,8 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   A_Amain.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/22 12:42:07 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/06/02 16:26:07 by tdeliot          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "minishell.h"
-#include "../signal_and_input/input/input.h"
+#include "../orchestrator/orchestrator.h"
 
 int	main(int argc, char **argv, char **envp)
 {
 	(void)argc;
-	read_input(argv[0], envp);
-	return (0);
+	return (run_shell(argv[0], envp));
 }
-
-/*
-prepare
-loop
-	read_input
-	parse
-	execution
-	free
-free
-*/

@@ -12,21 +12,6 @@
 
 #include "build_tree.h"
 
-void	set_associativity(t_parsed_command	*new_array)
-{
-	int	i;
-
-	i = 0;
-	while (new_array[i].command)
-	{
-		new_array[i].associativity = 0;
-		if (new_array[i].logical_operator)
-			new_array[i].associativity = LEFT;
-		if (new_array[i].logical_operator == 4)
-			new_array[i].associativity = RIGHT;
-		i++;
-	}
-}
 
 int	check_priority(t_parsed_command *new_array, int i, t_list *operator_stack)
 {

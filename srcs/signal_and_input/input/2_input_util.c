@@ -12,13 +12,14 @@
 
 #include "input.h"
 
-t_free	init_free_all(void)
+t_free	init_free_all(t_env_exp *env_exp)
 {
 	t_free	free_all;
 
 	free_all.new_array = NULL;
 	free_all.tree = NULL;
 	free_all.ast_helper = NULL;
+	free_all.env_exp = env_exp;
 	return (free_all);
 }
 

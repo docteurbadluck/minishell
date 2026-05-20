@@ -13,10 +13,25 @@
 #include "group_up.h"
 #include "../../free/free.h"
 #include "../1_tokenise/tokenise.h"
-#include "../3_build_tree/build_tree.h"
 #include "../wildcard/wildcard.h"
 
 
+
+void	set_associativity(t_parsed_command *new_array)
+{
+	int	i;
+
+	i = 0;
+	while (new_array[i].command)
+	{
+		new_array[i].associativity = 0;
+		if (new_array[i].logical_operator)
+			new_array[i].associativity = LEFT;
+		if (new_array[i].logical_operator == 4)
+			new_array[i].associativity = RIGHT;
+		i++;
+	}
+}
 
 t_parsed_command	*from_new_to_group_up(char *developped_input)
 {
