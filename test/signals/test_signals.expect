@@ -238,4 +238,20 @@ run_test "TEST 12 : heredoc vide" {
     wait
 }
 
+# --- TEST 13 : export PATH invalide → commande suivante doit échouer ---
+run_test "TEST 13 : export PATH invalide coupe la recherche" {
+    spawn $MINISHELL
+    expect $PROMPT
+    send "export PATH=/nonexistent && ls\n"
+    expect {
+        "Command not found" { puts "✓ export PATH invalide : ls introuvable comme attendu" }
+        $PROMPT             { puts "✗ export PATH invalide : ls a reussi malgre PATH invalide" }
+        timeout             { puts "✗ export PATH invalide : TIMEOUT" }
+        eof                 { puts "✗ export PATH invalide : minishell a quitte" }
+    }
+    expect $PROMPT
+    send "exit\n"
+    wait
+}
+
 puts "\n=== DONE ==="

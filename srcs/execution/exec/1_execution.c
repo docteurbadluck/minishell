@@ -51,11 +51,14 @@ static void	validate_and_execute(t_parsed_command *command,
 static void	execute_child_process(t_parsed_command *command,
 		t_ast_helper *ast_helper, t_env_exp *env_exp, t_free *free_all)
 {
+	char	**paths;
 	char	*path;
 
 	handle_command_execution(command, ast_helper);
 	validate_and_execute(command, env_exp);
-	path = find_path(env_exp->paths, command->arguments[0]);
+	paths = get_paths(env_exp);
+	path = find_path(paths, command->arguments[0]);
+	free_paths(paths);
 	check_path(path);
 	set_default_signals();
 	execve(path, command->arguments, env_exp->execute_env);

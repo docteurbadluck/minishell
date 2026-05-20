@@ -110,7 +110,6 @@ int	run_ast_pipeline(t_ast_node *tree, t_env_exp *env_exp,
 		cleanup_ast_helper(ast_helper);
 		return (-1);
 	}
-	env_exp->paths = get_paths(env_exp);
 	return_value = execute_ast(tree, ast_helper, env_exp, free_all);
 	return (return_value);
 }
