@@ -10,7 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "exec.h"
+#include "../../builtins/builtins.h"
 
 static int	wait_for_all_processes(t_ast_helper *ast_helper, int *status)
 {

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "free.h"
 
 void	free_iofiles(t_parsed_command *command)
 {

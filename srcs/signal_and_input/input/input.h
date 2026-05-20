@@ -2,6 +2,7 @@
 # define INPUT_H
 
 # include "minishell.h"
+# include "../../execution/execution.h"
 
 /* ===== PUBLIC API ===== */
 

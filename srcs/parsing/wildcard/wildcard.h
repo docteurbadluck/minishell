@@ -3,6 +3,19 @@
 
 # include "minishell.h"
 
+typedef struct s_tracker
+{
+	char	**groupped_array_list_of_files;
+	char	***groupped_array_argument;
+	char	**temporaire_array;
+	char	**input;
+	char	*cp_input;
+	char	**list_of_matched_name;
+	int		redirection;
+	int		y;
+	int		i;
+}	t_tracker;
+
 /* ===== PUBLIC API ===== */
 
 int		set_wildcard(t_parsed_command *grouped_array);

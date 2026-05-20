@@ -10,7 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "builtins.h"
+#include "../execution/execution.h"
+
 
 // ft_unset deletes a variable from env and exp
 int	ft_unset(t_env_exp *env_exp, char *content)

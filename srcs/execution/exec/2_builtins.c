@@ -10,7 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "exec.h"
+#include "../../builtins/builtins.h"
+
 
 int	check_build_in(char **command)
 {

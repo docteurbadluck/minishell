@@ -10,7 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "execution.h"
+#include "exec/exec.h"
 
 t_ast_node	*find_next_command_left(t_ast_node *node)
 {

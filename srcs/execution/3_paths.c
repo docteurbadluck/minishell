@@ -10,7 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "execution.h"
+#include "../builtins/4_env/env.h"
 
 char	**get_paths(t_env_exp *env_exp)
 {

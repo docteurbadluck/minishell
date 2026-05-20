@@ -3,6 +3,14 @@
 
 # include "minishell.h"
 
+typedef struct s_redir_state
+{
+	t_iofile	*infiles;
+	t_iofile	*outfiles;
+	int			x;
+	int			z;
+}	t_redir_state;
+
 /* ===== PUBLIC API ===== */
 
 t_parsed_command	*from_input_to_group(char *input);

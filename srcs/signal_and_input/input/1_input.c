@@ -11,6 +11,8 @@
 /* ************************************************************************** */
 
 #include "input.h"
+#include "../../execution/execution.h"
+#include "../../builtins/4_env/env.h"
 #include "../heredoc/heredoc.h"
 #include "../signal/signal.h"
 #include "../../parsing/2_group_up/group_up.h"

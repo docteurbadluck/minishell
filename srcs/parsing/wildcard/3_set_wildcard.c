@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "wildcard.h"
+#include "../../free/free.h"
 
 void	find_wildcard_in_redirection(t_parsed_command *grouped_array,
 			int i, t_list **list_of_tracker);
