@@ -24,7 +24,7 @@ SRC = srcs/builtins/1_ft_echo.c srcs/builtins/2_ft_cd.c srcs/builtins/3_ft_pwd.c
 	srcs/execution/exec/6_remove.c srcs/execution/exec/7_validate_permission_direc.c \
 	srcs/execution/0_preparation.c srcs/execution/1_setup.c srcs/execution/2_ast.c \
 	srcs/parsing/variable/1_variable_manager.c srcs/parsing/variable/2_variable_manager_helper.c \
-	srcs/parsing/A_Amain.c \
+	srcs/main.c \
 	srcs/parsing/wildcard/1_wildcard_manager.c srcs/parsing/wildcard/2_wildcard_util.c \
 	srcs/parsing/wildcard/3_set_wildcard.c srcs/parsing/wildcard/4_set_wildcard_utils.c \
 	srcs/parsing/wildcard/5_free.c \
@@ -87,7 +87,6 @@ clean:
 fclean: clean
 	rm -f $(NAME)
 	make -C libft- fclean 
-
 
 # Full rebuild
 re: fclean all
