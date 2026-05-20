@@ -20,7 +20,7 @@ int			create_ast_helper(t_ast_helper **ast_helper);
 void		cleanup(t_free *free_all);
 
 /* 1_setup.c */
-int			prepare_execution_ast(t_ast_node *tree, t_env_exp *env_exp,
+int			run_ast_pipeline(t_ast_node *tree, t_env_exp *env_exp,
 				t_ast_helper *ast_helper, t_free *free_all);
 
 /* 3_paths.c */

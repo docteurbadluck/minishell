@@ -13,7 +13,6 @@ typedef struct s_ast_node {
 /* ===== PUBLIC API ===== */
 
 t_ast_node	*from_group_to_tree(t_parsed_command **new_array);
-void		set_associativity(t_parsed_command *new_array);
 void		free_tree(t_ast_node *node);
 
 /* ===== INTERNAL HELPERS ===== */

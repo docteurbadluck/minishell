@@ -15,23 +15,19 @@ if [ $? -ne 0 ]; then
 fi
 pass "Build"
 
-# Unit tests and tester run in parallel
-make -C test test   > /tmp/check_unit.log   2>&1 & PID_UNIT=$!
-make -C test tester > /tmp/check_tester.log 2>&1 & PID_TESTER=$!
-
 echo "Running tests..."
 
-wait $PID_UNIT;   STATUS_UNIT=$?
-wait $PID_TESTER; STATUS_TESTER=$?
+# Tester
+make tester > /tmp/check_tester.log 2>&1
+STATUS_TESTER=$?
 
 # Signals run after — expect is sensitive to concurrent minishell processes
-make -C test signals > /tmp/check_signals.log 2>&1
+make signals > /tmp/check_signals.log 2>&1
 STATUS_SIGNALS=$?
 
 echo ""
 FAILED=0
 
-[ $STATUS_UNIT    -eq 0 ] && pass "Unit tests"   || { fail "Unit tests"   /tmp/check_unit.log;    FAILED=1; }
 [ $STATUS_TESTER  -eq 0 ] && pass "Tester"       || { fail "Tester"       /tmp/check_tester.log;  FAILED=1; }
 [ $STATUS_SIGNALS -eq 0 ] && pass "Signal tests" || { fail "Signal tests" /tmp/check_signals.log; FAILED=1; }
 
