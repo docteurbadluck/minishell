@@ -101,4 +101,7 @@ signals:
 signals-view:
 	@make -C test signals-view
 
-.PHONY: all check-readline clean fclean re install-deps test tester signals signals-view
+check:
+	@bash check.sh
+
+.PHONY: all check-readline clean fclean re install-deps test tester signals signals-view check
