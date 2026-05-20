@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "../parsing/3_build_tree/build_tree.h"
 
 int	prepare_env_exp(t_env_exp **env_exp, char **envp)
 {

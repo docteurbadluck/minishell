@@ -22,26 +22,29 @@ SRC = srcs/builtins/1_ft_echo.c srcs/builtins/2_ft_cd.c srcs/builtins/3_ft_pwd.c
 	srcs/execution/paths.c srcs/execution/3_1_builtins.c srcs/execution/3_2_input.c \
 	srcs/execution/3_3_output.c srcs/execution/3_4_parent.c srcs/execution/3_5_remove.c srcs/execution/3_0_execution.c \
 	srcs/execution/0_preparation.c srcs/execution/1_setup.c srcs/execution/2_ast.c \
-	srcs/parsing/A_variable_manager_helper.c \
-	srcs/parsing/A_Amain.c srcs/parsing/A_variable_manager.c srcs/parsing/Cc_cut.c\
-	srcs/parsing/B_wildcard_manager.c srcs/parsing/Ba_wildcard_util.c srcs/parsing/Bc_set_wildcard.c \
-	srcs/parsing/Bd_set_wildcard_utils.c srcs/parsing/Be_free.c srcs/parsing/Ca_count_word_valid_quote.c \
-	srcs/parsing/Cb_count_word_utils.c srcs/parsing/D_tokenise.c srcs/parsing/Da_tokenise_utils.c \
-	srcs/parsing/Dc_split_op_utils.c \
-	srcs/parsing/E_set_logic_op.c srcs/parsing/F_set_groupid_control_logic.c \
-	srcs/parsing/Fa_set_groupid_control_logic.c srcs/parsing/G_group_up.c \
-	srcs/parsing/Ga_group_up_utils.c srcs/parsing/Gb_group_up_count.c \
-	srcs/parsing/H_from_input_to_group.c srcs/parsing/Ha_set_outfiles.c \
-	srcs/parsing/Hb_set_outfiles_utils.c srcs/parsing/Hc_process_filename.c \
-	srcs/parsing/I_from_group_to_polish_reverse.c srcs/parsing/Ia_to_polish_reverse_utils.c \
-	srcs/parsing/J_from_polish_to_tree.c srcs/parsing/K_from_text_to_tree.c \
-	srcs/parsing/L_print_tree.c srcs/execution/3_6_validate_permission_direc.c \
+	srcs/parsing/variable/1_variable_manager.c srcs/parsing/variable/2_variable_manager_helper.c \
+	srcs/parsing/A_Amain.c \
+	srcs/parsing/wildcard/1_wildcard_manager.c srcs/parsing/wildcard/2_wildcard_util.c \
+	srcs/parsing/wildcard/3_set_wildcard.c srcs/parsing/wildcard/4_set_wildcard_utils.c \
+	srcs/parsing/wildcard/5_free.c \
+	srcs/parsing/1_tokenise/1_count_word_valid_quote.c srcs/parsing/1_tokenise/2_count_word_utils.c \
+	srcs/parsing/1_tokenise/3_cut.c srcs/parsing/1_tokenise/4_tokenise.c \
+	srcs/parsing/1_tokenise/5_tokenise_utils.c srcs/parsing/1_tokenise/6_split_word.c \
+	srcs/parsing/1_tokenise/7_split_op_utils.c \
+	srcs/parsing/2_group_up/1_set_logic_op.c srcs/parsing/2_group_up/2_set_groupid_control_logic.c \
+	srcs/parsing/2_group_up/3_set_groupid_control_logic_utils.c srcs/parsing/2_group_up/4_group_up.c \
+	srcs/parsing/2_group_up/5_group_up_utils.c srcs/parsing/2_group_up/6_group_up_count.c \
+	srcs/parsing/2_group_up/7_from_input_to_group.c srcs/parsing/2_group_up/8_set_outfiles.c \
+	srcs/parsing/2_group_up/9_set_outfiles_utils.c srcs/parsing/2_group_up/10_process_filename.c \
+	srcs/parsing/3_build_tree/1_from_group_to_polish_reverse.c srcs/parsing/3_build_tree/2_to_polish_reverse_utils.c \
+	srcs/parsing/3_build_tree/3_from_polish_to_tree.c srcs/parsing/3_build_tree/4_from_text_to_tree.c \
+	srcs/parsing/3_build_tree/5_print_tree.c srcs/execution/3_6_validate_permission_direc.c \
 	srcs/X_free_new_array.c srcs/Xa_free_new_array_utils.c \
-	  srcs/parsing/Db_split_word.c\
-	srcs/signal_and_input/Na_input_count_heredoc.c srcs/signal_and_input/Nb_input_util.c srcs/signal_and_input/N_input.c \
-	srcs/signal_and_input/Ma_signal_handler.c srcs/signal_and_input/M_signal.c \
-	srcs/signal_and_input/Oa_heredoc_utils.c srcs/signal_and_input/O_heredoc.c \
-	srcs/signal_and_input/P_name_generator.c
+	srcs/signal_and_input/input/1_input.c srcs/signal_and_input/input/2_input_count_heredoc.c \
+	srcs/signal_and_input/input/3_input_util.c \
+	srcs/signal_and_input/signal/1_signal.c srcs/signal_and_input/signal/2_signal_handler.c \
+	srcs/signal_and_input/heredoc/1_heredoc.c srcs/signal_and_input/heredoc/2_heredoc_utils.c \
+	srcs/signal_and_input/heredoc/3_name_generator.c
 
 # Object files in the build directory
 OBJ_FILES = $(SRC:srcs/%.c=$(BUILD_DIR)/%.o)

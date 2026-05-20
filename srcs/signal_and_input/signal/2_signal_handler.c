@@ -1,31 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   A_Amain.c                                          :+:      :+:    :+:   */
+/*   Ma_signal_handler.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/22 12:42:07 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/06/02 16:26:07 by tdeliot          ###   ########.fr       */
+/*   Created: 2025/03/26 10:23:59 by tdeliot           #+#    #+#             */
+/*   Updated: 2025/04/26 10:51:46 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include "../signal_and_input/input/input.h"
+#include "signal.h"
 
-int	main(int argc, char **argv, char **envp)
+volatile sig_atomic_t	g_cancel_heredoc = 0;
+
+void	handler_menu(int signum)
 {
-	(void)argc;
-	read_input(argv[0], envp);
-	return (0);
+	if (signum == SIGINT)
+	{
+		write(1, "\n", 1);
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+	}
+	if (signum == SIGQUIT)
+	{
+		rl_on_new_line();
+		rl_redisplay();
+	}
 }
 
-/*
-prepare
-loop
-	read_input
-	parse
-	execution
-	free
-free
-*/
+void	soft_quit_handler(int signum)
+{
+	if (signum == SIGINT)
+	{
+		g_cancel_heredoc = 1;
+		write(1, "\n", 1);
+	}
+}

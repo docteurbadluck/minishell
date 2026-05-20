@@ -1,31 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   A_Amain.c                                          :+:      :+:    :+:   */
+/*   Na_input_count_heredoc.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tdeliot <tdeliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/22 12:42:07 by tdeliot           #+#    #+#             */
-/*   Updated: 2025/06/02 16:26:07 by tdeliot          ###   ########.fr       */
+/*   Created: 2025/03/26 10:23:59 by tdeliot           #+#    #+#             */
+/*   Updated: 2025/04/26 10:55:17 by tdeliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include "../signal_and_input/input/input.h"
+#include "input.h"
 
-int	main(int argc, char **argv, char **envp)
+int	count_heredoc(t_parsed_command *ptr)
 {
-	(void)argc;
-	read_input(argv[0], envp);
-	return (0);
-}
+	int	i;
+	int	y;
+	int	heredoc_counter;
 
-/*
-prepare
-loop
-	read_input
-	parse
-	execution
-	free
-free
-*/
+	heredoc_counter = 0;
+	y = 0;
+	i = 0;
+	while (ptr[i].command)
+	{
+		y = 0;
+		while (ptr[i].input_file && ptr[i].input_file[y].filename)
+		{
+			if (ptr[i].input_file[y].mode == 4)
+				heredoc_counter++;
+			y++;
+		}
+		i++; 
+	}
+	return (heredoc_counter);
+}
