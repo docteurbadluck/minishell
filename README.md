@@ -45,7 +45,8 @@ The shell is organized around three components:
 
 - GCC or Clang
 - Make
-- libreadline (`sudo apt-get install libreadline-dev`)
+- libreadline (`sudo apt-get install libreadline-dev`) (automatic)
+- expect tmux for test (automatic with make test)
 - Linux or macOS
 
 ---
