@@ -89,17 +89,16 @@ re: fclean all
 install-deps:
 	sudo apt-get install -y libreadline-dev
 
-TEST_DIR = test
-TEST_SRC = $(wildcard $(TEST_DIR)/test_*.c)
-TEST_BINS = $(TEST_SRC:$(TEST_DIR)/test_%.c=$(TEST_DIR)/run_%)
+test:
+	@make -C test test
 
-$(TEST_DIR)/run_%: $(TEST_DIR)/test_%.c $(TEST_DIR)/unity.c
-	$(CC) -g -Iincludes -I$(TEST_DIR) $(TEST_DIR)/unity.c $< -o $@ $(READLINE) -Llibft- -lft
+tester:
+	@make -C test tester
 
-test: lib $(TEST_BINS)
-	@for t in $(TEST_BINS); do echo "\n--- $$t ---"; ./$$t; done
+signals:
+	@make -C test signals
 
-tclean:
-	rm -f $(TEST_BINS)
+signals-view:
+	@make -C test signals-view
 
-.PHONY: all check-readline clean fclean re install-deps test tclean
+.PHONY: all check-readline clean fclean re install-deps test tester signals signals-view

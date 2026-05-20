@@ -2,7 +2,7 @@
 
 log_user 1
 set timeout 5
-set MINISHELL "/home/docteurbadluck/Desktop/minishell/minishell"
+set MINISHELL [lindex $argv 0]
 set PROMPT "> "
 
 proc run_test {name body} {
@@ -124,6 +124,115 @@ run_test "TEST 7 : ctrl+D pendant cat" {
         $PROMPT { puts "✓ ctrl+D pendant cat : retour au prompt" }
         timeout { puts "✗ ctrl+D pendant cat : TIMEOUT" }
         eof     { puts "✗ ctrl+D pendant cat : minishell a quitte" }
+    }
+    send "exit\n"
+    wait
+}
+
+# --- TEST 8 : heredoc
+run_test "TEST 8 : heredoc normal" {
+    spawn $MINISHELL
+    expect $PROMPT
+    send "cat << eof\n"
+    expect {
+        ">"     {}
+        timeout { puts "✗ heredoc : prompt > non apparu"; return }
+        eof     { puts "✗ heredoc : minishell a quitte"; return }
+    }
+    send "hello world\n"
+    send "eof\n"
+    expect {
+        "hello world" { puts "✓ heredoc normal : OK" }
+        timeout { puts "✗ heredoc normal : TIMEOUT" }
+        eof     { puts "✗ heredoc normal : minishell a quitte" }
+    }
+    expect $PROMPT
+    send "exit\n"
+    wait
+}
+
+# --- TEST 9 : heredoc multi-lignes
+run_test "TEST 9 : heredoc multi-lignes" {
+    spawn $MINISHELL
+    expect $PROMPT
+    send "cat << eof\n"
+    expect {
+        ">"     {}
+        timeout { puts "✗ heredoc multi : prompt > non apparu"; return }
+        eof     { puts "✗ heredoc multi : minishell a quitte"; return }
+    }
+    send "line one\n"
+    send "line two\n"
+    send "eof\n"
+    expect {
+        "line one" { puts "✓ heredoc multi-lignes : OK" }
+        timeout    { puts "✗ heredoc multi-lignes : TIMEOUT" }
+        eof        { puts "✗ heredoc multi-lignes : minishell a quitte" }
+    }
+    expect $PROMPT
+    send "exit\n"
+    wait
+}
+
+# --- TEST 10 : heredoc expansion de variable
+run_test "TEST 10 : heredoc expansion variable" {
+    spawn $MINISHELL
+    expect $PROMPT
+    send "cat << eof\n"
+    expect {
+        ">"     {}
+        timeout { puts "✗ heredoc expand : prompt > non apparu"; return }
+        eof     { puts "✗ heredoc expand : minishell a quitte"; return }
+    }
+    send "home is \$HOME\n"
+    send "eof\n"
+    expect {
+        "home is /" { puts "✓ heredoc expansion variable : OK" }
+        timeout     { puts "✗ heredoc expansion variable : TIMEOUT" }
+        eof         { puts "✗ heredoc expansion variable : minishell a quitte" }
+    }
+    expect $PROMPT
+    send "exit\n"
+    wait
+}
+
+# --- TEST 11 : heredoc sans expansion (delimiter quote)
+run_test "TEST 11 : heredoc sans expansion" {
+    spawn $MINISHELL
+    expect $PROMPT
+    send "cat << 'eof'\n"
+    expect {
+        ">"     {}
+        timeout { puts "✗ heredoc no expand : prompt > non apparu"; return }
+        eof     { puts "✗ heredoc no expand : minishell a quitte"; return }
+    }
+    send "\$HOME\n"
+    send "eof\n"
+    expect {
+        "\$HOME" { puts "✓ heredoc sans expansion : OK" }
+        timeout  { puts "✗ heredoc sans expansion : TIMEOUT" }
+        eof      { puts "✗ heredoc sans expansion : minishell a quitte" }
+    }
+    expect $PROMPT
+    send "exit\n"
+    wait
+}
+
+# --- TEST 12 : heredoc vide
+run_test "TEST 12 : heredoc vide" {
+    spawn $MINISHELL
+    expect $PROMPT
+    send "cat << eof\n"
+    expect {
+        ">"     {}
+        timeout { puts "✗ heredoc vide : prompt > non apparu"; return }
+        eof     { puts "✗ heredoc vide : minishell a quitte"; return }
+    }
+    send "eof\n"
+    expect {
+        $PROMPT { puts "✓ heredoc vide : OK" }
+        timeout { puts "✗ heredoc vide : TIMEOUT" }
+        eof     { puts "✗ heredoc vide : minishell a quitte" }
     }
     send "exit\n"
     wait
